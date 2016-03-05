@@ -76,6 +76,14 @@ body > .container-with-nav {
   .navbar-default .nav-content #navbar ul > li.box-icon-navbar img {
     margin-top: -2px;
   }
+
+  .navbar-brand {
+    height: auto;
+  }
+
+  .navbar-default .nav-content .navbar-header .nav-logo img {
+    max-height: 46px;
+  }
 /* Header Styles */
 
 /* Footer Styles */
