@@ -1,0 +1,173 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+html {
+  position: relative;
+  min-height: 100%; }
+
+body {
+  font-weight: bold;
+  background-color: #e7e7e7; }
+
+body.with-footer {
+  margin-bottom: 60px;
+}
+
+body > .container-with-nav {
+  padding: 79px 15px 0;
+  margin-bottom: 76px;
+}
+
+/* Header Styles */
+  .navbar-fixed-top {
+    min-height: 60px;
+  }
+
+  .grad-navbar {
+    background: #d2ccce; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#d2ccce, #d2ccce); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#d2ccce, #d2ccce); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#d2ccce, #d2ccce); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#d2ccce, #d2ccce); /* Standard syntax (must be last) */
+    border-color: #828282;
+  }
+
+  nav.navbar.navbar-default.style-nav-default-public-login {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+  }
+
+  .navbar-default .nav-content #navbar {
+    position: relative;
+  }
+
+  .navbar-default .nav-content .navbar-header {
+    position: relative;
+    z-index: 10;
+  }
+
+  .navbar-default .nav-content #navbar ul {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .navbar-default .nav-content #navbar .navbar-nav > li > a {
+    padding-bottom: 6px;
+  }
+
+  .navbar-default .nav-content #navbar ul > li.box-icon-navbar img {
+    margin-top: -2px;
+  }
+/* Header Styles */
+
+/* Footer Styles */
+  .footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    /*background-color: #ff3900;*/
+
+    background: #ff3900; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#ff3900, #b82900); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#ff3900, #b82900); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#ff3900, #b82900); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#ff3900, #b82900); /* Standard syntax (must be last) */
+
+    width: 100%;
+    font-size: 12px;
+    padding-top: 7px;
+    height: 60px;
+    min-height: 60px;
+    color: #d6d6d6;
+    font-weight: normal;
+  }
+
+  .footer ul.footer-nav {
+    margin-right: 0;
+  }
+
+  .footer a.nav-logo {
+    color: #d6d6d6;
+  }
+
+  .footer a.nav-logo-image {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 11px;
+    height: 47px;
+  }
+
+  .footer a.nav-logo-image img {
+    width: 72px;
+  }
+
+  .footer p {
+    text-align: center;
+    width: 250px;
+    margin-top: 20px;
+  }
+
+  .footer-nav li {
+    list-style: none;
+    float: left;
+    margin-left: 15px;
+    padding-left: 15px;
+    border-left: 1px solid #ffffff;
+    margin-top: 14px;
+  }
+
+  .footer-nav li a {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    color: #d6d6d6;
+    text-transform: none;
+    text-decoration: none;
+  }
+
+  .footer-nav .first {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .footer-nav .second {
+    border-left: 0;
+  }
+
+  .footer.white {
+    background-color: #fff;
+    color: #000;
+    min-height: 102px;
+    padding-top: 25px;
+  }
+
+  .footer.white .footer-nav li a {
+    color: #000;
+  }
+
+  .footer-nav{
+    margin-bottom: 0;
+  }
+/* Footer Styles */
