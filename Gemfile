@@ -12,8 +12,13 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'devise', '~> 3.5', '>= 3.5.6'
+gem 'activeadmin', github: 'activeadmin'
+
 group :development, :test do
   gem 'byebug'
+  gem 'rspec-rails'
+  gem 'database_cleaner'
 end
 
 group :development do
