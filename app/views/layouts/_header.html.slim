@@ -6,10 +6,15 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
 
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
-        li.divider-vertical
-          a.color-text-dark href="#" Como Comprar
-        li
-          a.color-text-dark href="#" Entrega
-        li
-          a.color-text-dark href="#" Ingresar
-          a.color-text-dark href="#" Registrarse
+        - if current_user
+          li
+            p
+              | Bienvenid@ 
+              = @user.fullname
+          li
+            = link_to("Salir", destroy_user_session_path, method: :delete, class: "color-text-dark")
+        - else
+          li
+            a.color-text-dark href="#" Ingresar
+          li
+            a.color-text-dark href="#" Registrarse

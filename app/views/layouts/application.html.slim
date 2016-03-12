@@ -10,9 +10,5 @@ html
   body.with-footer
     = render 'layouts/header'
     .container.container-with-nav
-      p.notice
-        = notice
-      p.alert
-        = alert
       = yield
     = render 'layouts/footer'

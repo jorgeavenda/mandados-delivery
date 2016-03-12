@@ -31,8 +31,19 @@ body.with-footer {
 
 body > .container-with-nav {
   padding: 79px 15px 0;
-  margin-bottom: 76px;
+  margin-bottom: 60px;
 }
+
+.container input.form-control,
+.container-fluid input.form-control {
+  width: 100%;
+}
+
+/* Margin y Padiing */
+  .margin-bottom-zero {
+    margin-bottom: 0 !important;
+  }
+/* Margin y Padiing */
 
 /* Header Styles */
   .navbar-fixed-top {
@@ -71,6 +82,13 @@ body > .container-with-nav {
 
   .navbar-default .nav-content #navbar .navbar-nav > li > a {
     padding-bottom: 6px;
+  }
+
+  #navbar .navbar-nav > li > p {
+    padding-bottom: 6px;
+    padding-top: 15px;
+    margin-bottom: 0;
+    color: #777;
   }
 
   .navbar-default .nav-content #navbar ul > li.box-icon-navbar img {
