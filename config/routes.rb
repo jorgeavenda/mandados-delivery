@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   devise_for :users,
-             controllers: {sessions: 'user/sessions', registrations: 'user/registrations'},
              path_names: {sign_in: 'login', sign_out: 'logout', sign_up: 'register/:type'}
+  #controllers: {sessions: 'user/sessions', registrations: 'user/registrations'},
 
   devise_scope :user do
     get '/users/login/:type', to: 'user/sessions#new', as: :new_user_type_session
