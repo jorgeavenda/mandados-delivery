@@ -1,0 +1,27 @@
+.vertical-center-login
+  .box-login
+    .container-fluid
+      = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-horizontal" }) do |f|
+        .form-group
+          = f.label :email, nil, class: "col-sm-3 control-label"
+          .col-sm-9
+            = f.email_field :email, autofocus: true, class: "form-control", :placeholder => "email"
+
+        .form-group
+          = f.label :password, "Contraseña", class: "col-sm-3 control-label"
+          .col-sm-9
+            = f.password_field :password, autocomplete: "off", class: "form-control", :placeholder => "contraseña"
+
+        .form-group
+          .col-sm-offset-3.col-sm-9
+            .checkbox
+              label
+                = f.check_box :remember_me
+                | Recuerdame
+            
+            - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+              = link_to "¿has olvidado la contraseña?", new_password_path(resource_name)
+
+        .form-group.margin-bottom-zero
+          .col-sm-offset-3.col-sm-9
+            button.btn.btn-default type="submit" Ingresar

@@ -1,3 +1,32 @@
 // Place all the styles related to the main controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.vertical-center-login {
+  padding-top: calc(50vh - 173px);
+}
+
+.box-login {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 15px 0;
+}
+
+.box-login a {
+  font-size: 14px;
+  font-weight: normal;
+  position: absolute;
+  top: 7px;
+  right: 0;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.box-login input:-webkit-autofill,
+.box-login input:-webkit-autofill:hover,
+.box-login input:-webkit-autofill:focus,
+.box-login input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-box-shadow: 0 0 0px 1000px none inset;
+  -webkit-text-fill-color: #7f7f7f;
+}
