@@ -15,6 +15,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise', '~> 3.5', '>= 3.5.6'
 gem 'activeadmin', github: 'activeadmin'
 
+gem 'carrierwave'
+gem "mini_magick"
+gem 'enumerate_it'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
