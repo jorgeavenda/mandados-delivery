@@ -3,6 +3,7 @@ class MainController < ApplicationController
 
   def index
     @user = current_user
+    @products = Product.show_by_stock
   end
 
 end

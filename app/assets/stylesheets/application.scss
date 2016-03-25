@@ -39,9 +39,23 @@ body > .container-with-nav {
   width: 100%;
 }
 
+.img-responsive {
+  height: calc(100% - 1px);
+}
+
 /* Margin y Padiing */
   .margin-bottom-zero {
     margin-bottom: 0 !important;
+  }
+
+  .margin-side-zero {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .padding-side-zero {
+    padding-left: 0;
+    padding-right: 0;
   }
 /* Margin y Padiing */
 

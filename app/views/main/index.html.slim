@@ -1,6 +1,32 @@
-h1 Main#index
-p Aqui iniciamos la APP
+.container-fluid.padding-side-zero
+  .row
+    .col-xs-12.col-md-3
+      h2 Lista
+    .col-xs-12.col-md-9
+      h2.text-center Productos
+      .row
+        - @products.each do |p|
+          .col-xs-6.col-sm-4.col-md-3
+            .box-producto.center-block
+              .col-xs-12.fondoimgarticulo.vertical-align
+                span.helper
+                = image_tag(p.first_image, {class: "img-responsive"})
 
-p
-  | Bienvenido 
-  = @user.fullname
+              .col-xs-12.padding-side-zero name="box-precio"
+                h3.text-center 
+                  = p.description.capitalize
+                p.precio-producto.text-center name="pmvp" value="#{p.price}" id="pmvp_#{p.id}"
+                  = number_to_currency(p.price, unit: "", separator: ",", delimiter: ".")
+                .container-fluid
+                  .row.banda
+                    span BsF
+                    input.precio type="text" name="precio" id="precio_#{p.id}"
+                    span Kg
+                    input.peso type="text" name="peso" id="peso_#{p.id}"
+                  .container-fluid
+                    .row
+                      .col-md-12
+                        button.btn-xs.btn-m.center-block
+                          | Agregar
+
+= javascript_include_tag '/js/precio-peso', 'data-turbolinks-track' => true
