@@ -4,9 +4,9 @@ class CreateProduct < ActiveRecord::Migration
       t.string :description
       t.float :price
       t.string :image
-      t.integer :stock, default: 0
-      t.integer :stock_min, default: 0
-      t.integer :stock_max, default: 0
+      t.float :stock, default: 0
+      t.float :stock_min, default: 0
+      t.float :stock_max, default: 0
       t.integer :measuring_type, default: 0
       t.boolean :active, default: false
 

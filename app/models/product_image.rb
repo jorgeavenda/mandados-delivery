@@ -1,9 +1,9 @@
 class ProductImage < ActiveRecord::Base
-  belongs_to :product
   mount_uploader :image, ImageUploader
+  belongs_to :product
 
-  def default_image
-    image.nil? ? "default-upload.png" : image_url
+  def self.first_image
+    first.present? ? first.image_url : "default.png"
   end
 
 end

@@ -30,3 +30,91 @@
   -webkit-box-shadow: 0 0 0px 1000px none inset;
   -webkit-text-fill-color: #7f7f7f;
 }
+
+.box-producto .fondoimgarticulo .helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.box-producto .fondoimgarticulo img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.box-producto {
+  height: 265px;
+  background: #fcebe5;
+  border: 1px #ff3400 solid;
+  margin-bottom: 10px;
+  width: 162px;
+}
+
+.fondoimgarticulo {
+  height: 130px;
+  background: #ffffff;
+}
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
+.box-producto h3 {
+  margin: 140px 3px 0px;
+  margin: 0px 3px;
+  margin: 10px 3px 0px 3px;
+  padding-bottom: 2px; 
+  font-size: 1.1em;
+  font-weight: bold;
+  border-bottom: 2px #ff3400 solid;
+}
+
+.precio-producto {
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #ff3400;
+  font-style: italic;
+}
+
+.banda {
+  background: #ff3400;
+  color: #ffffff;
+  font-size: .85em;
+}
+
+.banda span {
+  float: left;
+  margin: 0px 3px;
+}
+
+.banda input {
+  float: left;
+  height: 18px;
+  color: black;
+  text-align: center;
+}
+
+.precio {
+  width: 65px;
+}
+
+.peso {
+  width: 40px;
+}
+
+button.btn-m {
+  background: linear-gradient(0deg,#fb4505,#fb8060);
+  margin-top: 7px; 
+  border: 0;
+  color: #ffffff;
+  text-shadow: #000 0 0px 0;
+  &:hover {
+    background: #fb4505;
+  }
+  &:active {
+    background: #fb8060;
+  }
+}
