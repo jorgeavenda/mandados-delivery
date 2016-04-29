@@ -3,17 +3,15 @@
     .container-fluid
       = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-horizontal" }) do |f|
         .form-group
-          = f.label :email, nil, class: "col-sm-3 control-label"
-          .col-sm-9
-            = f.email_field :email, autofocus: true, class: "form-control", :placeholder => "email"
+          .col-sm-12
+            = f.email_field :email, autofocus: true, class: "form-control", :placeholder => "Email"
 
         .form-group
-          = f.label :password, "Contraseña", class: "col-sm-3 control-label"
-          .col-sm-9
-            = f.password_field :password, autocomplete: "off", class: "form-control", :placeholder => "contraseña"
+          .col-sm-12
+            = f.password_field :password, autocomplete: "off", class: "form-control", :placeholder => "Contraseña"
 
         .form-group
-          .col-sm-offset-3.col-sm-9
+          .col-sm-12
             .checkbox
               label
                 = f.check_box :remember_me
@@ -23,5 +21,5 @@
               = link_to "¿has olvidado la contraseña?", new_password_path(resource_name)
 
         .form-group.margin-bottom-zero
-          .col-sm-offset-3.col-sm-9
-            button.btn.btn-default type="submit" Ingresar
+          .col-sm-12
+            button.btn-block.btn-sm.btn-m type="submit" Ingresar
