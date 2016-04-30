@@ -1,6 +1,11 @@
 nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute;"
   .container.nav-content
     .navbar-header.margin-right-logo
+      button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
       a.navbar-brand.nav-logo.nav-logo-image.nav-logo-image-black href="#{root_path}"
         = image_tag("logo.png")
 
@@ -18,3 +23,10 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
             a.color-text-dark href="#" Ingresar
           li
             a.color-text-dark href="#" Registrarse
+
+script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
+
+javascript:
+  $('.navbar-collapse').click('li', function() {
+    $('.navbar-collapse').collapse('hide');
+  });
