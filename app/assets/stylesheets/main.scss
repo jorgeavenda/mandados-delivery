@@ -53,7 +53,7 @@
 }
 
 .fondoimgarticulo {
-  height: 130px;
+  height: 120px;
   background: #ffffff;
 }
 
@@ -63,20 +63,35 @@
 }
 
 .box-producto h3 {
-  margin: 140px 3px 0px;
-  margin: 0px 3px;
-  margin: 10px 3px 0px 3px;
-  padding-bottom: 2px; 
-  font-size: 1.1em;
+  overflow: hidden;
+  margin: 20px 3px 0px 3px;
+  font-size: .9em;
   font-weight: bold;
-  border-bottom: 2px #ff3400 solid;
+  height: 40px;
+}
+
+.box-producto p.stock {
+  font-size: .8em;
+  font-weight: normal;
+  display: block;
+  position: absolute;
+  color: #777777;
+  text-indent: -1000em;
+  width: 100%;
+  background: #ffffff;
+}
+
+.box-producto:hover p.stock {
+  text-indent: 0;
 }
 
 .precio-producto {
+  margin: 5px 3px 0px 3px;
   font-weight: bold;
   font-size: 1.3em;
   color: #ff3400;
   font-style: italic;
+  border-top: 2px #ff3400 solid;
 }
 
 .banda {
@@ -88,6 +103,10 @@
 .banda span {
   float: left;
   margin: 0px 3px;
+}
+
+span.cant {
+  margin: 0px 3px 0px 45px;
 }
 
 .banda input {
@@ -105,7 +124,7 @@
   width: 40px;
 }
 
-button.btn-m {
+button.btn-m, .box-login button.btn-m {
   background: linear-gradient(0deg,#fb4505,#fb8060);
   margin-top: 7px; 
   border: 0;
@@ -115,6 +134,83 @@ button.btn-m {
     background: #fb4505;
   }
   &:active {
-    background: #fb8060;
+    background: linear-gradient(0deg,#fb4505,#fb3500);
   }
+}
+
+#tabla td:nth-of-type(2) a {
+  position: absolute; 
+  display: none;
+  top: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  background: #ddd;
+  border-radius: 3px;
+}
+
+.remove {
+  position: absolute;
+  top: 4px;
+  right: 4px; 
+  width: 7px;
+  height: 7px;
+  background-image: url("remove.png");
+}
+
+#tabla>tbody>tr:hover {
+  background-color: #fcebe5;
+}
+
+#tabla>tbody>tr:hover a {
+  display: inline;
+}
+
+#tabla thead th {
+  background: #f7f7f7; 
+}
+
+#tabla th:nth-of-type(2), #tabla td:nth-of-type(2) {
+  text-align: right;
+  vertical-align: bottom;
+  position: relative;
+}
+
+#tabla>tbody>tr>td, #tabla>thead>tr>th {
+  padding: 4px;
+}
+
+#tabla>thead>tr>th {
+  padding-right: 17px; 
+}
+
+tr {
+  width: 100%;
+  display: inline-table;
+}
+
+table {
+  position: relative;
+  height:270px;
+}
+
+#tabla tfoot td {
+  font-size: 1.2em;
+  font-weight: bold; 
+}
+
+tbody {
+  overflow-y: auto;
+  height: 200px;
+  width: 100%;
+  position: absolute;
+}
+
+.container h2 {
+  margin-top: 10px;
+}
+
+.box-productos {
+  height: 550px;
+  overflow-y: auto;
 }

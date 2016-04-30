@@ -1,28 +1,117 @@
 .container-fluid.padding-side-zero
   .row
-    .col-xs-12.col-md-3
-      h2 Lista
-    .col-xs-12.col-md-9
+    .col-xs-12.col-md-4
+      h2.text-center Lista del mandado
+      table id="tabla" class="table table-striped"
+        thead
+          tr
+            th
+              | Descripcion
+            th
+              | Precio
+        tfoot
+          tr
+            td
+              | Total
+            td
+              | 10.000,00
+        tbody
+          tr
+            td
+              | jamon de espalda alimex
+              br
+               | 0.500 x 1.560,00 
+            td
+              | 780,00
+              a href="#"
+                .remove
+          tr
+            td
+              | Queso
+              br
+               | 0.500 x 1.500,00 
+            td
+              | 750,00
+              a href="#"
+                .remove
+          tr
+            td
+              | mortadela
+              br
+               | 1.000 x 1.200,00 
+            td
+              | 1.200,00
+              a href="#"
+                .remove
+          tr
+            td
+              | jamon
+              br
+               | 0.500 x 5.000,00
+            td
+              | 2.500,00
+              a href="#"
+                .remove
+          tr
+            td
+              | vvvvvvvvvv
+              br
+               | 0.390 x 1.560,00 
+            td
+              | 569,00
+              a href="#"
+                .remove
+          tr
+            td
+              | rrrrrrrrrr
+              br
+               | 0.390 x 1.560,00 
+            td
+              | 569,00
+              a href="#"
+                .remove
+          tr
+            td
+              | wwwwwwwww
+              br
+               | 0.390 x 1.560,00 
+            td
+              | 569,00
+              a href="#"
+                .remove
+      button.btn-block.btn-sm.btn-m
+        | Finalizar lista
+
+    .col-xs-12.col-md-8
       h2.text-center Productos
-      .row
+      .row.box-productos
         - @products.each do |p|
-          .col-xs-6.col-sm-4.col-md-3
+          .col-xs-6.col-sm-4.col-lg-3
             .box-producto.center-block
               .col-xs-12.fondoimgarticulo.vertical-align
                 span.helper
                 = image_tag(p.first_image, {class: "img-responsive"})
-
               .col-xs-12.padding-side-zero name="box-precio"
-                h3.text-center 
+                p.stock
+                 | disponible: 
+                 = p.stock
+                h3.text-center
                   = p.description.capitalize
                 p.precio-producto.text-center name="pmvp" value="#{p.price}" id="pmvp_#{p.id}"
                   = number_to_currency(p.price, unit: "", separator: ",", delimiter: ".")
                 .container-fluid
                   .row.banda
-                    span BsF
-                    input.precio type="text" name="precio" id="precio_#{p.id}"
-                    span Kg
-                    input.peso type="text" name="peso" id="peso_#{p.id}"
+                    - if p.measuring_type == 1
+                      span.cant 
+                        | Cant
+                      input.peso type="number" name="cant" id="cant_#{p.id}"
+                    - else
+                      span
+                        | BsF
+                      input.precio type="text" name="precio" id="precio_#{p.id}"
+                      span
+                        | Kg
+                      input.peso type="text" name="peso" id="peso_#{p.id}"
                   .container-fluid
                     .row
                       .col-md-12
@@ -30,3 +119,4 @@
                           | Agregar
 
 = javascript_include_tag '/js/precio-peso', 'data-turbolinks-track' => true
+= javascript_include_tag '/js/lista-mandado', 'data-turbolinks-track' => true
