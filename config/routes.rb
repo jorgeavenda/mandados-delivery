@@ -10,5 +10,9 @@ Rails.application.routes.draw do
     get '/users/login/:type', to: 'user/sessions#new', as: :new_user_type_session
   end
 
+  resources :shopping_carts
+
+  post '/shopping_carts/:id/remove_item/:item_id', to: 'shopping_carts#remove_item', as: :remove_item_cart
+
   root to: 'main#index'
 end

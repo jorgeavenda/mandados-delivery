@@ -14,71 +14,19 @@
             td
               | Total
             td
-              | 10.000,00
+              = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
         tbody
-          tr
-            td
-              | jamon de espalda alimex
-              br
-               | 0.500 x 1.560,00 
-            td
-              | 780,00
-              a href="#"
-                .remove
-          tr
-            td
-              | Queso
-              br
-               | 0.500 x 1.500,00 
-            td
-              | 750,00
-              a href="#"
-                .remove
-          tr
-            td
-              | mortadela
-              br
-               | 1.000 x 1.200,00 
-            td
-              | 1.200,00
-              a href="#"
-                .remove
-          tr
-            td
-              | jamon
-              br
-               | 0.500 x 5.000,00
-            td
-              | 2.500,00
-              a href="#"
-                .remove
-          tr
-            td
-              | vvvvvvvvvv
-              br
-               | 0.390 x 1.560,00 
-            td
-              | 569,00
-              a href="#"
-                .remove
-          tr
-            td
-              | rrrrrrrrrr
-              br
-               | 0.390 x 1.560,00 
-            td
-              | 569,00
-              a href="#"
-                .remove
-          tr
-            td
-              | wwwwwwwww
-              br
-               | 0.390 x 1.560,00 
-            td
-              | 569,00
-              a href="#"
-                .remove
+          - @shopping_cart.shopping_cart_items.each do |item|
+            tr
+              td
+                = item.product.description
+                br
+                  = " #{number_with_precision(item.quantity, precision: 3)} x #{number_to_currency(item.amount, unit: 'BsF ', separator: ',', delimiter: '.')}"
+              td
+                = " #{ number_to_currency(item.quantity*item.amount, unit: '', separator: ',', delimiter: '.')} "
+                a onclick="removeItem(#{@shopping_cart.id}, #{item.id})"
+                  .remove
+
       button.btn-block.btn-sm.btn-m
         | Finalizar lista
 
@@ -115,8 +63,22 @@
                   .container-fluid
                     .row
                       .col-md-12
-                        button.btn-xs.btn-m.center-block
-                          | Agregar
+                        = link_to(shopping_carts_path, { class: "add-product", method: :post}) do
+                          button.btn-xs.btn-m.center-block
+                            | Agregar
 
 = javascript_include_tag '/js/precio-peso', 'data-turbolinks-track' => true
 = javascript_include_tag '/js/lista-mandado', 'data-turbolinks-track' => true
+
+javascript:
+  var removeItem = function(id, item_id) {
+    $.post("/shopping_carts/"+id+"/remove_item/"+item_id, { product_id: id, quantity: item_id }, function( data ) {
+    },function(data){
+      console.log('fallo: '+data)
+    });
+    renderCart();
+  }
+
+  var renderCart = function() {
+    window.location.href = "/";
+  }
