@@ -138,6 +138,13 @@ button.btn-m, .box-login button.btn-m {
   }
 }
 
+a.add-product {
+  text-decoration: inherit;
+  &:hover {
+    text-decoration: inherit;
+  }
+}
+
 #tabla td:nth-of-type(2) a {
   position: absolute; 
   display: none;
