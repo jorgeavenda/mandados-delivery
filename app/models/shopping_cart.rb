@@ -13,4 +13,8 @@ class ShoppingCart < ActiveRecord::Base
     self.shopping_cart_items.amount_total_cart_item
   end
 
+  def add_item(item_params)
+    self.shopping_cart_items.create(item_params)
+  end
+
 end

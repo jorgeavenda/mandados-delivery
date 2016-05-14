@@ -7,6 +7,11 @@ class ShoppingCartsController < ApplicationController
     render :status => 200, :json => {:shopping_cart => @shopping_cart}
   end
 
+  def add_item
+    @shopping_cart.add_item(add_item_params)
+    render :status => 200, :json => {:shopping_cart => @shopping_cart}
+  end
+
   private
     def extract_shopping_cart
       @shopping_cart = find_or_create_shopping_cart
@@ -23,6 +28,10 @@ class ShoppingCartsController < ApplicationController
 
     def find_item
       @shopping_cart_item = ShoppingCartItem.where(id: params[:item_id])
+    end
+
+    def add_item_params
+      params.permit(:product_id, :quantity, :amount)
     end
 
 end
