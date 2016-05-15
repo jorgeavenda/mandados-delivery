@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :shopping_carts
 
   post '/shopping_carts/:id/remove_item/:item_id', to: 'shopping_carts#remove_item', as: :remove_item_cart
+  post '/shopping_carts/:id/add_item', to: 'shopping_carts#add_item', as: :add_item_cart
 
   root to: 'main#index'
 end

@@ -5,14 +5,11 @@
       table id="tabla" class="table table-striped"
         thead
           tr
-            th
-              | Descripcion
-            th
-              | Precio
+            th Descripcion
+            th Precio
         tfoot
           tr
-            td
-              | Total
+            td Total
             td
               = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
         tbody
@@ -49,10 +46,10 @@
                   = number_to_currency(p.price, unit: "", separator: ",", delimiter: ".")
                 .container-fluid
                   .row.banda
-                    - if p.measuring_type == 1
+                    - if p.measuring_type == MeasuringType::UNIDAD
                       span.cant 
                         | Cant
-                      input.peso type="number" name="cant" id="cant_#{p.id}"
+                      input.peso type="number" name="cant" id="cant_#{p.id}" min="0" max="#{p.stock}"
                     - else
                       span
                         | BsF
@@ -63,7 +60,7 @@
                   .container-fluid
                     .row
                       .col-md-12
-                        = link_to(shopping_carts_path, { class: "add-product", method: :post}) do
+                        a class="add-product" method="POST" onclick="addItem(#{@shopping_cart.id}, #{p.id}, #{(p.measuring_type == MeasuringType::UNIDAD) ? '"cant_"' : '"peso_"' }, #{p.price})"
                           button.btn-xs.btn-m.center-block
                             | Agregar
 
@@ -81,4 +78,29 @@ javascript:
 
   var renderCart = function() {
     window.location.href = "/";
+  }
+
+  String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+  }
+
+  var addItem = function(id, product_id, measure, amount) {
+    var replace = $('#'+measure+product_id).val();
+
+    if (replace === null || replace === "undefine" || replace === "" || replace === 0 || replace === "0") {
+      $('#'+measure+product_id).focus();
+      $('#'+measure+product_id).addClass("alert-input").delay(800).queue(function(){
+        $(this).removeClass( "alert-input" ).dequeue();
+      });
+    } else {
+      var quantity = parseFloat( replace.replaceAll(',', '.') );
+      var price = parseFloat( amount );
+
+      $.post("/shopping_carts/"+id+"/add_item", { product_id: product_id, quantity: quantity, amount: price }, function( data ) {
+      },function(data){
+        console.log('fallo: '+data)
+      });
+      renderCart();
+    }
   }
