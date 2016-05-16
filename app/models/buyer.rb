@@ -13,7 +13,8 @@ class Buyer < User
   end
 
   def get_shopping_cart
-    self.shopping_carts.last
+    #self.shopping_carts.last
+    self.shopping_carts.last.blank? ? self.shopping_carts.create : self.shopping_carts.last
   end
 
 end
