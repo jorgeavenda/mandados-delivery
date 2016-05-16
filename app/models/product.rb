@@ -15,4 +15,13 @@ class Product < ActiveRecord::Base
     all_greater_stock
   end
 
+  def update_stock(quantity, action)
+    value = increase?(action) ? (self.stock+quantity.to_f) : (self.stock-quantity.to_f)
+    self.update_attributes(stock: value)
+  end
+
+  def increase?(action)
+    action == 'increase'
+  end
+
 end

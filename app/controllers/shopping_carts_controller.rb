@@ -30,7 +30,7 @@ class ShoppingCartsController < ApplicationController
     end
 
     def find_item
-      @shopping_cart_item = ShoppingCartItem.where(id: params[:item_id])
+      @shopping_cart_item = ShoppingCartItem.find_by_id(params[:item_id])
     end
 
     def add_item_params
