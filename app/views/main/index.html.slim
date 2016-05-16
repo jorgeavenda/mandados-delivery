@@ -11,7 +11,7 @@
           tr
             td Total
             td
-              = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+              /= number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
         tbody
           /- @shopping_cart.shopping_cart_items.each do |item|
             tr
