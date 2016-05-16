@@ -1,5 +1,5 @@
 .container-fluid.padding-side-zero
-  /.row
+  .row
     .col-xs-12.col-md-4
       h2.text-center Lista del mandado
       /table id="tabla" class="table table-striped"
@@ -11,9 +11,9 @@
           tr
             td Total
             td
-              /= number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+              = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
         tbody
-          /- @shopping_cart.shopping_cart_items.each do |item|
+          - @shopping_cart.shopping_cart_items.each do |item|
             tr
               td
                 = item.product.description
