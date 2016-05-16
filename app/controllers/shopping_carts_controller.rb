@@ -18,12 +18,19 @@ class ShoppingCartsController < ApplicationController
     end
 
     def find_or_create_shopping_cart
-      if session[:shopping_cart].blank?
+      #if session[:shopping_cart].blank?
+      if find_shopping_cart.blank?
         current_user.shopping_carts.create
       else
-        shopping_cart_id = session[:shopping_cart].blank? ? 0 : session[:shopping_cart]["id"]
-        ShoppingCart.find_by_id(shopping_cart_id)
+        #shopping_cart_id = session[:shopping_cart].blank? ? 0 : session[:shopping_cart]["id"]
+        #ShoppingCart.find_by_id(shopping_cart_id)
+
+        find_shopping_cart
       end
+    end
+
+    def find_shopping_cart
+      ShoppingCart.find_by_id(params[:id])
     end
 
     def find_item
