@@ -1,5 +1,7 @@
-.list-group
-  .list-group-item
-    span.badge
-    	| 14
-    | Cras justo odio
+- if @shopping_carts.last.blank?
+	p
+		| No tiene mandados para mostrar
+	a.btn.btn-default.btn-xs  href="" onclick="renderCart()" style="text-decoration: none;"
+		| Regresar
+- else
+	= render "my_errands"
