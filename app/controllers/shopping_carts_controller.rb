@@ -2,14 +2,26 @@ class ShoppingCartsController < ApplicationController
   before_action :extract_shopping_cart
   before_action :find_item, only: [:remove_item]
 
+  def index
+    @user = current_user
+  end
+
   def remove_item
     @shopping_cart.remove_item(@shopping_cart_item)
     render :status => 200, :json => {:shopping_cart => @shopping_cart}
   end
 
   def add_item
-    @shopping_cart.add_item(add_item_params)
-    render :status => 200, :json => {:shopping_cart => @shopping_cart}
+    if @shopping_cart.add_item(add_item_params)
+      render :status => 200, :json => {:shopping_cart => @shopping_cart, :add => "true"}
+    else
+      render :status => 200, :json => {:shopping_cart => @shopping_cart, :add => "false"}
+    end
+  end
+
+  def save_list
+    @shopping_cart.change_status_received
+     render :status => 200, :json => {:shopping_cart => @shopping_cart}
   end
 
   private

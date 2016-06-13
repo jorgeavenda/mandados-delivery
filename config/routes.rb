@@ -15,5 +15,9 @@ Rails.application.routes.draw do
   post '/shopping_carts/:id/remove_item/:item_id', to: 'shopping_carts#remove_item', as: :remove_item_cart
   post '/shopping_carts/:id/add_item', to: 'shopping_carts#add_item', as: :add_item_cart
 
+  post '/shopping_carts/:id/save_list', to: 'shopping_carts#save_list', as: :save_list
+
+  get "commanded_detail" => 'main#commanded_detail'
+
   root to: 'main#index'
 end

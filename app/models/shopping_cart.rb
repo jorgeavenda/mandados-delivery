@@ -15,14 +15,24 @@ class ShoppingCart < ActiveRecord::Base
   end
 
   def add_item(item_params)
-    self.shopping_cart_items.create(item_params)
-    update_product_stock(item_params, 'decrease')
+    product_id = item_params[:product_id]
+    quantity = item_params[:quantity]
+    if Product.find_by_id(product_id).product_available?(quantity)
+      self.shopping_cart_items.create(item_params)
+      update_product_stock(item_params, 'decrease')
+    else
+      return false
+    end
   end
 
   def update_product_stock(item_params, action)
     product_id = item_params[:product_id]
     quantity = item_params[:quantity]
     Product.find_by_id(product_id).update_stock(quantity, action)
+  end
+
+  def change_status_received
+    self.update_attributes(status_cart: StatusCart::RECIBIDO)
   end
 
 end

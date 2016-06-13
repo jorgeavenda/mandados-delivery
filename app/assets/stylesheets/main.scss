@@ -41,7 +41,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
 }
 
 .box-producto {
@@ -114,6 +115,7 @@ span.cant {
   height: 18px;
   color: black;
   text-align: center;
+  font-size: .9em;
 }
 
 .precio {
@@ -124,7 +126,7 @@ span.cant {
   width: 40px;
 }
 
-button.btn-m, .box-login button.btn-m {
+button.btn-m, .box-login button.btn-m, .detail button.btn-m {
   background: linear-gradient(0deg,#fb4505,#fb8060);
   margin-top: 7px; 
   border: 0;
@@ -180,6 +182,9 @@ a.add-product {
 #tabla th:nth-of-type(2), #tabla td:nth-of-type(2) {
   text-align: right;
   vertical-align: bottom;
+}
+
+#tabla td:nth-of-type(2) {
   position: relative;
 }
 
@@ -207,14 +212,19 @@ table {
 }
 
 tbody {
+  visibility: hidden;
   overflow-y: auto;
   height: 200px;
   width: 100%;
-  position: absolute;
+  display: block;
 }
 
 .container h2 {
   margin-top: 10px;
+}
+
+#box-productos{
+  visibility: hidden;
 }
 
 .box-productos {
@@ -225,4 +235,53 @@ tbody {
 .alert-input {
   border: 1px solid red;
   background-color: #fcebe5;
+}
+
+.detail h2, .detail h3 {
+  color: #ff5112;
+  font-style: italic;
+}
+
+.detail p {
+  color: #787878;
+  font-size: 1.2em;
+  margin: 15px 0;
+}
+
+.detail p~a, .detail p~button {
+  margin: 0px 35px;
+}
+
+.detail a {
+  text-decoration: none;
+  color: #ff5112;
+  vertical-align: bottom;
+  &:hover {
+    color: #ff5112;
+  }
+  &:visited {
+    color: #ff5112;
+  }
+}
+
+#myModal .modal-footer {
+  text-align: center;
+  & button {
+    margin: 0px 35px;
+    min-width: 80px;
+  }
+}
+
+.progress {
+  width: 400px;
+  position: relative;
+  top: 200px;
+}
+
+.oculto {
+  display: none;
+}
+
+.progress_mandado>.progress>.progress-bar {
+  background-color: #ff5112;
 }

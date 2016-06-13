@@ -5,14 +5,15 @@ class Product < ActiveRecord::Base
   has_many :shopping_cart_items
   has_many :shopping_carts, through: :shopping_cart_items
 
-  scope :all_greater_stock,  -> { where("stock >= stock_min") }
+  scope :all_greater_stock,  -> { where("stock >= stock_min and (stock-stock_min) > 0.3") }
+  scope :all_greater_stock_order, -> { all_greater_stock.order(created_at: :asc) }
 
   def first_image
     self.product_images.present? ? self.product_images.first_image : "default.png"
   end
 
   def self.show_by_stock
-    all_greater_stock
+    all_greater_stock_order
   end
 
   def update_stock(quantity, action)
@@ -24,4 +25,12 @@ class Product < ActiveRecord::Base
     action == 'increase'
   end
 
+  def max_sale
+    self.stock-self.stock_min
+  end
+
+  def product_available?(quantity)
+    self.max_sale >= quantity.to_f
+  end
+  
 end

@@ -6,7 +6,7 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand.nav-logo.nav-logo-image.nav-logo-image-black href="#{root_path}"
+      a.navbar-brand.nav-logo.nav-logo-image.nav-logo-image-black href="" onclick="renderCart()"
         = image_tag("logo.png")
 
     #navbar.collapse.navbar-collapse
@@ -30,3 +30,7 @@ javascript:
   $('.navbar-collapse').click('li', function() {
     $('.navbar-collapse').collapse('hide');
   });
+
+  var renderCart = function() {
+    window.location.href = "/";
+  }

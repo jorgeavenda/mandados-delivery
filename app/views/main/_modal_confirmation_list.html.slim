@@ -1,0 +1,20 @@
+- unless @shopping_cart.shopping_cart_items.last.blank?
+  #myModal.modal.fade tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    .modal-dialog role="document"
+      .modal-content.text-center
+        .modal-header
+          button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            | &times;
+          h3 class="modal-title"
+            | Atención
+        .modal-body
+          p
+            | ¿Todo listo para guardar?
+          p
+            | Una vez que se finalice la lista del mandado no podra ser modificada
+        .modal-footer
+          button.btn-sm.btn-m data-dismiss="modal"
+            | No
+          a class="add-product" method="POST" onclick="save_list(#{@shopping_cart.id})"  
+            button.btn-sm.btn-m
+              | Si
