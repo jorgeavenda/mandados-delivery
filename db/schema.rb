@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160509015338) do
     t.integer  "product_id"
     t.float    "quantity",         default: 0.0
     t.float    "amount",           default: 0.0
+    t.float    "dispatched",       default: 0.0
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
   end

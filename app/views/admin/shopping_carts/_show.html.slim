@@ -1,0 +1,88 @@
+.items_dispatched
+  .container-fluid.padding-side-zero
+    .row
+      h4.col-xs-9
+        | Cliente: 
+        = @shopping_cart.buyer_id
+      .col-xs-3
+        button.btn.btn-default.btn-sm
+          = link_to "Regresar", admin_shopping_carts_path
+    .row
+      .table-responsive
+        table id="tabla" class="table table-striped"
+          thead
+            tr
+              th
+              th Descripcion
+              th Pedido
+              th Despachado
+              th Acciones
+          tfoot
+            tr
+              td
+              td Total
+              td
+                = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+              td
+              td
+          tbody
+            - @shopping_cart.shopping_cart_items.each do |item|
+              tr
+                -if item.dispatched > item.quantity+0.02 || item.dispatched < item.quantity-0.02 
+                  td style="background: red"
+                -else
+                  td style="background: green"
+                td
+                  = item.product.description
+                td
+                  = " #{number_with_precision(item.quantity, precision: 3, separator: ',', delimiter: '.')}"
+                td
+                  input.despacho type="tel" name="despachado" id="despachado_#{item.id}" value="#{number_with_precision(item.dispatched, precision: 3, separator: ',', delimiter: '.')}" onClick="this.select();"
+                td
+                  a method="POST" onclick="dispatched(#{@shopping_cart.id}, #{item.id}, #{item.quantity}, #{item.dispatched})" 
+                    | Guardar  
+
+= javascript_include_tag '/js/jquery.price_format.2.0.min', 'data-turbolinks-track' => true
+
+javascript:
+
+  $(function() {
+    $('[name="despachado"]').keyup(function() {
+      var iddespachado= "#"+$(this).attr('id');
+      $(iddespachado).priceFormat({
+       prefix: '',
+       centsSeparator: ',',
+       thousandsSeparator: '.',
+       centsLimit: 3,
+       });
+    }); 
+  });
+
+  var dispatched = function(id, item_id, order, despacho){
+    var replace = $('#despachado_'+item_id).val();
+
+    var row= $('#despachado_'+item_id).parent().parent().index();
+    
+    var cant = parseFloat( replace.replaceAll(',', '.') );
+    var sup = order+0.02
+    var inf = order-0.02
+    
+    if (cant > inf & cant < sup ){
+      $.post("/admin/shopping_carts/"+id+"/dispatched", { quantity: cant, item_id: item_id }, function( data, status ) {
+          console.log('fallo: '+status);
+          $("tbody tr:eq(" + row + ") td").eq(0).css("background", "#0EFF0A");
+        });
+    } else{
+      $('#despachado_'+item_id).val(despacho).priceFormat({
+       prefix: '',
+       centsSeparator: ',',
+       thousandsSeparator: '.',
+       centsLimit: 3,
+       });
+    }
+  }
+
+  String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+  }

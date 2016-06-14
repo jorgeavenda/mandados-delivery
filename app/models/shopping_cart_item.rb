@@ -6,4 +6,9 @@ class ShoppingCartItem < ActiveRecord::Base
     sum("quantity * amount")
   end
 
+  def update_dispatched(item_params)
+  	quantity = item_params[:quantity]
+  	self.update_attributes(dispatched: quantity)
+  end
+  
 end
