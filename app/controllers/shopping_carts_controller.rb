@@ -1,15 +1,36 @@
 class ShoppingCartsController < ApplicationController
-  before_action :extract_shopping_cart
+  before_filter :authenticate_user!
+  before_action :extract_shopping_cart, only: [:remove_item, :add_item, :save_list]
   before_action :find_item, only: [:remove_item]
 
+  def index
+    @user = current_user
+    @shopping_carts = @user.shopping_carts.where(status_cart: StatusCart::RECIBIDO).order(id: :desc)
+    @shopping_cart = @shopping_carts.first
+  end
+
+  def show
+    @user = current_user
+    @shopping_carts = @user.shopping_carts.where(status_cart: StatusCart::RECIBIDO).order(id: :desc)
+    @shopping_cart = @shopping_carts.find(params[:id])
+  end
+  
   def remove_item
     @shopping_cart.remove_item(@shopping_cart_item)
     render :status => 200, :json => {:shopping_cart => @shopping_cart}
   end
 
   def add_item
-    @shopping_cart.add_item(add_item_params)
-    render :status => 200, :json => {:shopping_cart => @shopping_cart}
+    if @shopping_cart.add_item(add_item_params)
+      render :status => 200, :json => {:shopping_cart => @shopping_cart, :add => "true"}
+    else
+      render :status => 200, :json => {:shopping_cart => @shopping_cart, :add => "false"}
+    end
+  end
+
+  def save_list
+    @shopping_cart.change_status_received
+     render :status => 200, :json => {:shopping_cart => @shopping_cart}
   end
 
   private

@@ -7,4 +7,8 @@ class MainController < ApplicationController
     @products = Product.show_by_stock
   end
 
+  def commanded_detail
+  	@user = current_user
+  end
+
 end

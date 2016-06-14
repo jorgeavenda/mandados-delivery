@@ -1,3 +1,6 @@
+= render "modal_confirmation_list"
+= render "modal_no_product"
+
 .container-fluid.padding-side-zero
   .row
     .col-xs-12.col-md-4
@@ -12,24 +15,24 @@
             td Total
             td
               = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
-        tbody
+        tbody onscroll="getItemScrolltop()"
           - @shopping_cart.shopping_cart_items.each do |item|
             tr
               td
                 = item.product.description
                 br
-                  = " #{number_with_precision(item.quantity, precision: 3)} x #{number_to_currency(item.amount, unit: 'BsF ', separator: ',', delimiter: '.')}"
+                  = " #{number_with_precision(item.quantity, precision: 3, separator: ',', delimiter: '.')} x #{number_to_currency(item.amount, unit: 'BsF ', separator: ',', delimiter: '.')}"
               td
                 = " #{ number_to_currency(item.quantity*item.amount, unit: '', separator: ',', delimiter: '.')} "
                 a onclick="removeItem(#{@shopping_cart.id}, #{item.id})"
                   .remove
 
-      button.btn-block.btn-sm.btn-m
+      button.btn-block.btn-sm.btn-m data-toggle="modal" data-target="#myModal"
         | Finalizar lista
 
     .col-xs-12.col-md-8
       h2.text-center Productos
-      .row.box-productos
+      .row.box-productos#box-productos onscroll="getProductScrolltop()"
         - @products.each do |p|
           .col-xs-6.col-sm-4.col-lg-3
             .box-producto.center-block
@@ -38,8 +41,13 @@
                 = image_tag(p.first_image, {class: "img-responsive"})
               .col-xs-12.padding-side-zero name="box-precio"
                 p.stock
-                 | disponible: 
-                 = p.stock
+                  | Disponible:
+                  - if p.measuring_type == MeasuringType::UNIDAD
+                    = " #{number_with_precision(p.max_sale, precision: 0)}"
+                    |  Unid
+                  - else
+                    = " #{number_with_precision(p.max_sale, precision: 3, separator: ',', delimiter: '.')}"
+                    |  Kg
                 h3.text-center
                   = p.description.capitalize
                 p.precio-producto.text-center name="pmvp" value="#{p.price}" id="pmvp_#{p.id}"
@@ -49,7 +57,7 @@
                     - if p.measuring_type == MeasuringType::UNIDAD
                       span.cant 
                         | Cant
-                      input.peso type="number" name="cant" id="cant_#{p.id}" min="0" max="#{p.stock}"
+                      input.peso type="number" name="cant" id="cant_#{p.id}" min="0" max="#{p.max_sale}"
                     - else
                       span
                         | BsF
@@ -60,24 +68,66 @@
                   .container-fluid
                     .row
                       .col-md-12
-                        a class="add-product" method="POST" onclick="addItem(#{@shopping_cart.id}, #{p.id}, #{(p.measuring_type == MeasuringType::UNIDAD) ? '"cant_"' : '"peso_"' }, #{p.price})"
+                        a class="add-product" method="POST" onclick="addItem(#{@shopping_cart.id}, #{p.id}, #{(p.measuring_type == MeasuringType::UNIDAD) ? '"cant_"' : '"peso_"' }, #{p.price}, #{p.max_sale})"
                           button.btn-xs.btn-m.center-block
                             | Agregar
 
 = javascript_include_tag '/js/precio-peso', 'data-turbolinks-track' => true
 = javascript_include_tag '/js/lista-mandado', 'data-turbolinks-track' => true
+= javascript_include_tag '//code.jquery.com/ui/1.11.4/jquery-ui.js', 'data-turbolinks-track' => true
 
 javascript:
+
+  $(document).ready(function() {
+    controlScroll();
+  });
+
+  var getProductScrolltop = function(){
+    sessionStorage["productos_scrolltop"] = $("#box-productos").scrollTop();
+  }
+  var getItemScrolltop = function(){
+    sessionStorage["items_scrolltop"] = $("#tabla tbody").scrollTop();
+  }
+  var setProductScrolltop = function(){
+    $("#box-productos").scrollTop(sessionStorage.getItem('productos_scrolltop'));
+  }
+  var visible = function() {
+    $("#box-productos").css({ "visibility": "visible"});
+    $("#tabla tbody").css({ "visibility": "visible"});
+  }
+  var controlScroll = function(){
+    if (sessionStorage.getItem('items_add') == "true" ) {
+      sessionStorage["items_add"]=false;
+      $("#tabla tbody").scrollTop($("#tabla tbody").prop('scrollHeight'));
+      
+      $('#tabla tbody tr:last').css({"background-color": "#fcebe5"});
+      $('#tabla tbody tr:last').animate({backgroundColor: "#ffdacd"}, 800);
+      $('#tabla tbody tr:last').animate({backgroundColor: "#f9f9f9"}, 800);
+      $("#tabla tbody tr:last").delay(1600).queue(function(){
+        $("#tabla tbody tr:last").removeAttr("style");
+      });
+      setProductScrolltop();
+      visible();
+    } else {
+      if (sessionStorage.getItem('items_remove') == "true" ) {
+        sessionStorage["items_remove"]=false;
+        $("#tabla tbody").scrollTop(sessionStorage.getItem('items_scrolltop'));
+        setProductScrolltop();
+        visible();
+      }
+      else{
+        visible();
+      }
+    }
+  }
+
   var removeItem = function(id, item_id) {
     $.post("/shopping_carts/"+id+"/remove_item/"+item_id, { product_id: id, quantity: item_id }, function( data ) {
     },function(data){
       console.log('fallo: '+data)
     });
+    sessionStorage["items_remove"]=true;
     renderCart();
-  }
-
-  var renderCart = function() {
-    window.location.href = "/";
   }
 
   String.prototype.replaceAll = function(search, replacement) {
@@ -85,10 +135,10 @@ javascript:
     return target.split(search).join(replacement);
   }
 
-  var addItem = function(id, product_id, measure, amount) {
+  var addItem = function(id, product_id, measure, amount, max_sale) {
     var replace = $('#'+measure+product_id).val();
 
-    if (replace === null || replace === "undefine" || replace === "" || replace === 0 || replace === "0") {
+    if (replace === null || replace === "undefine" || replace === "" || replace === 0 || replace === "0" || replace > max_sale || parseFloat( replace.replaceAll(',', '.') ) > max_sale) {
       $('#'+measure+product_id).focus();
       $('#'+measure+product_id).addClass("alert-input").delay(800).queue(function(){
         $(this).removeClass( "alert-input" ).dequeue();
@@ -97,10 +147,26 @@ javascript:
       var quantity = parseFloat( replace.replaceAll(',', '.') );
       var price = parseFloat( amount );
 
-      $.post("/shopping_carts/"+id+"/add_item", { product_id: product_id, quantity: quantity, amount: price }, function( data ) {
-      },function(data){
-        console.log('fallo: '+data)
+      $.post("/shopping_carts/"+id+"/add_item", { product_id: product_id, quantity: quantity, amount: price }, function( data, status ) {
+        if (data.add == "true" ){
+            renderCart();
+        } else {
+            $('#myModalNoProduct').modal('show');
+            $('#myModalNoProduct').on('hidden.bs.modal', function(){
+            renderCart();
+            });
+        }
+        //console.log('fallo: '+status)
       });
-      renderCart();
+      sessionStorage["items_add"]=true;
     }
+  }
+
+  var save_list = function(id){
+    $.post("/shopping_carts/"+id+"/save_list", function( data, status ) {
+
+      window.location.href = "/commanded_detail";
+
+       console.log('fallo: '+status)
+      });
   }

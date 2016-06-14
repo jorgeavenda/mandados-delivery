@@ -14,6 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise', '~> 3.5', '>= 3.5.6'
 gem 'activeadmin', github: 'activeadmin'
+gem 'responsive_active_admin'
 
 gem 'carrierwave'
 gem "mini_magick"
