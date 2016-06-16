@@ -9,7 +9,7 @@
       		= link_to  shopping_cart_path(cart), {class: "list-group-item "}
 	          span.badge
 	          	= cart.shopping_cart_items.count
-	          = cart.updated_at.strftime("%A %d %B %Y")
+	          = cart.updated_at.in_time_zone('Caracas').strftime("%d %B %Y")
 
     .col-xs-12.col-md-8
       h2.text-center Productos

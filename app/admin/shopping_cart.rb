@@ -9,7 +9,7 @@ ActiveAdmin.register ShoppingCart do
     column "Nro. Mandado", :id
     column "Cliente", :buyer_id
     column "Fecha de Recibido", :updated_at  do |obj|
-      obj.updated_at.strftime("%d / %m / %Y")
+      obj.updated_at.in_time_zone('Caracas').strftime("%d / %m / %Y")
     end
     actions
   end
@@ -33,7 +33,8 @@ ActiveAdmin.register ShoppingCart do
 
   controller do
     def scoped_collection
-      super.where(status_cart: StatusCart::RECIBIDO)
+      t = Time.now.in_time_zone('UTC')-86400
+      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 04:30:00")})
     end
   end
 
