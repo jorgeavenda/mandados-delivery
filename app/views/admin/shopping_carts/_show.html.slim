@@ -1,10 +1,10 @@
 .items_dispatched
   .container-fluid.padding-side-zero
     .row
-      h4.col-xs-9
+      h4.col-xs-8
         | Cliente: 
         = @shopping_cart.buyer_id
-      .col-xs-3
+      .col-xs-4
         button.btn.btn-default.btn-sm
           = link_to "Regresar", admin_shopping_carts_path
     .row
@@ -43,7 +43,11 @@
 
                 td
                   a method="POST" onclick="dispatched(#{@shopping_cart.id}, #{item.id}, #{item.quantity}, #{item.dispatched})" 
-                    | Guardar  
+                    | Guardar
+    .row
+      .col-xs-12
+        button.btn.btn-default.btn-sm onclick="prepared(#{@shopping_cart.id})"
+          | Preparado
 
 = javascript_include_tag '/js/jquery.price_format.2.0.min', 'data-turbolinks-track' => true
 
@@ -91,7 +95,23 @@ javascript:
     }
   }
 
+  var prepared = function(id){
+  
+    $.post("/admin/shopping_carts/"+id+"/save_prepared", function( data, status ) {
+      console.log('fallo: '+status);
+      if (data.terminado == "true"){
+        to_return();
+      } else {
+        alert("Al menos un producto no esta preparado")
+      }
+    });
+  }
+
   String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.split(search).join(replacement);
+  }
+  
+  var to_return = function() {
+    window.location.href = "/admin/shopping_carts";
   }

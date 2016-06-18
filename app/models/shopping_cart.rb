@@ -35,4 +35,8 @@ class ShoppingCart < ActiveRecord::Base
     self.update_attributes(status_cart: StatusCart::RECIBIDO)
   end
 
+  def change_status_prepared
+    self.update_attributes(status_cart: StatusCart::PREPARADO)
+  end
+
 end
