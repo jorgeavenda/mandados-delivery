@@ -61,10 +61,10 @@
                     - else
                       span
                         | BsF
-                      input.precio type="text" name="precio" id="precio_#{p.id}"
+                      input.precio type="tel" name="precio" id="precio_#{p.id}"
                       span
                         | Kg
-                      input.peso type="text" name="peso" id="peso_#{p.id}"
+                      input.peso type="tel" name="peso" id="peso_#{p.id}"
                   .container-fluid
                     .row
                       .col-md-12
@@ -75,6 +75,7 @@
 = javascript_include_tag '/js/precio-peso', 'data-turbolinks-track' => true
 = javascript_include_tag '/js/lista-mandado', 'data-turbolinks-track' => true
 = javascript_include_tag '//code.jquery.com/ui/1.11.4/jquery-ui.js', 'data-turbolinks-track' => true
+= javascript_include_tag '/js/jquery.price_format.2.0.min', 'data-turbolinks-track' => true
 
 javascript:
 
