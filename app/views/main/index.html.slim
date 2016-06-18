@@ -164,7 +164,7 @@ javascript:
 
   var save_list = function(id){
     $.post("/shopping_carts/"+id+"/save_list", function( data, status ) {
-
+      sessionStorage["guarded"]=true;
       window.location.href = "/commanded_detail";
 
        console.log('fallo: '+status)

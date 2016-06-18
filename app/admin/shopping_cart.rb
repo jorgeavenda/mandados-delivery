@@ -9,7 +9,7 @@ ActiveAdmin.register ShoppingCart do
     column "Nro. Mandado", :id
     column "Cliente", :buyer_id
     column "Fecha de Recibido", :updated_at  do |obj|
-      obj.updated_at.strftime("%d / %m / %Y")
+      obj.updated_at.in_time_zone('Caracas').strftime("%d / %m / %Y")
     end
     actions
   end
@@ -31,9 +31,22 @@ ActiveAdmin.register ShoppingCart do
     render :layout => false, :status => 200
   end
 
+  member_action :save_prepared, method: :post do
+    
+    @shopping_cart = ShoppingCart.find(params[:id])
+    
+    if @shopping_cart.shopping_cart_items.where("dispatched < quantity-0.02 OR dispatched > quantity+0.02").blank?
+      @shopping_cart.change_status_prepared
+      render :layout => false, :status => 200, :json => {:terminado => "true"} 
+    else
+     render :layout => false, :status => 200, :json => {:terminado => "false"}
+    end
+  end
+
   controller do
     def scoped_collection
-      super.where(status_cart: StatusCart::RECIBIDO)
+      t = Time.now.in_time_zone('Caracas')
+      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 04:30:00")})
     end
   end
 
