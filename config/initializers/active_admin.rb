@@ -205,6 +205,13 @@ ActiveAdmin.setup do |config|
 
   # == Menu System
   #
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add :label => "Imprimir" do |submenu|
+        submenu.add :label => "Preparados", :url => proc {admin_print_orders_prepared_path}
+      end
+    end
+  end
   # You can add a navigation menu to be used in your application, or configure a provided menu
   #
   # To change the default utility navigation to show a link to your website & a logout btn

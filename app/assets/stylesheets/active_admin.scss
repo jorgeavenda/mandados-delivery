@@ -36,7 +36,7 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
   margin-bottom: 30px;
 }
 
-.items_dispatched {
+.items_dispatched, .print_prepared{
 	@import "bootstrap";
 	@import "bootstrap-sprockets";
 
