@@ -1,12 +1,18 @@
 $(document).ready(function(){
-  $('[name="peso"]').maskMoney({ thousands:'.', decimal:',', precision: 3 });
-  $('[name="precio"]').maskMoney({ thousands:'.', decimal:','});
+  //$('[name="peso"]').maskMoney({ thousands:'.', decimal:',', precision: 3 });
+  //$('[name="precio"]').maskMoney({ thousands:'.', decimal:','});
 }); // fin de function ready
 //para el calculo de precio a pagar en funcion de campo gramos 
 $(function() {
   $('[name="peso"]').keyup(function() {
     var idpeso= "#"+$(this).attr('id');
     var idprecio = "#"+$(idpeso).siblings('[name="precio"]').attr('id');
+    $(idpeso).priceFormat({
+    prefix: '',
+    centsSeparator: ',',
+    thousandsSeparator: '.',
+    centsLimit: 3,
+    });
     var value = $(this).val();
     var pmvp = $(idpeso).parents('[name="box-precio"]').find('[name="pmvp"]').text();
     var precio = Convert.string_decimal(value)*Convert.string_decimal(pmvp);
@@ -18,6 +24,12 @@ $(function() {
   $('[name="precio"]').keyup(function() {
     var idprecio= "#"+$(this).attr('id');
     var idpeso = "#"+$(idprecio).siblings('[name="peso"]').attr('id');
+    $(idprecio).priceFormat({
+    prefix: '',
+    centsSeparator: ',',
+    thousandsSeparator: '.',
+    centsLimit: 2,
+    });
     var value = $(this).val();
     var pmvp = $(idprecio).parents('[name="box-precio"]').find('[name="pmvp"]').text();
     var gram = Convert.string_decimal(value)/Convert.string_decimal(pmvp);
