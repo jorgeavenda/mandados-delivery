@@ -1,0 +1,39 @@
+.print_prepared
+  .container-fluid.padding-side-zero
+    .row
+      .col-xs-12
+        h2.text-center Preparados
+        table#tabla.table.table-striped.table-bordered
+          thead
+            tr
+              th Direccion
+              th Cod. CLiente
+              th Nombre y apellido
+              th Telefono
+              th Cant. Mandados
+              th Forma de pago
+              th colspan="2" Pago en la entrega
+              th Firma
+            tr
+              th colspan="6"
+              th Si
+              th No
+              th
+          tfoot
+            tr
+              th colspan="9"
+          tbody
+            - @shopping_carts.each do |cart|
+              tr
+                td
+                td
+                  = cart.buyer_id
+                td
+                  = cart.buyer.buyer_info.fullname
+                td
+                  = cart.buyer.buyer_info.phonenumber
+                td
+                td
+                td
+                td
+                td
