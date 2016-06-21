@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509015338) do
+ActiveRecord::Schema.define(version: 20160621001107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,13 +69,17 @@ ActiveRecord::Schema.define(version: 20160509015338) do
     t.string   "description"
     t.float    "price"
     t.string   "image"
-    t.float    "stock",          default: 0.0
-    t.float    "stock_min",      default: 0.0
-    t.float    "stock_max",      default: 0.0
-    t.integer  "measuring_type", default: 0
-    t.boolean  "active",         default: false
+    t.float    "stock",                     default: 0.0
+    t.float    "stock_min",                 default: 0.0
+    t.float    "stock_max",                 default: 0.0
+    t.integer  "measuring_type",            default: 0
+    t.boolean  "active",                    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "imageproduct_file_name"
+    t.string   "imageproduct_content_type"
+    t.integer  "imageproduct_file_size"
+    t.datetime "imageproduct_updated_at"
   end
 
   create_table "shopping_cart_items", force: :cascade do |t|
