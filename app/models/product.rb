@@ -32,5 +32,15 @@ class Product < ActiveRecord::Base
   def product_available?(quantity)
     self.max_sale >= quantity.to_f
   end
+
+  validates :imageproduct,
+    attachment_content_type: { content_type: /\Aimage\/.*\Z/ },
+    attachment_size: { less_than: 5.megabytes }
+
+  has_attached_file :imageproduct, styles: {
+    thumb: '100x100>',
+    square: '200x200#',
+    medium: '300x300>'
+  }
   
 end

@@ -38,7 +38,8 @@
             .box-producto.center-block
               .col-xs-12.fondoimgarticulo.vertical-align
                 span.helper
-                = image_tag(p.first_image, {class: "img-responsive"})
+                /= image_tag(p.first_image, {class: "img-responsive"})
+                = image_tag(p.imageproduct.url(:medium), {class: "img-responsive"})
               .col-xs-12.padding-side-zero name="box-precio"
                 p.stock
                   | Disponible:

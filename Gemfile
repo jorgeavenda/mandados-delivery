@@ -20,6 +20,9 @@ gem 'carrierwave'
 gem "mini_magick"
 gem 'enumerate_it'
 
+gem 'paperclip'
+gem 'aws-sdk', '~> 2.3'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'

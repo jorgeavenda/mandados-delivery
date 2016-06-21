@@ -1,6 +1,6 @@
 ActiveAdmin.register Product do
   menu parent: "Products"
-  permit_params :description, :price, :image, :stock, :stock_min, :stock_max, :measuring_type, :active, product_images_attributes: [:id, :image, :_destroy]
+  permit_params :description, :price, :image, :stock, :stock_min, :stock_max, :measuring_type, :active, :imageproduct, product_images_attributes: [:id, :image, :_destroy]
 
   index do
     selectable_column
@@ -40,12 +40,13 @@ ActiveAdmin.register Product do
       f.input :stock_max
       f.input :measuring_type, as: :select, collection: MeasuringType.to_a, label: 'Tipo de Medida'
       f.input :active
+      f.input :imageproduct, :as => :file
     end
-    f.has_many :product_images do |i|
-      i.input :image, :as => :file, :hint => i.object.image.present? ? image_tag(i.object.image.url(:thumb)) : content_tag(:span, "Ninguna imagen aun")
-      i.input :image_cache, :as => :hidden
-      i.input :_destroy, :as => :boolean, :required => false, :label => 'Remove'
-    end
+    # f.has_many :product_images do |i|
+    #   i.input :image, :as => :file, :hint => i.object.image.present? ? image_tag(i.object.image.url(:thumb)) : content_tag(:span, "Ninguna imagen aun")
+    #   i.input :image_cache, :as => :hidden
+    #   i.input :_destroy, :as => :boolean, :required => false, :label => 'Remove'
+    # end
     f.actions
   end
 
