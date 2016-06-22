@@ -21,7 +21,7 @@ gem "mini_magick"
 gem 'enumerate_it'
 
 gem 'paperclip'
-gem 'aws-sdk', '~> 2.3'
+gem 'aws-sdk', '< 2.0'
 
 group :development, :test do
   gem 'byebug'
