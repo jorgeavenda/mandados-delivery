@@ -2,30 +2,33 @@
   .container-fluid.padding-side-zero
     .row
       .col-xs-12
-        h2.text-center Preparados
         table#tabla.table.table-striped.table-bordered
           thead
             tr
-              th Direccion
-              th Cod. CLiente
-              th Nombre y apellido
+              th Ruta
+              th Domicilio
+              th Cod.
+              th Cliente
               th Telefono
-              th Cant. Mandados
+              th Cant. Mand.
               th Forma de pago
-              th colspan="2" Pago en la entrega
+              th colspan="2" Pagado
               th Firma
             tr
-              th colspan="6"
+              th colspan="7"
               th Si
               th No
               th
           tfoot
             tr
-              th colspan="9"
+              th colspan="10"
           tbody
             - @shopping_carts.each do |cart|
               tr
                 td
+                  = cart.buyer.domicile.delivery_route.get_addres_full
+                td
+                  = cart.buyer.domicile.home
                 td
                   = cart.buyer_id
                 td
@@ -33,7 +36,10 @@
                 td
                   = cart.buyer.buyer_info.phonenumber
                 td
+                  = @shopping_carts.count[cart.buyer_id]
                 td
                 td
                 td
                 td
+
+= stylesheet_link_tag 'print', :media => 'print'

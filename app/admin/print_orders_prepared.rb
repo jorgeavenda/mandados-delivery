@@ -1,7 +1,7 @@
 ActiveAdmin.register_page "Print_orders_prepared" do
   menu false
 
-  content do
+  content :title => 'Mandados preparados' do
     render partial: 'print_orders_prepared'
   end
 
