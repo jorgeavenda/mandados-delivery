@@ -210,6 +210,12 @@ ActiveAdmin.setup do |config|
       menu.add :label => "Imprimir" do |submenu|
         submenu.add :label => "Preparados", :url => proc {admin_print_orders_prepared_path}
       end
+      menu.add :label => "Rutas" do |submenu|
+        submenu.add :label => "Urbanizacion", :url => proc {admin_urbanizations_path}
+        submenu.add :label => "Edificios", :url => proc {admin_buildings_path}
+        submenu.add :label => "Conj. Residencial", :url => proc {admin_residentials_path}
+        submenu.add :label => "Rutas de entrega", :url => proc {admin_delivery_routes_path}, priority: 0
+      end
     end
   end
   # You can add a navigation menu to be used in your application, or configure a provided menu
