@@ -1,6 +1,6 @@
 ActiveAdmin.register Buyer do
   menu parent: "Users"
-  permit_params :email, :password, :password_confirmation, :active, :buyer_info_attributes => [:id, :buyer_id, :first_name, :last_name, :phonenumber]
+  permit_params :email, :password, :password_confirmation, :active, :buyer_info_attributes => [:id, :buyer_id, :first_name, :last_name, :phonenumber], :domicile_attributes => [:id, :buyer_id, :delivery_route_id, :home]
 
   index do
     selectable_column
@@ -32,6 +32,12 @@ ActiveAdmin.register Buyer do
         t.input :first_name
         t.input :last_name
         t.input :phonenumber
+      end
+      f.inputs "Domicile", for: [:domicile, (f.object.domicile || Domicile.new)] do |u|
+        u.input :id, as: :hidden
+        u.input :buyer_id, as: :hidden
+        u.input :delivery_route, as: :select, collection: DeliveryRoute.all.map {|r| [r.get_addres_full, r.id]}, label: 'Ruta'
+        u.input :home
       end
     end
     f.actions

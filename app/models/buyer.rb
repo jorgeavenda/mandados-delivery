@@ -1,6 +1,8 @@
 class Buyer < User
   has_one :buyer_info
   accepts_nested_attributes_for :buyer_info
+  has_one :domicile
+  accepts_nested_attributes_for :domicile
 
   has_many :shopping_carts
 
