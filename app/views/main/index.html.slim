@@ -126,9 +126,9 @@ javascript:
   var removeItem = function(id, item_id) {
     $.post("/shopping_carts/"+id+"/remove_item/"+item_id, { product_id: id, quantity: item_id },function(data){
       console.log('fallo: '+data)
+      renderCart();
     });
     sessionStorage["items_remove"]=true;
-    renderCart();
   }
 
   String.prototype.replaceAll = function(search, replacement) {
