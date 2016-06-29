@@ -46,7 +46,7 @@ ActiveAdmin.register ShoppingCart do
   controller do
     def scoped_collection
       t = Time.now.in_time_zone('Caracas')
-      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 04:30:00")})
+      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")})
     end
   end
 
