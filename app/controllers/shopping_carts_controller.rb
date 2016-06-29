@@ -5,13 +5,13 @@ class ShoppingCartsController < ApplicationController
 
   def index
     @user = current_user
-    @shopping_carts = @user.shopping_carts.where(status_cart: StatusCart::RECIBIDO).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart = ? or status_cart = ?", StatusCart::RECIBIDO, StatusCart::PREPARADO).order(id: :desc)
     @shopping_cart = @shopping_carts.first
   end
 
   def show
     @user = current_user
-    @shopping_carts = @user.shopping_carts.where(status_cart: StatusCart::RECIBIDO).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart = ? or status_cart = ?", StatusCart::RECIBIDO, StatusCart::PREPARADO).order(id: :desc)
     @shopping_cart = @shopping_carts.find(params[:id])
   end
   
