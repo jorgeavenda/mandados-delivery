@@ -1,6 +1,6 @@
 = render "modal_confirmation_list"
 = render "modal_no_product"
-
+= render "modal_loading"
 .container-fluid.padding-side-zero
   .row
     .col-xs-12.col-md-4
@@ -124,6 +124,7 @@ javascript:
   }
 
   var removeItem = function(id, item_id) {
+    $('#myModalLoading').modal('show');
     $.post("/shopping_carts/"+id+"/remove_item/"+item_id, { product_id: id, quantity: item_id },function(data){
       console.log('fallo: '+data)
       renderCart();
@@ -148,10 +149,13 @@ javascript:
       var quantity = parseFloat( replace.replaceAll(',', '.') );
       var price = parseFloat( amount );
 
+      $('#myModalLoading').modal('show');
+
       $.post("/shopping_carts/"+id+"/add_item", { product_id: product_id, quantity: quantity, amount: price }, function( data, status ) {
         if (data.add == "true" ){
             renderCart();
         } else {
+            $('#myModalLoading').modal('hide');
             $('#myModalNoProduct').modal('show');
             $('#myModalNoProduct').on('hidden.bs.modal', function(){
             renderCart();
