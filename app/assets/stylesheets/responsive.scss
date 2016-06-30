@@ -6,4 +6,17 @@
   #navbar .navbar-nav > li > p {
     padding-left: 15px;
   }
+  table {
+    height: 220px;
+  }
+
+  tbody {
+    height: 150px;
+  }
+
+  .form_product:hover .banda input, .form_product:hover button.btn-m{
+    -webkit-transform: scale(1.3);
+    -moz-transform: scale(1.3);
+    transform: scale(1.3);
+  }
 }

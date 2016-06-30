@@ -53,7 +53,7 @@
                   = p.description.capitalize
                 p.precio-producto.text-center name="pmvp" value="#{p.price}" id="pmvp_#{p.id}"
                   = number_to_currency(p.price, unit: "", separator: ",", delimiter: ".")
-                .container-fluid
+                .container-fluid.form_product
                   .row.banda
                     - if p.measuring_type == MeasuringType::UNIDAD
                       span.cant 
