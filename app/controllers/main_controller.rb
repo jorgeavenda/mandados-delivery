@@ -9,6 +9,7 @@ class MainController < ApplicationController
 
   def commanded_detail
   	@user = current_user
+  	@shopping_cart = @user.shopping_carts.last
   end
 
 end
