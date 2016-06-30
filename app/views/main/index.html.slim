@@ -140,7 +140,7 @@ javascript:
   var addItem = function(id, product_id, measure, amount, max_sale) {
     var replace = $('#'+measure+product_id).val();
 
-    if (replace === null || replace === "undefine" || replace === "" || replace === 0 || replace === "0" || replace > max_sale || parseFloat( replace.replaceAll(',', '.') ) > max_sale) {
+    if (replace === "NaN" || replace === null || replace === "undefine" || replace === "" || replace === 0 || replace === "0" || replace > max_sale || parseFloat( replace.replaceAll(',', '.') ) > max_sale) {
       $('#'+measure+product_id).focus();
       $('#'+measure+product_id).addClass("alert-input").delay(800).queue(function(){
         $(this).removeClass( "alert-input" ).dequeue();

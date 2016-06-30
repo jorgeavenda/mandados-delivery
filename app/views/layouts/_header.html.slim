@@ -17,9 +17,9 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
               | Bienvenid@ 
               = @user.fullname
           li
-            = link_to("Salir", destroy_user_session_path, method: :delete, class: "color-text-dark")
-          li
             = link_to("Mis mandados", shopping_carts_path, class: "color-text-dark")
+          li
+            = link_to("Salir", destroy_user_session_path, method: :delete, class: "color-text-dark")
         - else
           li
             a.color-text-dark href="#" Ingresar
