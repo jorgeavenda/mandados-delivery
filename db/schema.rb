@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160625182538) do
   create_table "shopping_carts", force: :cascade do |t|
     t.integer  "buyer_id"
     t.integer  "status_cart", default: 1
+    t.datetime "received_at"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end

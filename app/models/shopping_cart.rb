@@ -32,7 +32,7 @@ class ShoppingCart < ActiveRecord::Base
   end
 
   def change_status_received
-    self.update_attributes(status_cart: StatusCart::RECIBIDO)
+    self.update_attributes(status_cart: StatusCart::RECIBIDO, received_at: Time.now)
   end
 
   def change_status_prepared
