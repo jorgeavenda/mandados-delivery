@@ -1,11 +1,11 @@
 ActiveAdmin.register ShoppingCart do
-	menu parent: "Preparar pedidos"
+	menu parent: "Mandados", label: "Preparar", priority: 1
 
   permit_params do
     params = [:quantity]
   end
 
-  index :title => 'Mandados recibidos' do
+  index :title => 'Mandados para preparar' do
     column "Nro. Mandado", :id
     column "Cliente", :buyer_id
     column "Fecha de Recibido", :updated_at  do |obj|
