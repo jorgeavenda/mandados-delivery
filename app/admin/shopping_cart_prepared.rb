@@ -1,9 +1,8 @@
-ActiveAdmin.register ShoppingCart, as: "delivered" do
-	menu parent: "Mandados", label: "Entregas del dia"
+ActiveAdmin.register ShoppingCart, as: "prepared" do
+  menu parent: "Mandados", label: "Preparados", priority: 2
 
 
-  index :title => 'Mandados enviados' do
-    selectable_column
+  index :title => 'Mandados preparados' do
     column "Nro. Mandado", :id
     column "Cod. Cliente", :buyer_id
     column ("Cliente") { |s| (s.buyer.buyer_info.fullname).humanize }
@@ -19,7 +18,7 @@ ActiveAdmin.register ShoppingCart, as: "delivered" do
   config.clear_action_items!
   actions :all, except: [:edit, :destroy]
 
-  show do |shopping_cart|
+  show :title =>  proc{|s| "Mandado: #{s.id}" } do |shopping_cart|
     panel "Productos" do
       table_for shopping_cart.shopping_cart_items do
         column ("Description") { |s| (s.product.description) }
@@ -31,7 +30,7 @@ ActiveAdmin.register ShoppingCart, as: "delivered" do
   end
 
   action_item :atras, only: :show do
-    link_to "Volver", admin_delivereds_path
+    link_to "Volver", admin_prepareds_path
   end
 
   sidebar "Inf. Mandando", only: [:show] do
@@ -40,14 +39,6 @@ ActiveAdmin.register ShoppingCart, as: "delivered" do
       row("Cliente") { |s| (s.buyer.buyer_info.fullname).humanize }
       row("Monto total") { |s| number_to_currency(s.amount_total_cart, unit: '', separator: ',', delimiter: '.') }
     end
-  end
-
-  batch_action :destroy, false
-  batch_action "Entregar", confirm: "Marcar como entregado" do |ids|
-    ShoppingCart.find(ids).each do |shopping_cart|
-      shopping_cart.change_status_delivered
-    end
-    redirect_to collection_path, alert: "Listo"
   end
 
   controller do

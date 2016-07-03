@@ -25,6 +25,10 @@ ActiveAdmin.register ShoppingCart do
     render partial: 'show'
   end
 
+  action_item :atras, only: :show do
+    link_to "Volver", admin_shopping_carts_path
+  end
+
   member_action :dispatched, method: :post do
     @shopping_cart = ShoppingCart.find(params[:id])
     @shopping_cart.shopping_cart_items.find(params[:item_id]).update_dispatched(params)
