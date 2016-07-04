@@ -33,6 +33,10 @@ class Product < ActiveRecord::Base
     self.max_sale >= quantity.to_f
   end
 
+  def get_image_medium
+    self.imageproduct.present? ? self.imageproduct.url(:medium) : "/assets/default.png"
+  end
+
   validates :imageproduct,
     attachment_content_type: { content_type: /\Aimage\/.*\Z/ },
     attachment_size: { less_than: 5.megabytes }
