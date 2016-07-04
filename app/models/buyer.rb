@@ -19,4 +19,8 @@ class Buyer < User
     self.shopping_carts.last.status_cart == StatusCart::INICIADO ? self.shopping_carts.last :  self.shopping_carts.create
   end
 
+  def get_shopping_cart_prepared
+    self.shopping_carts.where(status_cart: StatusCart::RECIBIDO)
+  end
+
 end

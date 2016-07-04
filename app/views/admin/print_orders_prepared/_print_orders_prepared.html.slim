@@ -11,17 +11,18 @@
               th Cliente
               th Telefono
               th Cant. Mand.
+              th Monto a pagar
               th Forma de pago
               th colspan="2" Pagado
               th Firma
             tr
-              th colspan="7"
+              th colspan="8"
               th Si
               th No
               th
           tfoot
             tr
-              th colspan="10"
+              th colspan="11"
           tbody
             - @shopping_carts.each do |cart|
               tr
@@ -37,6 +38,8 @@
                   = cart.buyer.buyer_info.phonenumber
                 td
                   = @shopping_carts.count[cart.buyer_id]
+                td
+                  = number_to_currency(cart.buyer.get_shopping_cart_prepared.to_a.sum(&:amount_total_cart), unit: 'BsF ', separator: ',', delimiter: '.')
                 td
                 td
                 td
