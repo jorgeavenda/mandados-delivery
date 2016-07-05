@@ -20,7 +20,7 @@ class Buyer < User
   end
 
   def get_shopping_cart_prepared
-    self.shopping_carts.where(status_cart: StatusCart::RECIBIDO)
+    self.shopping_carts.where(status_cart: StatusCart::PREPARADO)
   end
 
 end

@@ -6,7 +6,7 @@
           thead
             tr
               th Ruta
-              th Domicilio
+              th Dom.
               th Cod.
               th Cliente
               th Telefono
@@ -39,7 +39,7 @@
                 td
                   = @shopping_carts.count[cart.buyer_id]
                 td
-                  = number_to_currency(cart.buyer.get_shopping_cart_prepared.to_a.sum(&:amount_total_cart), unit: 'BsF ', separator: ',', delimiter: '.')
+                  = number_to_currency(cart.buyer.get_shopping_cart_prepared.to_a.sum(&:amount_total_cart)+@config_system.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
                 td
                 td
                 td

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625182538) do
+ActiveRecord::Schema.define(version: 20160705042305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 20160625182538) do
     t.string   "phonenumber"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "config_systems", force: :cascade do |t|
+    t.float    "delivery_price"
+    t.float    "min_total_cart"
+    t.float    "min_quantity"
+    t.float    "dispatch_margin_error"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "delivery_routes", force: :cascade do |t|
@@ -133,10 +142,11 @@ ActiveRecord::Schema.define(version: 20160625182538) do
 
   create_table "shopping_carts", force: :cascade do |t|
     t.integer  "buyer_id"
-    t.integer  "status_cart", default: 1
+    t.integer  "status_cart",    default: 1
     t.datetime "received_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.float    "delivery_price"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "shopping_carts", ["buyer_id"], name: "index_shopping_carts_on_buyer_id", using: :btree

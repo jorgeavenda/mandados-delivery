@@ -4,6 +4,7 @@ class CreateShoppingCart < ActiveRecord::Migration
       t.belongs_to :buyer, index:true
       t.integer :status_cart, default: 1
       t.datetime :received_at
+      t.float :delivery_price
 
       t.timestamps null: false
     end
