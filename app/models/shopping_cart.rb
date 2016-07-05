@@ -31,7 +31,7 @@ class ShoppingCart < ActiveRecord::Base
   def validate_quantity(item_params)
     quantity = item_params[:quantity]
     product_id = item_params[:product_id]
-    if Product.find_by_id(product_id).measuring_type == MeasuringType::PESO and quantity.to_f < 0.3
+    if Product.find_by_id(product_id).measuring_type == MeasuringType::PESO and quantity.to_f < ConfigSystem.last.min_quantity
       return false, "minimun"
     else
       add_item(item_params)
@@ -39,7 +39,7 @@ class ShoppingCart < ActiveRecord::Base
   end
 
   def amount_minimum_shopping?
-    self.amount_total_cart < 4000
+    self.amount_total_cart < ConfigSystem.last.min_total_cart
   end
 
   def update_product_stock(item_params, action)

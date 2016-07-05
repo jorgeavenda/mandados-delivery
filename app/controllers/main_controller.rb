@@ -5,6 +5,7 @@ class MainController < ApplicationController
     @user = current_user
     @shopping_cart = @user.get_shopping_cart
     @products = Product.show_by_stock
+    @config_system = ConfigSystem.last
   end
 
   def commanded_detail

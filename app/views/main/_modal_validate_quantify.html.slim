@@ -8,7 +8,9 @@
           | "Atención"
       .modal-body
         p
-          | La cantidad minima es de 300 gr
+          | La cantidad minima es de
+          = " #{number_with_precision(@config_system.min_quantity*1000, precision: 0)}"
+          |  gr
       .modal-footer
         button.btn-sm.btn-m data-dismiss="modal"
           | Ok

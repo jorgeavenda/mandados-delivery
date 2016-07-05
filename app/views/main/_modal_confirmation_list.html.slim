@@ -10,7 +10,9 @@
               | "Atención"
           .modal-body
             p
-              | El monto minimo para guardar un mandados es de 4000 BsF
+              | El monto minimo para finalizar un mandados es de
+              = " #{number_with_precision(@config_system.min_total_cart, precision: 0)}"
+              |  BsF
           .modal-footer
             button.btn-sm.btn-m data-dismiss="modal"
               | Ok
@@ -19,7 +21,7 @@
             button type="button" class="close" data-dismiss="modal" aria-label="Close"
               | &times;
             h3 class="modal-title"
-              | ¿Todo listo para guardar?
+              | ¿Todo listo para finalizar?
           .modal-body
             p
               | Una vez que finalice la lista no podra ser modificada ni eliminada
