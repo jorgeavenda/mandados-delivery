@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
   end
 
   def product_available?(quantity)
-    self.max_sale >= quantity.to_f
+    self.max_sale >= quantity.to_f and 0 < quantity.to_f
   end
 
   def get_image_medium

@@ -21,10 +21,11 @@ class ShoppingCartsController < ApplicationController
   end
 
   def add_item
-    if @shopping_cart.add_item(add_item_params)
+    a,b = @shopping_cart.validate_quantity(add_item_params)
+    if a
       render :status => 200, :json => {:shopping_cart => @shopping_cart, :add => "true"}
     else
-      render :status => 200, :json => {:shopping_cart => @shopping_cart, :add => "false"}
+      render :status => 200, :json => {:shopping_cart => @shopping_cart, :add => "false", :reason => b}
     end
   end
 

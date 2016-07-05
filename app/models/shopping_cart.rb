@@ -24,8 +24,22 @@ class ShoppingCart < ActiveRecord::Base
       self.shopping_cart_items.create(item_params)
       update_product_stock(item_params, 'decrease')
     else
-      return false
+      return false, "availability"
     end
+  end
+
+  def validate_quantity(item_params)
+    quantity = item_params[:quantity]
+    product_id = item_params[:product_id]
+    if Product.find_by_id(product_id).measuring_type == MeasuringType::PESO and quantity.to_f < 0.3
+      return false, "minimun"
+    else
+      add_item(item_params)
+    end
+  end
+
+  def amount_minimum_shopping?
+    self.amount_total_cart < 4000
   end
 
   def update_product_stock(item_params, action)

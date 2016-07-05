@@ -1,6 +1,7 @@
 = render "modal_confirmation_list"
 = render "modal_no_product"
 = render "modal_loading"
+= render "modal_validate_quantify"
 .container-fluid.padding-side-zero
   .row
     .col-xs-12.col-md-4
@@ -144,7 +145,7 @@ javascript:
   var addItem = function(id, product_id, measure, amount, max_sale) {
     var replace = $('#'+measure+product_id).val();
 
-    if (replace === "NaN" || replace === null || replace === "undefine" || replace === "" || replace === 0 || replace === "0" || replace > max_sale || parseFloat( replace.replaceAll(',', '.') ) > max_sale) {
+    if (replace === "NaN" || replace === null || replace === "undefine" || replace === "" || replace === 0 || replace <= 0 || replace === "0,000" || replace === "0" || replace > max_sale || parseFloat( replace.replaceAll(',', '.') ) > max_sale) {
       $('#'+measure+product_id).focus();
       $('#'+measure+product_id).addClass("alert-input").delay(800).queue(function(){
         $(this).removeClass( "alert-input" ).dequeue();
@@ -159,11 +160,16 @@ javascript:
         if (data.add == "true" ){
             renderCart();
         } else {
-            $('#myModalLoading').modal('hide');
-            $('#myModalNoProduct').modal('show');
-            $('#myModalNoProduct').on('hidden.bs.modal', function(){
-            renderCart();
-            });
+            if (data.reason == "availability" ){
+              $('#myModalLoading').modal('hide');
+              $('#myModalNoProduct').modal('show');
+              $('#myModalNoProduct').on('hidden.bs.modal', function(){
+              renderCart();
+              });
+            } else {
+              $('#myModalLoading').modal('hide');
+              $('#myModalValidateQuantify').modal('show');
+            }
         }
         //console.log('fallo: '+status)
       });

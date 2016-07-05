@@ -2,17 +2,30 @@
   #myModal.modal.fade tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     .modal-dialog role="document"
       .modal-content.text-center
-        .modal-header
-          button type="button" class="close" data-dismiss="modal" aria-label="Close"
-            | &times;
-          h3 class="modal-title"
-            | ¿Todo listo para guardar?
-        .modal-body
-          p
-            | Una vez que finalice la lista no podra ser modificada ni eliminada
-        .modal-footer
-          button.btn-sm.btn-m data-dismiss="modal"
-            | No
-          a class="add-product" method="POST" onclick="save_list(#{@shopping_cart.id})"  
-            button.btn-sm.btn-m
-              | Si
+        - if @shopping_cart.amount_minimum_shopping?
+          .modal-header
+            button type="button" class="close" data-dismiss="modal" aria-label="Close"
+              | &times;
+            h3 class="modal-title"
+              | "Atención"
+          .modal-body
+            p
+              | El monto minimo para guardar un mandados es de 4000 BsF
+          .modal-footer
+            button.btn-sm.btn-m data-dismiss="modal"
+              | Ok
+        - else
+          .modal-header
+            button type="button" class="close" data-dismiss="modal" aria-label="Close"
+              | &times;
+            h3 class="modal-title"
+              | ¿Todo listo para guardar?
+          .modal-body
+            p
+              | Una vez que finalice la lista no podra ser modificada ni eliminada
+          .modal-footer
+            button.btn-sm.btn-m data-dismiss="modal"
+              | No
+            a class="add-product" method="POST" onclick="save_list(#{@shopping_cart.id})"  
+              button.btn-sm.btn-m
+                | Si
