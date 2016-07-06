@@ -1,0 +1,73 @@
+.container-fluid.padding-side-zero.how_to_buy
+  .row
+    .col-xs-12
+      h2.text-center
+        | Como crear un mandados
+        = image_tag("como-crear-mandado.png", width: "70px")
+      p.text-center
+        | Crear un mandado es muy facil, solo navega por nuestra vitrina de productos,
+        br
+          | ingresa la cantidad del porducto que desees y agregalo a la lista del mandado.
+      .col-md-1 style="width: 12.5%"
+      .col-sm-4.col-md-3
+        = image_tag("vitrina.png", class: "center-block", width: "180px")
+        p.circulo-img 1.
+      .col-sm-4.col-md-3
+        = image_tag("boxs-product.png", class: "center-block", width: "180px")
+        p.circulo-img 2.
+      .col-sm-4.col-md-3
+        = image_tag("lista.png", class: "center-block", width: "180px")
+        p.circulo-img 3.
+    .col-xs-12
+      p.text-center
+        | Una vez que hayas agregado todos los productos
+        br
+          | has click en "Finalizar Pedido"
+          br
+            | y listo.
+
+
+
+.container-fluid.padding-side-zero.detail_box
+  .row
+    .col-xs-12
+      h2.text-center
+        | Esta es la informacion que encontraras en la caja de cada producto
+        br
+        br
+        offset
+    .col-xs-12.col-sm-4.col-md-offset-1
+      p
+        span.circulo
+          | 1
+        | Imagen referencial del producto
+      p
+        span.circulo
+          | 2
+        | Descripcion del producto:
+        br “que es”, “marca” y “presentacion
+      p
+        span.circulo
+          | 3
+        | Precio del producto segun su presentacion
+      p
+        span.circulo
+          | 4
+        | Campo para selecionar la cantidad
+        br del producto segun el monto a pagar
+      p
+        span.circulo
+          | 5
+        | Campo para seleccionar la cantidad
+        br del producto segun su peso
+      p
+        span.circulo
+          | 6
+        | campo para seleccionar la cantidad
+        br del producto por unidad segun su presentacion
+      p
+        span.circulo
+          | 7
+        | Cantidad disponible por cada producto
+    .col-xs-12.col-sm-7
+      = image_tag("detalle-box-productos.png", class: "center-block" )

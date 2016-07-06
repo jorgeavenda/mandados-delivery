@@ -13,11 +13,18 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
       ul.nav.navbar-nav.navbar-right
         - if current_user
           li
+            = link_to(shopping_carts_path)
+              = image_tag("condiciones.png", width: "90px")
+          li
+            = link_to(how_to_buy_index_path)
+              = image_tag("how-to-buy.png", width: "90px")
+          li
+            = link_to(shopping_carts_path, class: "color-text-dark")
+              = image_tag("mis-mandados.png", width: "90px")
+          li
             p
               | Bienvenid@ 
               = @user.fullname
-          li
-            = link_to("Mis mandados", shopping_carts_path, class: "color-text-dark")
           li
             = link_to("Salir", destroy_user_session_path, method: :delete, class: "color-text-dark")
         - else
@@ -29,9 +36,6 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
 script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
 
 javascript:
-  $('.navbar-collapse').click('li', function() {
-    $('.navbar-collapse').collapse('hide');
-  });
 
   var renderCart = function() {
     window.location.href = "/";

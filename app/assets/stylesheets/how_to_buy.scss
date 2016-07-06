@@ -1,0 +1,44 @@
+// Place all the styles related to the how_to_buy controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.circulo-img {
+  margin: 0 15%;
+  margin-top: -20px;
+}
+
+.how_to_buy, .detail_box {
+  height: calc( 100vh - 70px)
+}
+
+.how_to_buy h2, .detail_box h2 {
+  color: #ff3400;
+}
+
+.how_to_buy p {
+  font-size: 1.3em;
+  color: #777;
+}
+
+.how_to_buy p.text-center {
+  margin: 40px 0;
+}
+
+.detail_box p{
+  color: #777;
+  margin: 20px 0;
+}
+
+span.circulo {
+  background: #ff5617;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 15px;
+  text-align: center;
+  width: 1.6em;
+}

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'how_to_buy/index'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
