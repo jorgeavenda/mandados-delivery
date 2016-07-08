@@ -87,7 +87,10 @@ javascript:
     controlScroll();
   });
 
-  $("img.lazy").lazyload();
+  $("img.lazy").lazyload({
+      effect : "fadeIn",
+      container: $("#box-productos")
+  });
 
   var getProductScrolltop = function(){
     sessionStorage["productos_scrolltop"] = $("#box-productos").scrollTop();
