@@ -13,17 +13,21 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
       ul.nav.navbar-nav.navbar-right
         - if current_user
           li
-            = link_to(shopping_carts_path)
-              = image_tag("condiciones.png", width: "90px")
+            a href="" onclick="renderCart()"
+              = image_tag("main.png")
           li
-            = link_to(how_to_buy_index_path)
-              = image_tag("how-to-buy.png", width: "90px")
+            = link_to(how_to_buy_condition_path)
+              = image_tag("condiciones.png")
+          li
+            = link_to(how_to_buy_instructions_path)
+              = image_tag("how-to-buy.png")
           li
             = link_to(shopping_carts_path, class: "color-text-dark")
-              = image_tag("mis-mandados.png", width: "90px")
+              = image_tag("mis-mandados.png")
           li
             p
               | Bienvenid@ 
+              br
               = @user.fullname
           li
             = link_to("Salir", destroy_user_session_path, method: :delete, class: "color-text-dark")

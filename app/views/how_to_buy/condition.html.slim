@@ -1,0 +1,47 @@
+.container-fluid.padding-side-zero.conditions
+  .row.text-center
+    .col-xs-12
+      h2.text-center
+        | Condiciones para crear un mandado
+    .col-xs-6
+      .condition
+        = image_tag("icons/cart-full.svg")
+        h4.text-center
+          strong
+            | Minimo del mandado
+        p.text-center
+          | El monto total minimo para finalizar un pedido
+          br
+            = " #{number_with_precision(@config_system.min_total_cart, precision: 0)}"
+            |  BsF
+    .col-xs-6
+      .condition
+        = image_tag("icons/add-to-the-cart.svg")
+        h4.text-center
+          strong
+            | Minimo para agregar
+        p.text-center
+          | La cantidad minima para agregar a la listas
+          br un producto pesado es de
+          = " #{number_with_precision(@config_system.min_quantity*1000, precision: 0)}"
+          |  gr
+    .col-xs-6
+      .condition
+        = image_tag("icons/cargo-truck.svg")
+        h4.text-center
+          strong
+            | Delivery
+        p.text-center
+          | El costo del delivery es de 
+          = " #{number_with_precision(@config_system.delivery_price, precision: 0)}"
+          |  BsF
+    .col-xs-6
+      .condition
+        = image_tag("icons/clock.svg")
+        h4.text-center
+          strong
+            | Entrega
+        p.text-center
+          | Los mandados creados antes de las 12:00 pm
+          br seran entregados el mismo dia
+

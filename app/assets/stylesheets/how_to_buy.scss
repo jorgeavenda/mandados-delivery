@@ -7,11 +7,11 @@
   margin-top: -20px;
 }
 
-.how_to_buy, .detail_box {
+.how_to_buy, .detail_box, .conditions {
   height: calc( 100vh - 70px)
 }
 
-.how_to_buy h2, .detail_box h2 {
+.how_to_buy h2, .detail_box h2, .conditions h2 {
   color: #ff3400;
 }
 
@@ -24,9 +24,12 @@
   margin: 40px 0;
 }
 
-.detail_box p{
+.detail_box p, .conditions p, .conditions h4 {
   color: #777;
-  margin: 20px 0;
+}
+
+.condition {
+  margin: 25px 0;
 }
 
 span.circulo {
@@ -37,8 +40,19 @@ span.circulo {
   color: #ffffff;
   display: inline-block;
   font-weight: bold;
-  line-height: 1.6em;
-  margin-right: 15px;
   text-align: center;
   width: 1.6em;
+}
+
+.condition span
+{
+  font-size: 3em;
+  border-radius: 50%;
+  border: 1px solid #777;
+  padding: 1em;
+  color: #ff5617;
+}
+
+.condition img {
+  width: 100px;
 }

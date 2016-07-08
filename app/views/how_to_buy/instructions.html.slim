@@ -35,39 +35,53 @@
         | Esta es la informacion que encontraras en la caja de cada producto
         br
         br
-        offset
     .col-xs-12.col-sm-4.col-md-offset-1
-      p
-        span.circulo
-          | 1
-        | Imagen referencial del producto
-      p
-        span.circulo
-          | 2
-        | Descripcion del producto:
-        br “que es”, “marca” y “presentacion
-      p
-        span.circulo
-          | 3
-        | Precio del producto segun su presentacion
-      p
-        span.circulo
-          | 4
-        | Campo para selecionar la cantidad
-        br del producto segun el monto a pagar
-      p
-        span.circulo
-          | 5
-        | Campo para seleccionar la cantidad
-        br del producto segun su peso
-      p
-        span.circulo
-          | 6
-        | campo para seleccionar la cantidad
-        br del producto por unidad segun su presentacion
-      p
-        span.circulo
-          | 7
-        | Cantidad disponible por cada producto
+      .row
+        .col-xs-1
+          span.circulo
+            | 1
+        .col-xs-11
+          p
+            | Imagen referencial del producto
+        .col-xs-1
+          span.circulo
+            | 2
+        .col-xs-11
+          p
+            | Descripcion del producto:
+            br “que es”, “marca” y “presentacion
+        .col-xs-1
+          span.circulo
+            | 3
+        .col-xs-11
+          p
+            | Precio del producto segun su presentacion
+        .col-xs-1
+          span.circulo
+            | 4
+        .col-xs-11
+          p
+            | Campo para ingresar la cantidad
+            br del producto segun el monto a pagar
+        .col-xs-1
+          span.circulo
+            | 5
+        .col-xs-11
+          p
+            | Campo para ingresar la cantidad
+            br del producto segun su peso
+        .col-xs-1
+          span.circulo
+            | 6
+        .col-xs-11
+          p
+            | campo para ingresar la cantidad
+            br del producto por unidad segun su presentacion
+        .col-xs-1
+          span.circulo
+            | 7
+        .col-xs-11
+          p
+            | Cantidad disponible por cada producto
     .col-xs-12.col-sm-7
       = image_tag("detalle-box-productos.png", class: "center-block" )
