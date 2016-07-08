@@ -12,6 +12,7 @@
         p.text-center
           | El monto total minimo para finalizar un pedido
           br
+            | es de
             = " #{number_with_precision(@config_system.min_total_cart, precision: 0)}"
             |  BsF
     .col-xs-6
