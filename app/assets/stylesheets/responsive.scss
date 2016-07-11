@@ -22,4 +22,8 @@
   .box-productos {
       overflow-y: visible;
   }
+
+  #tabla>tbody>tr>td img {
+    width: 80px;
+  }
 }
