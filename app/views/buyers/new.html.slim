@@ -1,0 +1,41 @@
+= form_for @buyer, url: buyers_path do |f|
+  div.field
+    = f.label :email 
+    br
+    = f.email_field :email, autofocus: true
+  div.field
+    = f.label :password
+    br
+    = f.password_field :password, autocomplete: "off"
+  div.field
+    = f.label :password_confirmation 
+    br
+    = f.password_field :password_confirmation, autocomplete: "off"
+
+
+    = f.fields_for :buyer_info do |h|
+      div.field 
+        = h.label :first_name
+        br
+        = h.text_field :first_name
+      div.field
+        = h.label :last_name
+        br
+        = h.text_field :last_name
+      div.field
+        = h.label :phonenumber
+        br
+        = h.text_field :phonenumber
+
+    = f.fields_for :domicile do |h|
+      div.field 
+        = h.label :home
+        br
+        = h.text_field :home
+      div.field
+        = h.label :delivery_route
+        br
+        = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id]}), { include_blank: true }
+
+  div.actions
+    = f.submit "Sign up"
