@@ -36,7 +36,7 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
   margin-bottom: 30px;
 }
 
-.items_dispatched, .print_prepared{
+.items_dispatched, .print_prepared, .inventory{
 	@import "bootstrap";
 	@import "bootstrap-sprockets";
 
@@ -45,4 +45,16 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
 	.despacho {
 		width: 80px;
 	}
+}
+
+.inventory {
+	input {
+		width: 80px;
+	}
+
+	img {
+		max-width: 50px;
+		max-height: 50px
+	}
+
 }

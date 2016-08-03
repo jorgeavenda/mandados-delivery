@@ -37,6 +37,12 @@ class Product < ActiveRecord::Base
     self.imageproduct.present? ? self.imageproduct.url(:medium) : "/assets/default.png"
   end
 
+  def inventorying(params)
+    price = params[:price]
+    stock = params[:stock]
+    self.update_attributes(price: price, stock: stock)
+  end
+
   validates :imageproduct,
     attachment_content_type: { content_type: /\Aimage\/.*\Z/ },
     attachment_size: { less_than: 5.megabytes }

@@ -1,5 +1,5 @@
 ActiveAdmin.register Product do
-  menu parent: "Products"
+  menu parent: "Productos"
   permit_params :description, :price, :image, :stock, :stock_min, :stock_max, :measuring_type, :active, :imageproduct, product_images_attributes: [:id, :image, :_destroy]
 
   index do

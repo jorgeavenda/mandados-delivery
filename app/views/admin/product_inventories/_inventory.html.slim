@@ -1,0 +1,87 @@
+.inventory
+  .container-fluid.padding-side-zero
+    .row
+      .table-responsive
+        table id="tabla" class="table table-striped"
+          thead
+            tr
+              th
+              /th Imagen
+              th Descripcion
+              /th Precio
+              /th stock
+              th Precio
+              th stock
+              th Acciones
+          tbody
+            - @product_inventories.each do |p|
+              tr
+                td
+                /td
+                  = image_tag(p.imageproduct.url(:thumb), {class: "img-responsive" })
+                td
+                  = p.description
+                /td
+                  = number_to_currency(p.price, unit: "", separator: ",", delimiter: "")
+                /td
+                  - if p.measuring_type == MeasuringType::UNIDAD
+                    = " #{number_with_precision(p.stock, precision: 0)}"
+                  - else
+                    = " #{number_with_precision(p.stock, precision: 3, separator: ',', delimiter: '.')}"
+                td
+                  input type="tel" name="price" id="price_#{p.id}" value="#{number_with_precision(p.price, precision: 2, separator: ',', delimiter: '')}" onClick="this.select();"
+                td
+                  - if p.measuring_type == MeasuringType::UNIDAD
+                    input type="number" id="stock_#{p.id}" value="#{number_with_precision(p.stock, precision: 0)}" onClick="this.select();"
+                  - else
+                    input type="tel" name="stock" id="stock_#{p.id}" value="#{number_with_precision(p.stock, precision: 3, separator: ',', delimiter: '.')}" onClick="this.select();"
+
+                td
+                  a method="POST" onclick="inventorying(#{p.id})"
+                    | Guardar
+
+= javascript_include_tag '/js/jquery.price_format.2.0.min', 'data-turbolinks-track' => true
+
+javascript:
+
+  $(function() {
+    $('[name="stock"]').keyup(function() {
+      var idstock= "#"+$(this).attr('id');
+      $(idstock).priceFormat({
+       prefix: '',
+       centsSeparator: ',',
+       thousandsSeparator: '.',
+       centsLimit: 3,
+       });
+    });
+    $('[name="price"]').keyup(function() {
+      var idprice= "#"+$(this).attr('id');
+      $(idprice).priceFormat({
+       prefix: '',
+       centsSeparator: ',',
+       thousandsSeparator: '',
+       centsLimit: 2,
+       });
+    });
+  });
+
+  var inventorying = function(id){
+    var replace1 = $('#price_'+id).val();
+    var replace2 = $('#stock_'+id).val();
+
+    var row= $('#stock_'+id).parent().parent().index();
+
+
+    var price = parseFloat( replace1.replaceAll(',', '.') );
+    var stock = parseFloat( replace2.replaceAll(',', '.') );
+
+      $.post("/admin/product_inventories/"+id+"/inventorying", { price: price, stock: stock }, function( data, status ) {
+          console.log('fallo: '+status);
+          $(".inventory tbody tr:eq(" + row + ") td").eq(0).css("background", "#0EFF0A");
+        });
+  }
+
+  String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+  }
