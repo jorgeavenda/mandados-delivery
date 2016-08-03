@@ -77,14 +77,14 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'mandados.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'mandadosweb.herokuapp.com' }
 
   config.action_mailer.smtp_settings = {
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => "gmail.com",
-      :user_name            => 'felix@softwarecriollo.com',
-      :password             => 'felix18261871',
+      :user_name            => 'mandados.com.ve@gmail.com',
+      :password             => 'itan110689.4',
       :authentication       => :login,
       :enable_starttls_auto => true
   }
