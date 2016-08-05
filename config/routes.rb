@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   post '/shopping_carts/:id/save_list', to: 'shopping_carts#save_list', as: :save_list
 
   get "commanded_detail" => 'main#commanded_detail'
+  get "no_active" => 'main#no_active'
 
   root to: 'main#index'
 end
