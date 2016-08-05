@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   get 'how_to_buy/instructions'
   get 'how_to_buy/condition'
 
+  resources :buyers
+  get 'buyers/welcome'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -21,6 +24,7 @@ Rails.application.routes.draw do
   post '/shopping_carts/:id/save_list', to: 'shopping_carts#save_list', as: :save_list
 
   get "commanded_detail" => 'main#commanded_detail'
+  get "no_active" => 'main#no_active'
 
   root to: 'main#index'
 end
