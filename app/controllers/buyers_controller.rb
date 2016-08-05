@@ -1,5 +1,6 @@
 class BuyersController < ApplicationController
   
+
   def new
     @buyer = Buyer.new
     @buyer.build_buyer_info
@@ -8,15 +9,13 @@ class BuyersController < ApplicationController
     @routes = DeliveryRoute.all
   end
 
-  def welcome
-  end
-  
   def create
     @buyer = Buyer.new(buyer_params)
     if @buyer.save
-      render plain: params[:buyer].inspect
+      render 'welcome', buyer: @buyer
+      ActionCorreo.new_registered_user(@buyer).deliver
     else
-      render 'new'
+      redirect_to new_buyer_path
     end
     
   end

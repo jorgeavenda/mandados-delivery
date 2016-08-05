@@ -1,41 +1,61 @@
-= form_for @buyer, url: buyers_path do |f|
-  div.field
-    = f.label :email 
-    br
-    = f.email_field :email, autofocus: true
-  div.field
-    = f.label :password
-    br
-    = f.password_field :password, autocomplete: "off"
-  div.field
-    = f.label :password_confirmation 
-    br
-    = f.password_field :password_confirmation, autocomplete: "off"
+.form_registro
+  div.container-fluid
+    div.row
+      div.col-md-12
+        h2.text-center Registro
+      div.col-md-12
+        = form_for @buyer, url: buyers_path, :html => {:class => 'form-horizontal'} do |f|
+          div.form-group
+            label.col-sm-3.control-label Email
+            div.col-sm-9
+              = f.email_field :email, autofocus: true, class: "form-control", placeholder: "Introduce tu email"
+          div.form-group
+            label.col-sm-3.control-label Contraseña
+            div.col-sm-5
+              = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Contraseña"
+            p.col-sm-4.help-block Coloca entre 8 y 20 caracteres
+          div.form-group
+            label.col-sm-3.control-label Repetir Contraseña
+            div.col-sm-5
+              = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Contraseña"
+          = f.fields_for :buyer_info do |h|
+            div.form-group
+              label.col-sm-3.control-label Nombre
+              div.col-sm-9
+                = h.text_field :first_name, class: "form-control", placeholder: "Introduce tu nombre"
+            div.form-group
+              label.col-sm-3.control-label Apellido
+              div.col-sm-9
+                = h.text_field :last_name, class: "form-control", placeholder: "Introduce tu apellido"
+            div.form-group
+              label.col-sm-3.control-label Teléfono
+              div.col-sm-5
+                = h.text_field :phonenumber, class: "form-control", placeholder: "Introduce tu numero de telefono"
+              p.col-sm-4.help-block Usa este formato: 0251-0000000
+          = f.fields_for :domicile do |h|
+            div.form-group
+              label.col-sm-3.control-label Ruta de entrega
+              div.col-sm-9
+                = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id, 'data-time' => r.delivery_time.in_time_zone('Caracas').strftime("%I:%M%p")]}), { include_blank: true}, class: "form-control"
+            div.form-group
+              label.col-sm-3.control-label Hora de entrega
+              p.col-sm-9.time.help-block
+            div.form-group
+              label.col-sm-3.control-label Casa o Apartamento
+              div.col-sm-9
+                = h.text_field :home, class: "form-control", placeholder: "Introduce tu numero de Casa o Apartamento"
+          button.btn-block.btn-sm.btn-m type="submit" Enviar
 
+javascript:
 
-    = f.fields_for :buyer_info do |h|
-      div.field 
-        = h.label :first_name
-        br
-        = h.text_field :first_name
-      div.field
-        = h.label :last_name
-        br
-        = h.text_field :last_name
-      div.field
-        = h.label :phonenumber
-        br
-        = h.text_field :phonenumber
-
-    = f.fields_for :domicile do |h|
-      div.field 
-        = h.label :home
-        br
-        = h.text_field :home
-      div.field
-        = h.label :delivery_route
-        br
-        = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id]}), { include_blank: true }
-
-  div.actions
-    = f.submit "Sign up"
+  $( "select" ).change(function() {
+    var str = "";
+    $( "select option:selected" ).each(function() {
+      str += $(this).data("time");
+    });
+    if (str =="undefined") {
+      $( "p.time" ).text( "Seleccione una ruta para ver la hora de entrega");
+    } else {
+      $( "p.time" ).text( "La hora de entrega aproximada es: " + str );
+    }
+  }).trigger( "change" );

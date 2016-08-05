@@ -6,7 +6,8 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand.nav-logo.nav-logo-image.nav-logo-image-black href="" onclick="renderCart()"
+      /a.navbar-brand.nav-logo.nav-logo-image.nav-logo-image-black href="" onclick="renderCart()"
+      a.navbar-brand.nav-logo.nav-logo-image.nav-logo-image-black href=""
         = image_tag("logo.png")
 
     #navbar.collapse.navbar-collapse
@@ -33,7 +34,8 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
             = link_to("Salir", destroy_user_session_path, method: :delete, class: "color-text-dark")
         - else
           li
-            a.color-text-dark href="#" Ingresar
+            /a.color-text-dark href="#" Ingresar
+            = link_to("Ingresar", new_user_session_path, class: "color-text-dark")
           li
             /a.color-text-dark href="#" Registrarse
             = link_to("Registrarse", new_buyer_path, class: "color-text-dark")
