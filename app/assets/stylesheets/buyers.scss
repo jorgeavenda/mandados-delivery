@@ -32,3 +32,12 @@ p.help-block {
 .welcome_register p.text-center {
   margin: 40px 0;
 }
+
+.form_registro ul li {
+  color: red;
+}
+#error_explanation {
+    border: 1px solid red;
+    padding: 6px;
+    margin: 30px;
+}

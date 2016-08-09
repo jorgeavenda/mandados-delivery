@@ -4,7 +4,17 @@
       div.col-md-12
         h2.text-center Registro
       div.col-md-12
-        = form_for @buyer, url: buyers_path, :html => {:class => 'form-horizontal'} do |f|
+        = form_for @buyer, :html => { class: 'form-horizontal', id: 'form_registro'} do |f|
+          - if @buyer.errors.any?
+            div id="error_explanation"
+              p
+                | Por favor:
+              ul
+                - @buyer.errors.messages.values.each do |msg|
+                  - msg.each do |m|
+                    li
+                      | -
+                      = m
           div.form-group
             label.col-sm-3.control-label Email
             div.col-sm-9
@@ -30,8 +40,8 @@
             div.form-group
               label.col-sm-3.control-label Teléfono
               div.col-sm-5
-                = h.text_field :phonenumber, class: "form-control", placeholder: "Introduce tu numero de telefono"
-              p.col-sm-4.help-block Usa este formato: 0251-0000000
+                = h.text_field :phonenumber, class: "form-control", placeholder: "Introduce tu número de teléfono"
+              p.col-sm-4.help-block Usa este formato: 9999-9999999
           = f.fields_for :domicile do |h|
             div.form-group
               label.col-sm-3.control-label Ruta de entrega
@@ -43,11 +53,91 @@
             div.form-group
               label.col-sm-3.control-label Casa o Apartamento
               div.col-sm-9
-                = h.text_field :home, class: "form-control", placeholder: "Introduce tu numero de Casa o Apartamento"
+                = h.text_field :home, class: "form-control", placeholder: "Introduce tu número de Casa o Apartamento"
           button.btn-block.btn-sm.btn-m type="submit" Enviar
 
 javascript:
 
+  $(document).ready(function() {
+
+    jQuery.validator.addMethod("customphone", function(value, element) {
+      return this.optional(element) || /^\d{4}-\d{7}$/.test(value);
+    }, "Usa este formato: 9999-9999999");
+
+    
+  });
+
+    $('#form_registro').validate({
+        rules: {
+            'buyer[email]': {
+              required: true,
+              email: true
+            },
+            'buyer[password]': {
+              required: true,
+              minlength: 8
+            },
+            'buyer[password_confirmation]': {
+              required: true,
+              minlength: 8,
+              equalTo: "#buyer_password"
+            },
+            'buyer[buyer_info_attributes][first_name]': {
+              required: true
+            },
+            'buyer[buyer_info_attributes][last_name]': {
+              required: true
+            },
+            'buyer[buyer_info_attributes][phonenumber]': {
+              customphone: true,
+              required: true
+            },
+            'buyer[domicile_attributes][delivery_route_id]': {
+              required: true
+            },
+            'buyer[domicile_attributes][home]': {
+              required: true
+            }
+        },
+        messages: {
+            'buyer[email]': {
+              required: "Email requerido",
+              email: "Especifique un email valido"
+            },
+            'buyer[password]': {
+              required: "Contraseña requerido",
+              minlength: "La contraseña debe tener entre 8 y 20 caracteres"
+            },
+            'buyer[password_confirmation]': {
+              required: "Confirmacion de contraseña requerido",
+              minlength: "La contraseña debe tener entre 8 y 20 caracteres",
+              equalTo: "Las contraseñas no coinciden"
+            },
+            'buyer[buyer_info_attributes][first_name]': {
+              required: "Nombre requerido"
+            },
+            'buyer[buyer_info_attributes][last_name]': {
+              required: "Apellido requerido"
+            },
+            'buyer[buyer_info_attributes][phonenumber]': {
+              required: "Teléfono requerido",
+              customphone: "Usa este formato: 9999-9999999"
+            },
+            'buyer[domicile_attributes][delivery_route_id]': {
+              required: "Ruta de entrega requerido"
+            },
+            'buyer[domicile_attributes][home]': {
+              required: "Número de casa o apartamento requerido"
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function (element) {
+            element.text('OK!').addClass('valid')
+                .closest('.form-group').removeClass('has-error').addClass('has-success');
+        }
+    });
   $( "select" ).change(function() {
     var str = "";
     $( "select option:selected" ).each(function() {

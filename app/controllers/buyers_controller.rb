@@ -15,7 +15,8 @@ class BuyersController < ApplicationController
       render 'welcome', buyer: @buyer
       ActionCorreo.new_registered_user(@buyer).deliver
     else
-      redirect_to new_buyer_path
+      @routes = DeliveryRoute.all
+      render 'new'
     end
     
   end

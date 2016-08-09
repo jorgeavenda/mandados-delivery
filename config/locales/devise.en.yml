@@ -1,6 +1,21 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 en:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "Especifique un Email"
+              taken: "Use un Email diferente"
+            password:
+              blank: "Especifique una contraseña"
+              too_short: "La contraseña debe tener entre 8 y 20 caracteres"
+            password_confirmation:
+              blank: "Repetir la contraseña"
+              confirmation: "Las contraseñas no coinciden"
+
   devise:
     confirmations:
       confirmed: "Your email address has been successfully confirmed."
