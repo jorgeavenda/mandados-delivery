@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+html lang="en"
+head
+  meta charset="UTF-8"
+  meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+body
+  h1 Bienvenido a Mandados
+  p
+    | ¡Bienvenido!
+    = " #{@user.buyer_info.fullname}"
+    br
+      | tu cuenta de usuario se encuentra activa, ya puedes crear mandados
+  = link_to 'mandados.com.ve', "mandados.com.ve"

@@ -9,6 +9,10 @@ ActiveAdmin.register Buyer, as: "buyer_active" do
     config.clear_action_items!
     config.batch_actions = false
 
+    action_item only: :edit do
+      link_to 'Editar', edit_admin_buyer_path(buyer_active)
+    end
+
     before_filter :skip_sidebar!, :only => :index
 
   form do |f|
@@ -30,6 +34,15 @@ ActiveAdmin.register Buyer, as: "buyer_active" do
       end
     end
     f.actions
+  end
+
+  controller do
+    def update
+      super
+      if Buyer.find_by_id(@buyer_active.id).active
+        ActionCorreo.active_new_user(@buyer_active).deliver
+      end
+    end
   end
 
 end

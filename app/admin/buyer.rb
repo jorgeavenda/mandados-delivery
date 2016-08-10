@@ -24,8 +24,10 @@ ActiveAdmin.register Buyer do
     f.inputs "Buyer Details" do
       f.input :email
       f.input :active
-      f.input :password
-      f.input :password_confirmation
+      if f.object.new_record?
+        f.input :password
+        f.input :password_confirmation
+      end
       f.inputs "Buyer Info", for: [:buyer_info, (f.object.buyer_info || BuyerInfo.new)] do |t|
         t.input :id, as: :hidden
         t.input :buyer_id, as: :hidden
