@@ -7,7 +7,7 @@ ActiveAdmin.register ShoppingCart, as: "prepared" do
     column "Nro. Mandado", :id
     column "Cod. Cliente", :buyer_id
     column ("Cliente") { |s| (s.buyer.buyer_info.fullname).humanize }
-    column "Fecha de entrega", :updated_at  do |obj|
+    column "Fecha de preparado", :updated_at  do |obj|
       obj.updated_at.in_time_zone('Caracas').strftime("%d / %m / %Y")
     end
     actions
