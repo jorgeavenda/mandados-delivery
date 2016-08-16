@@ -3,7 +3,7 @@
     .row
       h4.col-xs-12
         | Cliente: 
-        = @shopping_cart.buyer_id
+        = @received.buyer_id
     .row
       .table-responsive
         table id="tabla" class="table table-striped"
@@ -22,7 +22,7 @@
               td
               td
           tbody
-            - @shopping_cart.shopping_cart_items.order(id: :asc).each do |item|
+            - @received.shopping_cart_items.order(id: :asc).each do |item|
               tr
                 -if item.dispatched > item.quantity+0.02 || item.dispatched < item.quantity-0.02 
                   td style="background: red"
@@ -39,11 +39,11 @@
                     input.despacho type="tel" name="despachado" id="despachado_#{item.id}" value="#{number_with_precision(item.dispatched, precision: 3, separator: ',', delimiter: '.')}" onClick="this.select();"
 
                 td
-                  a method="POST" onclick="dispatched(#{@shopping_cart.id}, #{item.id}, #{item.quantity}, #{item.dispatched})" 
+                  a method="POST" onclick="dispatched(#{@received.id}, #{item.id}, #{item.quantity}, #{item.dispatched})" 
                     | Guardar
     .row
       .col-xs-12
-        button.btn.btn-default.btn-sm onclick="prepared(#{@shopping_cart.id})"
+        button.btn.btn-default.btn-sm onclick="prepared(#{@received.id})"
           | Preparado
 
 = javascript_include_tag '/js/jquery.price_format.2.0.min', 'data-turbolinks-track' => true
@@ -72,7 +72,7 @@ javascript:
     var inf = order-0.02
     
     if (cant > inf & cant < sup ){
-      $.post("/admin/shopping_carts/"+id+"/dispatched", { quantity: cant, item_id: item_id }, function( data, status ) {
+      $.post("/admin/receiveds/"+id+"/dispatched", { quantity: cant, item_id: item_id }, function( data, status ) {
           console.log('fallo: '+status);
           $("tbody tr:eq(" + row + ") td").eq(0).css("background", "#0EFF0A");
         });
@@ -94,7 +94,7 @@ javascript:
 
   var prepared = function(id){
   
-    $.post("/admin/shopping_carts/"+id+"/save_prepared", function( data, status ) {
+    $.post("/admin/receiveds/"+id+"/save_prepared", function( data, status ) {
       console.log('fallo: '+status);
       if (data.terminado == "true"){
         to_return();
@@ -110,5 +110,5 @@ javascript:
   }
   
   var to_return = function() {
-    window.location.href = "/admin/shopping_carts";
+    window.location.href = "/admin/receiveds";
   }

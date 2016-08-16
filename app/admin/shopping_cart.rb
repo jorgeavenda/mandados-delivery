@@ -1,17 +1,19 @@
-ActiveAdmin.register ShoppingCart do
-	menu parent: "Mandados", label: "Preparar", priority: 1
+ActiveAdmin.register ShoppingCart, as: "received" do
+	menu parent: "Mandados", label: "Recibido", priority: 1
 
   permit_params do
     params = [:quantity]
   end
 
-  index :title => 'Mandados para preparar' do
+  index :title => 'Mandados recibidos' do
     column "Nro. Mandado", :id
     column "Cliente", :buyer_id
     column "Fecha de Recibido", :updated_at  do |obj|
       obj.updated_at.in_time_zone('Caracas').strftime("%d / %m / %Y")
     end
-    actions
+    actions defaults: false do |received|
+      link_to 'Preparar', admin_received_path(received)
+    end
   end
     
     config.clear_action_items! 
@@ -26,7 +28,7 @@ ActiveAdmin.register ShoppingCart do
   end
 
   action_item :atras, only: :show do
-    link_to "Volver", admin_shopping_carts_path
+    link_to "Volver", admin_receiveds_path
   end
 
   member_action :dispatched, method: :post do
@@ -50,7 +52,7 @@ ActiveAdmin.register ShoppingCart do
   controller do
     def scoped_collection
       t = Time.now.in_time_zone('Caracas')
-      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")})
+      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-17 16:30:00")})
     end
   end
 
