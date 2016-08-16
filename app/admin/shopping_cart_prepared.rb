@@ -3,6 +3,7 @@ ActiveAdmin.register ShoppingCart, as: "prepared" do
 
 
   index :title => 'Mandados preparados' do
+    selectable_column
     column "Nro. Mandado", :id
     column "Cod. Cliente", :buyer_id
     column ("Cliente") { |s| (s.buyer.buyer_info.fullname).humanize }
@@ -39,6 +40,14 @@ ActiveAdmin.register ShoppingCart, as: "prepared" do
       row("Cliente") { |s| (s.buyer.buyer_info.fullname).humanize }
       row("Monto total") { |s| number_to_currency(s.amount_total_cart, unit: '', separator: ',', delimiter: '.') }
     end
+  end
+
+  batch_action :destroy, false
+  batch_action "Entregar", confirm: "Marcar como entregado" do |ids|
+    ShoppingCart.find(ids).each do |shopping_cart|
+      shopping_cart.change_status_delivered
+    end
+    redirect_to collection_path, alert: "Listo"
   end
 
   controller do

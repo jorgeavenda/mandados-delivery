@@ -1,5 +1,5 @@
 ActiveAdmin.register ShoppingCart, as: "received" do
-	menu parent: "Mandados", label: "Recibido", priority: 1
+	menu parent: "Mandados", label: "Recibidos", priority: 1
 
   permit_params do
     params = [:quantity]
