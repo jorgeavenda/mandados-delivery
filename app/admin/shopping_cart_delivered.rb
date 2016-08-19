@@ -1,8 +1,8 @@
 ActiveAdmin.register ShoppingCart, as: "delivered" do
-	menu parent: "Mandados", label: "Entregas del dia"
+	menu parent: "Mandados", label: "Entregados", priority: 3
 
 
-  index :title => 'Mandados enviados' do
+  index :title => 'Mandados entregados' do
     selectable_column
     column "Nro. Mandado", :id
     column "Cod. Cliente", :buyer_id
@@ -52,7 +52,7 @@ ActiveAdmin.register ShoppingCart, as: "delivered" do
 
   controller do
     def scoped_collection
-      super.where(status_cart: StatusCart::PREPARADO)
+      super.where(status_cart: StatusCart::ENTREGADO)
     end
   end
 

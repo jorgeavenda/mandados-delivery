@@ -2,6 +2,8 @@ class ShoppingCart < ActiveRecord::Base
   belongs_to :buyer
 
   has_many :shopping_cart_items
+  has_many :packings
+  accepts_nested_attributes_for :packings, :allow_destroy => true
   has_many :products, through: :shopping_cart_items
 
 

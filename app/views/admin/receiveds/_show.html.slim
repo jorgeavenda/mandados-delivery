@@ -42,9 +42,31 @@
                   a method="POST" onclick="dispatched(#{@received.id}, #{item.id}, #{item.quantity}, #{item.dispatched})" 
                     | Guardar
     .row
-      .col-xs-12
+      .col-xs-3
         button.btn.btn-default.btn-sm onclick="prepared(#{@received.id})"
-          | Preparado
+          | Preparar
+      .col-xs-3
+        = link_to(edit_admin_prepare_packaging_path)
+          button.btn.btn-default.btn-sm
+            | Empacar
+      .col-xs-6
+        table id="tabla-packing" class="table table-striped"
+          thead
+            tr
+              th Tipo de empaque
+              th Cantidad
+          tfoot
+            tr
+              td
+              td
+          tbody
+            - @received.packings.each do |pack|
+              tr
+                td
+                  = PackingType.key_for(pack.packing_type).to_s.humanize
+                td
+                  = pack.quantity
+
 
 = javascript_include_tag '/js/jquery.price_format.2.0.min', 'data-turbolinks-track' => true
 

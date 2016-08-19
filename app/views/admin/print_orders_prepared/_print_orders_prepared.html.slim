@@ -7,16 +7,18 @@
             tr
               th Ruta
               th Dom.
-              th Cod.
-              th Cliente
+              th Cod - Cliente
               th Telefono
-              th Cant. Mand.
+              th colspan="2" Empaques
               th Monto a pagar
               th Forma de pago
               th colspan="2" Pagado
               th Firma
             tr
-              th colspan="8"
+              th colspan="4"
+              th Nat.
+              th Ref.
+              th colspan="2"
               th Si
               th No
               th
@@ -32,14 +34,17 @@
                   = cart.buyer.domicile.home
                 td
                   = cart.buyer_id
-                td
+                  |  - 
                   = cart.buyer.buyer_info.fullname
                 td
                   = cart.buyer.buyer_info.phonenumber
                 td
-                  = @shopping_carts.count[cart.buyer_id]
+                  = @shopping_carts_prepared.joins(:packings).where(buyer_id: cart.buyer_id, :packings => {packing_type: 2}).sum(:quantity)
                 td
-                  = number_to_currency(cart.buyer.get_shopping_cart_prepared.to_a.sum(&:amount_total_cart)+@config_system.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+                  = @shopping_carts_prepared.joins(:packings).where(buyer_id: cart.buyer_id, :packings => {packing_type: 1}).sum(:quantity)
+                td
+                  /= number_to_currency(cart.buyer.get_shopping_cart_prepared.to_a.sum(&:amount_total_cart)+@config_system.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+                  = number_to_currency(@shopping_carts_prepared.joins(:shopping_cart_items).where(buyer_id: cart.buyer_id).sum("amount * quantity")+@config_system.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
                 td
                 td
                 td

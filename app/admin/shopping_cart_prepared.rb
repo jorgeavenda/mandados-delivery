@@ -20,7 +20,7 @@ ActiveAdmin.register ShoppingCart, as: "prepared" do
   actions :all, except: [:edit, :destroy]
 
   show :title =>  proc{|s| "Mandado: #{s.id}" } do |shopping_cart|
-    panel "Productos" do
+    panel "Productos", class: "panel_overflow" do
       table_for shopping_cart.shopping_cart_items do
         column ("Description") { |s| (s.product.description) }
         column "Pedido", :quantity
@@ -40,6 +40,14 @@ ActiveAdmin.register ShoppingCart, as: "prepared" do
       row("Cliente") { |s| (s.buyer.buyer_info.fullname).humanize }
       row("Monto total") { |s| number_to_currency(s.amount_total_cart, unit: '', separator: ',', delimiter: '.') }
     end
+  end
+
+  sidebar "Empaques", only: [:show] do |r|
+    table_for prepared.packings do
+      column ("Tipo de empaque") { |s| (PackingType.key_for(s.packing_type).to_s.humanize) }
+      column "Cantidad", :quantity
+    end
+    link_to "Modificar", edit_admin_prepared_packaging_path, class: 'button'
   end
 
   batch_action :destroy, false

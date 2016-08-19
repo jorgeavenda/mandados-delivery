@@ -6,7 +6,8 @@ ActiveAdmin.register_page "Print_orders_prepared" do
   end
 
   page_action :index do
-    @shopping_carts = ShoppingCart.select(:buyer_id).group(:buyer_id).where(status_cart: StatusCart::PREPARADO)
+    @shopping_carts_prepared = ShoppingCart.where(status_cart: StatusCart::PREPARADO)
+    @shopping_carts = @shopping_carts_prepared.select(:buyer_id).group(:buyer_id)
     @config_system = ConfigSystem.last
   end
 

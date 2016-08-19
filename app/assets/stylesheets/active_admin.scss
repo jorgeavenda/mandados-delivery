@@ -58,3 +58,7 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
 	}
 
 }
+
+.panel_overflow {
+	overflow: auto;
+}

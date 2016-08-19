@@ -19,7 +19,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     config.clear_action_items! 
     #config.remove_action_item(:new)
     
-    actions :all, except: [:edit, :destroy]
+    actions :all, except: [:destroy]
     before_filter :skip_sidebar!, :only => :index
 
 
@@ -52,7 +52,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
   controller do
     def scoped_collection
       t = Time.now.in_time_zone('Caracas')
-      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-17 16:30:00")})
+      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")})
     end
   end
 
