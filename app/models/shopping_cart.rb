@@ -65,7 +65,7 @@ class ShoppingCart < ActiveRecord::Base
   end
 
   def change_status_delivered
-    self.update_attributes(status_cart: StatusCart::ENTREGADO)
+    self.update_attributes(status_cart: StatusCart::ENTREGADO, delivered_at: Time.now)
   end
 
 end

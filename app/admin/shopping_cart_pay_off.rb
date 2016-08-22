@@ -46,7 +46,7 @@ ActiveAdmin.register ShoppingCart, as: "pay_off" do
       unless @cuadre_last.blank?
         date_start = @cuadre_last.end_date_at
       else
-        date_start = ShoppingCart.where(status_cart: StatusCart::PREPARADO).order(prepared_at: :desc).last.prepared_at
+        date_start = ShoppingCart.where("status_cart > 2").order(prepared_at: :desc).last.prepared_at
       end
       @cuadre_new.start_date_at = date_start
       if params[:q].nil?
