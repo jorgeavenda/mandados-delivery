@@ -2,7 +2,7 @@ ActiveAdmin.register Product, as: "product_inventory" do
   menu parent: "Productos", label: "Inventario"
 
   permit_params do
-    params = [:price, :stock]
+    params = [:price, :stock, :cost]
   end
 
   index do

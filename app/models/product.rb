@@ -40,7 +40,8 @@ class Product < ActiveRecord::Base
   def inventorying(params)
     price = params[:price]
     stock = params[:stock]
-    self.update_attributes(price: price, stock: stock)
+    cost = params[:cost]
+    self.update_attributes(price: price, stock: stock, cost: cost)
   end
 
   validates :imageproduct,

@@ -22,11 +22,13 @@ class ShoppingCart < ActiveRecord::Base
 
   def add_item(item_params)
     product_id = item_params[:product_id]
-    if Product.find_by_id(product_id).measuring_type == MeasuringType::UNIDAD
+    product = Product.find_by_id(product_id)
+    if product.measuring_type == MeasuringType::UNIDAD
       item_params[:quantity] = item_params[:quantity].to_f.ceil
     end
     quantity = item_params[:quantity]
-    if Product.find_by_id(product_id).product_available?(quantity)
+    item_params[:cost] = product.cost
+    if product.product_available?(quantity)
       self.shopping_cart_items.create(item_params)
       update_product_stock(item_params, 'decrease')
     else

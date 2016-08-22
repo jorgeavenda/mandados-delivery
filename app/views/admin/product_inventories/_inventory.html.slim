@@ -9,7 +9,7 @@
               /th Imagen
               th Descripcion
               /th Precio
-              /th stock
+              th Costo
               th Precio
               th stock
               th Acciones
@@ -21,6 +21,8 @@
                   = image_tag(p.imageproduct.url(:thumb), {class: "img-responsive" })
                 td
                   = p.description
+                td
+                  input type="tel" name="cost" id="cost_#{p.id}" value="#{number_with_precision(p.cost, precision: 2, separator: ',', delimiter: '')}" onClick="this.select();"
                 /td
                   = number_to_currency(p.price, unit: "", separator: ",", delimiter: "")
                 /td
@@ -34,7 +36,7 @@
                   - if p.measuring_type == MeasuringType::UNIDAD
                     input type="number" id="stock_#{p.id}" value="#{number_with_precision(p.stock, precision: 0)}" onClick="this.select();"
                   - else
-                    input type="tel" name="stock" id="stock_#{p.id}" value="#{number_with_precision(p.stock, precision: 3, separator: ',', delimiter: '.')}" onClick="this.select();"
+                    input type="tel" name="stock" id="stock_#{p.id}" value="#{number_with_precision(p.stock, precision: 0)}" onClick="this.select();"
 
                 td
                   a method="POST" onclick="inventorying(#{p.id})"
@@ -45,13 +47,13 @@
 javascript:
 
   $(function() {
-    $('[name="stock"]').keyup(function() {
-      var idstock= "#"+$(this).attr('id');
-      $(idstock).priceFormat({
+    $('[name="cost"]').keyup(function() {
+      var idcost= "#"+$(this).attr('id');
+      $(idcost).priceFormat({
        prefix: '',
        centsSeparator: ',',
-       thousandsSeparator: '.',
-       centsLimit: 3,
+       thousandsSeparator: '',
+       centsLimit: 2,
        });
     });
     $('[name="price"]').keyup(function() {
@@ -63,19 +65,30 @@ javascript:
        centsLimit: 2,
        });
     });
+    $('[name="stock"]').keyup(function() {
+      var idstock= "#"+$(this).attr('id');
+      $(idstock).priceFormat({
+       prefix: '',
+       centsSeparator: ',',
+       thousandsSeparator: '',
+       centsLimit: 0,
+       });
+    });
   });
 
   var inventorying = function(id){
     var replace1 = $('#price_'+id).val();
     var replace2 = $('#stock_'+id).val();
+    var replace3 = $('#cost_'+id).val();
 
     var row= $('#stock_'+id).parent().parent().index();
 
 
     var price = parseFloat( replace1.replaceAll(',', '.') );
     var stock = parseFloat( replace2.replaceAll(',', '.') );
+    var cost = parseFloat( replace3.replaceAll(',', '.') );
 
-      $.post("/admin/product_inventories/"+id+"/inventorying", { price: price, stock: stock }, function( data, status ) {
+      $.post("/admin/product_inventories/"+id+"/inventorying", { price: price, stock: stock, cost: cost }, function( data, status ) {
           console.log('fallo: '+status);
           $(".inventory tbody tr:eq(" + row + ") td").eq(0).css("background", "#0EFF0A");
         });

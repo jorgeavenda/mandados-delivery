@@ -1,11 +1,12 @@
 ActiveAdmin.register Product do
   menu parent: "Productos"
-  permit_params :description, :price, :image, :stock, :stock_min, :stock_max, :measuring_type, :active, :imageproduct, product_images_attributes: [:id, :image, :_destroy]
+  permit_params :description, :cost, :price, :image, :stock, :stock_min, :stock_max, :measuring_type, :active, :imageproduct, product_images_attributes: [:id, :image, :_destroy]
 
   index do
     selectable_column
     id_column
     column :description
+    column :cost
     column :price
     column :stock
     column :stock_min
@@ -34,6 +35,7 @@ ActiveAdmin.register Product do
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs "Product Details"  do
       f.input :description
+      f.input :cost
       f.input :price
       f.input :stock
       f.input :stock_min
