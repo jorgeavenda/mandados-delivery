@@ -16,6 +16,10 @@ class ShoppingCart < ActiveRecord::Base
     self.shopping_cart_items.amount_total_cart_item
   end
 
+  def cost_total_cart
+    self.shopping_cart_items.cost_total_cart_item
+  end
+
   def add_item(item_params)
     product_id = item_params[:product_id]
     if Product.find_by_id(product_id).measuring_type == MeasuringType::UNIDAD
@@ -55,7 +59,7 @@ class ShoppingCart < ActiveRecord::Base
   end
 
   def change_status_prepared
-    self.update_attributes(status_cart: StatusCart::PREPARADO)
+    self.update_attributes(status_cart: StatusCart::PREPARADO, prepared_at: Time.now)
   end
 
   def change_status_delivered

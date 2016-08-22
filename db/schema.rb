@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819231257) do
+ActiveRecord::Schema.define(version: 20160821233154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,13 @@ ActiveRecord::Schema.define(version: 20160819231257) do
     t.datetime "updated_at",            null: false
   end
 
+  create_table "cuadres", force: :cascade do |t|
+    t.datetime "start_date_at"
+    t.datetime "end_date_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "delivery_routes", force: :cascade do |t|
     t.integer  "urbanization_id"
     t.integer  "residential_id"
@@ -129,6 +136,7 @@ ActiveRecord::Schema.define(version: 20160819231257) do
     t.string   "imageproduct_content_type"
     t.integer  "imageproduct_file_size"
     t.datetime "imageproduct_updated_at"
+    t.float    "cost",                      default: 0.0
   end
 
   create_table "residentials", force: :cascade do |t|
@@ -145,6 +153,7 @@ ActiveRecord::Schema.define(version: 20160819231257) do
     t.float    "dispatched",       default: 0.0
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.float    "cost",             default: 0.0
   end
 
   add_index "shopping_cart_items", ["product_id"], name: "index_shopping_cart_items_on_product_id", using: :btree

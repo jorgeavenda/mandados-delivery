@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :buyers
   get 'buyers/welcome'
 
+  post '/admin/pay_offs/add_cuadre', to: 'admin/pay_offs#add_cuadre', as: :admin_pay_offs_add_cuadre
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

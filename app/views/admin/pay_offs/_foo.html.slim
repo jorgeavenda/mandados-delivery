@@ -1,0 +1,15 @@
+- if params[:q].nil?
+  = link_to "Cuadrar", admin_pay_offs_add_cuadre_path(start_date_at: @cuadre_new.start_date_at, end_date_at: @cuadre_new.end_date_at), method: :post , class: 'button'
+-else
+    -if params[:q][:prepared_at_gteq].nil?
+      = link_to "Cuadrar", admin_pay_offs_add_cuadre_path(start_date_at: @cuadre_new.start_date_at, end_date_at: @cuadre_new.end_date_at), method: :post , class: 'button'
+p
+  = number_to_currency(@pay_offs.to_a.sum(&:cost_total_cart), unit: 'BsF ', separator: ',', delimiter: '.')
+p
+  | Fecha Inicio
+  p
+    = @cuadre_new.start_date_at.in_time_zone('Caracas').strftime("%d %m %Y")
+p
+  | Fecha Fin
+  p
+    = @cuadre_new.end_date_at.in_time_zone('Caracas').strftime("%d %m %Y")
