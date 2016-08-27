@@ -34,6 +34,9 @@ nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute
             = link_to("Salir", destroy_user_session_path, method: :delete, class: "color-text-dark")
         - else
           li
+            = link_to(how_to_buy_instructions_path)
+              = image_tag("how-to-buy.png")
+          li
             /a.color-text-dark href="#" Ingresar
             = link_to("Ingresar", new_user_session_path, class: "color-text-dark")
           li
