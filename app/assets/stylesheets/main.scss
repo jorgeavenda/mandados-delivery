@@ -286,11 +286,38 @@ tbody {
   background-color: #ff5112;
 }
 
-.list-group.recibidos {
+.shopping_carts .list-group{
   overflow-y: auto;
   height: 200px;
   width: 100%;
   display: block;
+}
+
+.shopping_carts ul.nav-tabs {
+  margin-right: 0;
+}
+
+.shopping_carts .nav-tabs > li > a, .shopping_carts .nav-tabs > li > a:hover {
+  text-decoration: none;
+  border: none;
+  color: #555555;
+}
+
+.shopping_carts .tab-content {
+  border: none;
+}
+
+.shopping_carts .nav-tabs > li.active > a, .shopping_carts .nav-tabs > li.active > a:focus, .shopping_carts .nav-tabs > li.active > a:hover {
+  background-color: #f7f7f7;
+}
+
+.shopping_carts span.badge.id_cart{
+  float: left;
+  margin-right: 10px;
+}
+
+.shopping_carts .list-group-item {
+  text-decoration: none;
 }
 
 .loading {

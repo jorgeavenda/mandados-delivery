@@ -1,0 +1,26 @@
+- unless @shopping_cart.blank?
+  span
+    | Mandados Nro.
+    = " #{@shopping_cart.id}"
+  table id="tabla" class="table table-striped" 
+    thead
+      tr
+        th Descripcion
+        th Precio
+    tfoot
+      tr
+        td Total
+        td
+          = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+    tbody style="visibility: visible"
+      - @shopping_cart.shopping_cart_items.each do |item|
+        tr
+          td
+            = item.product.description
+            br
+              = " #{number_with_precision(item.quantity, precision: 3, separator: ',', delimiter: '.')} x #{number_to_currency(item.amount, unit: 'BsF ', separator: ',', delimiter: '.')}"
+          td
+            = " #{ number_to_currency(item.quantity*item.amount, unit: '', separator: ',', delimiter: '.')} "
+- else
+  p
+    | Aqui se mostrara el detalle de su mandado

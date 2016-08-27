@@ -1,0 +1,46 @@
+.container-fluid.padding-side-zero
+  .row
+    .col-xs-12.col-md-4.shopping_carts
+      h2.text-center Listas de mandados
+      ul.nav.nav-tabs
+        li.active
+          a data-toggle="tab" href="#today" Para hoy
+        li
+          = link_to "Para mañana", for_tomorrow_shopping_carts_path, class: "list-group-item"
+        li
+          = link_to "Recibidos", previous_shopping_carts_path, class: "list-group-item"
+
+      div.tab-content
+        div.tab-pane.fade.in.active id="today"
+          - unless @shopping_carts.blank?
+            .list-group
+              - @shopping_carts.each do |cart|
+                = link_to  shopping_cart_path(cart), {class: "list-group-item "}
+                  span.badge
+                    = number_to_currency(cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+                  span.badge.id_cart
+                    = cart.id
+                  span
+                    = cart.received_at.in_time_zone('Caracas').strftime("%d-%m-%Y")
+            table id="tabla" class="table table-striped" 
+              thead
+                tr
+                  td Sub-total
+                  td
+                    = number_to_currency(@shopping_carts.joins(:shopping_cart_items).sum("amount * quantity"), unit: 'BsF ', separator: ',', delimiter: '.')
+                tr
+                  td Delivery
+                  td 
+                    = number_to_currency(@shopping_carts.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+              tfoot
+                tr
+                  td Total
+                  td
+                    = number_to_currency(@shopping_carts.joins(:shopping_cart_items).sum("amount * quantity")+@shopping_carts.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+          - else
+            p
+              | No tiene mandados para hoy
+
+    .col-xs-12.col-md-8
+      h2.text-center Productos
+      = render "detail_shopping_cart"

@@ -2,19 +2,48 @@ class ShoppingCartsController < ApplicationController
   before_filter :authenticate_user!
   before_action :extract_shopping_cart, only: [:remove_item, :add_item, :save_list]
   before_action :find_item, only: [:remove_item]
+  #mejorar este codigo
 
   def index
+    t = Time.now.in_time_zone('Caracas')
     @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart = ? or status_cart = ?", StatusCart::RECIBIDO, StatusCart::PREPARADO).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.first
   end
 
   def show
+    t = Time.now.in_time_zone('Caracas')
     @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart = ? or status_cart = ?", StatusCart::RECIBIDO, StatusCart::PREPARADO).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.find(params[:id])
   end
   
+  def for_tomorrow
+    t = Time.now.in_time_zone('Caracas')
+    @user = current_user
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at >= :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_cart = @shopping_carts.first
+  end
+
+  def show_for_tomorrow
+    t = Time.now.in_time_zone('Caracas')
+    @user = current_user
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at >= :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_cart = @shopping_carts.find(params[:id])
+  end
+
+  def previous
+    @user = current_user
+    @shopping_carts = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).order(id: :desc).limit(10)
+    @shopping_cart = @shopping_carts.first
+  end
+
+  def show_previous
+    @user = current_user
+    @shopping_carts = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).order(id: :desc).limit(10)
+    @shopping_cart = @shopping_carts.find(params[:id])
+  end
+
   def remove_item
     @shopping_cart.remove_item(@shopping_cart_item)
     render :status => 200, :json => {:shopping_cart => @shopping_cart}

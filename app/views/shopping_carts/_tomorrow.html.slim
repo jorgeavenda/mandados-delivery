@@ -1,0 +1,31 @@
+.container-fluid.padding-side-zero
+  .row
+    .col-xs-12.col-md-4.shopping_carts
+      h2.text-center Listas de mandados
+      ul.nav.nav-tabs
+        li
+          = link_to "Para hoy", shopping_carts_path, class: "list-group-item"
+        li.active
+          a data-toggle="tab" href="#for_tomorrow" Para mañana
+        li
+          = link_to "Recibidos", previous_shopping_carts_path, class: "list-group-item"
+
+      div.tab-content
+        div.tab-pane.fade.in.active id="for_tomorrow"
+          - unless @shopping_carts.blank?
+            .list-group
+              - @shopping_carts.each do |cart|
+                = link_to show_for_tomorrow_path(cart), {class: "list-group-item "}
+                  span.badge
+                    = number_to_currency(cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+                  span.badge.id_cart
+                    = cart.id
+                  span
+                    = cart.received_at.in_time_zone('Caracas').strftime("%d-%m-%Y")
+          - else
+            p
+              | No tiene mandados para mañana
+
+    .col-xs-12.col-md-8
+      h2.text-center Productos
+      = render "detail_shopping_cart"
