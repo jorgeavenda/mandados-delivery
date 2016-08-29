@@ -1,4 +1,4 @@
-.inventory
+.inventory#inventory
   .container-fluid.padding-side-zero
     .row
       .table-responsive
@@ -6,7 +6,7 @@
           thead
             tr
               th
-              /th Imagen
+              th Imagen
               th Descripcion
               /th Precio
               th Costo
@@ -17,8 +17,8 @@
             - @product_inventories.each do |p|
               tr
                 td
-                /td
-                  = image_tag(p.imageproduct.url(:thumb), {class: "img-responsive" })
+                td.image-zoom
+                  = image_tag("default.png", {class: "img-responsive lazy", 'data-original' => p.get_image_medium })
                 td
                   = p.description
                 td
@@ -43,8 +43,14 @@
                     | Guardar
 
 = javascript_include_tag '/js/jquery.price_format.2.0.min', 'data-turbolinks-track' => true
+= javascript_include_tag '/js/jquery.lazyload.min', 'data-turbolinks-track' => true
 
 javascript:
+
+  $("img.lazy").lazyload({
+      effect : "fadeIn",
+      container: $("#inventory")
+  });
 
   $(function() {
     $('[name="cost"]').keyup(function() {

@@ -17,8 +17,8 @@ ActiveAdmin.register Product, as: "product_inventory" do
 
     config.clear_action_items!
     config.batch_actions = false
-
-    before_filter :skip_sidebar!, :only => :index
+    filter :description
+    # before_filter :skip_sidebar!, :only => :index
 
   member_action :inventorying, method: :post do
     @product = Product.find(params[:id]).inventorying(params)

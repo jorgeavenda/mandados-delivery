@@ -37,28 +37,38 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
 }
 
 .items_dispatched, .print_prepared, .inventory{
-	@import "bootstrap";
-	@import "bootstrap-sprockets";
+  @import "bootstrap";
+  @import "bootstrap-sprockets";
 
-	font-size: 1.2em;
-	
-	.despacho {
-		width: 80px;
-	}
+  font-size: 1.2em;
+
+  .despacho {
+    width: 80px;
+  }
 }
 
 .inventory {
-	input {
-		width: 80px;
-	}
+  input {
+    width: 80px;
+  }
 
-	img {
-		max-width: 50px;
-		max-height: 50px
-	}
+  img {
+    max-width: 50px;
+    max-height: 50px
+  }
 
 }
 
 .panel_overflow {
-	overflow: auto;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 767px) {
+
+  #inventory .image-zoom:hover img{
+    -webkit-transform: scale(1.4);
+    -moz-transform: scale(1.4);
+    transform: scale(1.4);
+  }
+
 }
