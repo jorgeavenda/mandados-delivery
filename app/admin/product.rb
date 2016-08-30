@@ -18,9 +18,7 @@ ActiveAdmin.register Product do
     actions
   end
 
-  filter :stock
-  filter :stock_min
-  filter :stock_max
+  filter :description
   filter :measuring_type
   filter :active
 

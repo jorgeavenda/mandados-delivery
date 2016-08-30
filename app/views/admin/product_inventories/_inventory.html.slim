@@ -32,6 +32,11 @@
                     = " #{number_with_precision(p.stock, precision: 3, separator: ',', delimiter: '.')}"
                 td
                   input type="tel" name="price" id="price_#{p.id}" value="#{number_with_precision(p.price, precision: 2, separator: ',', delimiter: '')}" onClick="this.select();"
+                  span
+                    - if p.measuring_type == MeasuringType::UNIDAD
+                      |  x Unid
+                    - else
+                      |  x Kg
                 td
                   - if p.measuring_type == MeasuringType::UNIDAD
                     input type="number" id="stock_#{p.id}" value="#{number_with_precision(p.stock, precision: 0)}" onClick="this.select();"
