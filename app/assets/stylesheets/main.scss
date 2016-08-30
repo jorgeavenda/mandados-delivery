@@ -3,13 +3,31 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .vertical-center-login {
-  padding-top: calc(50vh - 173px);
+  padding-top: calc(50vh - 373px);
 }
 
 .box-login {
   max-width: 450px;
   margin: 0 auto;
   padding: 15px 0;
+}
+
+.box-login p {
+  font-weight: normal;
+}
+
+.box-welcome {
+  text-transform: uppercase;
+  max-width: 550px;
+  margin: 20px auto;
+  h2 {
+    font-weight: bold;
+  }
+  h3 {
+    text-shadow: 1px 2px 2px rgba(251, 128, 96, 0.5);
+    -moz-text-shadow: 1px 2px 2px rgba(251, 128, 96, 0.5);
+    color: #fb4505;
+  }
 }
 
 .box-login a {

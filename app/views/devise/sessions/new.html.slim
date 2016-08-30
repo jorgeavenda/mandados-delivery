@@ -1,6 +1,15 @@
 .vertical-center-login
+  .box-welcome
+    .container-fluid
+      .col-sm-12.text-center
+        h2
+          | mandados delivery
+        h3
+          | ¡ tu charcuteria online !
   .box-login
     .container-fluid
+      p
+        | Iniciar Sesion
       = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-horizontal" }) do |f|
         .form-group
           .col-sm-12
