@@ -23,4 +23,8 @@ class Buyer < User
     self.shopping_carts.where(status_cart: StatusCart::PREPARADO)
   end
 
+  def activate
+    self.update_attributes(active: true)
+  end
+
 end

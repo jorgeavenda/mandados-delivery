@@ -2,7 +2,17 @@ Rails.application.routes.draw do
   get 'how_to_buy/instructions'
   get 'how_to_buy/condition'
 
-  resources :buyers
+  resources :buyers do
+    member do
+      get :active
+      get :edit_register
+      patch :update_register
+    end
+    collection do
+      get :msg_edit
+    end
+  end
+
   get 'buyers/welcome'
 
   post '/admin/pay_offs/add_cuadre', to: 'admin/pay_offs#add_cuadre', as: :admin_pay_offs_add_cuadre

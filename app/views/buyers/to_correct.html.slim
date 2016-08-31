@@ -5,7 +5,7 @@
       div.col-md-12
         h2.text-center Registro
       div.col-md-12
-        = form_for @buyer, :html => { class: 'form-horizontal', id: 'form_registro'} do |f|
+        = form_for @buyer, url: update_register_buyer_path(@buyer), method: :patch, :html => { class: 'form-horizontal', id: 'form_registro'} do |f|
           - if @buyer.errors.any?
             div id="error_explanation"
               p
@@ -16,19 +16,6 @@
                     li
                       | -
                       = m
-          div.form-group
-            label.col-sm-3.control-label Email
-            div.col-sm-9
-              = f.email_field :email, autofocus: true, class: "form-control", placeholder: "Introduce tu email"
-          div.form-group
-            label.col-sm-3.control-label Contraseña
-            div.col-sm-5
-              = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Contraseña"
-            p.col-sm-4.help-block Coloca entre 8 y 20 caracteres
-          div.form-group
-            label.col-sm-3.control-label Repetir Contraseña
-            div.col-sm-5
-              = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Contraseña"
           = f.fields_for :buyer_info do |h|
             div.form-group
               label.col-sm-3.control-label Nombre
@@ -47,7 +34,7 @@
             div.form-group
               label.col-sm-3.control-label Ruta de entrega
               div.col-sm-9
-                = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id, 'data-time' => r.delivery_time.in_time_zone('Caracas').strftime("%I:%M%p")]}), { include_blank: true}, class: "form-control"
+                = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id, 'data-time' => r.delivery_time.in_time_zone('Caracas').strftime("%I:%M%p")]}, @buyer.domicile.delivery_route.id), { include_blank: false}, class: "form-control"
             div.form-group
               label.col-sm-3.control-label Hora de entrega
               p.col-sm-9.time.help-block
