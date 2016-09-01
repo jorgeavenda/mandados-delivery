@@ -19,7 +19,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     config.clear_action_items! 
     #config.remove_action_item(:new)
     
-    actions :all, except: [:destroy]
+    actions :all, except: [:new, :destroy]
     before_filter :skip_sidebar!, :only => :index
 
 

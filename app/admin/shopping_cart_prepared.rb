@@ -17,7 +17,7 @@ ActiveAdmin.register ShoppingCart, as: "prepared" do
   filter :buyer_buyer_info_last_name_or_buyer_buyer_info_first_name, :as => :string, label: "Cliente"
 
   config.clear_action_items!
-  actions :all, except: [:edit, :destroy]
+  actions :all, except: [:new, :edit, :destroy]
 
   show :title =>  proc{|s| "Mandado: #{s.id}" } do |shopping_cart|
     panel "Productos", class: "panel_overflow" do
