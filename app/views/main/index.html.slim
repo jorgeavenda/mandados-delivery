@@ -37,6 +37,9 @@
 
       button.btn-block.btn-sm.btn-m data-toggle="modal" data-target="#myModal"
         | Finalizar Pedido
+      .col-xs-12.box-observation
+        label.control-label for="message-text" Observación para el mandado:
+        textarea#observation.form-control maxlength="250" placeholder="Puede especificar por ejemplo si necesita un corte en particular para algun producto"
 
     .col-xs-12.col-md-8
       h2.text-center Productos
@@ -92,6 +95,7 @@ javascript:
 
   $(document).ready(function() {
     controlScroll();
+    $('#observation').val(sessionStorage.getItem('observation'));
   });
 
   $("img.lazy").lazyload({
@@ -187,9 +191,15 @@ javascript:
     }
   }
 
+  $('#observation').keyup(function(){
+    sessionStorage["observation"]=$(this).val();
+  });
+
   var save_list = function(id){
-    $.post("/shopping_carts/"+id+"/save_list", function( data, status ) {
+    var obs = sessionStorage.getItem('observation');
+    $.post("/shopping_carts/"+id+"/save_list", { obs: obs }, function( data, status ) {
       sessionStorage["guarded"]=true;
+      sessionStorage["observation"]="";
       window.location.href = "/commanded_detail";
 
        console.log('fallo: '+status)

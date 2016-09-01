@@ -56,8 +56,9 @@ class ShoppingCart < ActiveRecord::Base
     Product.find_by_id(product_id).update_stock(quantity, action)
   end
 
-  def change_status_received
-    self.update_attributes(status_cart: StatusCart::RECIBIDO, received_at: Time.now, delivery_price: ConfigSystem.last.delivery_price)
+  def change_status_received(obs)
+    obs = obs[:obs]
+    self.update_attributes(status_cart: StatusCart::RECIBIDO, received_at: Time.now, delivery_price: ConfigSystem.last.delivery_price, observation: obs)
   end
 
   def change_status_prepared

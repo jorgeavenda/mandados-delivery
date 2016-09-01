@@ -59,8 +59,8 @@ class ShoppingCartsController < ApplicationController
   end
 
   def save_list
-    @shopping_cart.change_status_received
-     render :status => 200, :json => {:shopping_cart => @shopping_cart}
+    @shopping_cart.change_status_received(obs_params)
+    render :status => 200, :json => {:shopping_cart => @shopping_cart}
   end
 
   private
@@ -86,6 +86,10 @@ class ShoppingCartsController < ApplicationController
 
     def add_item_params
       params.permit(:product_id, :quantity, :amount)
+    end
+
+    def obs_params
+      params.permit(:obs)
     end
 
 end
