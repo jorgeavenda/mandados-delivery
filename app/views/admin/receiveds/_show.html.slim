@@ -1,9 +1,14 @@
 .items_dispatched
   .container-fluid.padding-side-zero
     .row
-      h4.col-xs-12
-        | Cliente: 
-        = @received.buyer_id
+      .col-xs-12.col-md-2
+        h4
+          | Cliente: 
+          = @received.buyer_id
+      .col-xs-12.col-md-10
+        label Observacion: 
+        p
+          = @received.observation
     .row
       .table-responsive
         table id="tabla" class="table table-striped"
