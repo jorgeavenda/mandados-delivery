@@ -16,9 +16,28 @@ ActiveAdmin.register Buyer do
 
   filter :email
   filter :active
-  filter :current_sign_in_at
-  filter :sign_in_count
-  filter :created_at
+
+  config.action_items.delete_if { |item|
+    item.display_on?(:show)
+  }
+
+  show :title =>  proc{|s| "Usuario: #{s.id}" } do
+    attributes_table do
+      row :id
+      row ("Nombre y Apellido") { |s| (s.buyer_info.fullname) }
+      row ("Telefono") { |s| (s.buyer_info.phonenumber) }
+      row ("Ruta") { |s| (s.domicile.delivery_route.get_addres_full) }
+      row ("Casa o Apartamento") { |s| (s.domicile.home) }
+    end
+  end
+
+  action_item :atras, only: :show do
+    unless params[:shopping_cart].nil?
+      link_to "Volver", admin_received_path(params[:shopping_cart])
+    else
+      link_to "Volver", admin_buyers_path
+    end
+  end
 
   form do |f|
     f.inputs "Buyer Details" do

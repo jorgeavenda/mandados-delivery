@@ -5,7 +5,10 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     params = [:quantity]
   end
 
-  index :title => 'Mandados recibidos' do
+  @buyer_delivered = Buyer.select(:id).group(:id).joins(:shopping_carts).where('shopping_carts.status_cart > 3').map{|i| i.id}
+
+  index :title => 'Mandados recibidos', :row_class => -> record { 'buyer_new' unless @buyer_delivered.include? record.buyer_id } do
+    column ""
     column "Nro. Mandado", :id
     column "Cliente", :buyer_id
     column "Fecha de Recibido", :updated_at  do |obj|
@@ -31,6 +34,10 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     link_to "Volver", admin_receiveds_path
   end
 
+  action_item :usuario, only: :show do
+    link_to "Usuario", admin_buyer_path(received.buyer_id, shopping_cart: received.id)
+  end
+
   member_action :dispatched, method: :post do
     @shopping_cart = ShoppingCart.find(params[:id])
     @shopping_cart.shopping_cart_items.find(params[:item_id]).update_dispatched(params)
@@ -52,7 +59,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
   controller do
     def scoped_collection
       t = Time.now.in_time_zone('Caracas')
-      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")})
+      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-2 16:30:00")})
     end
   end
 

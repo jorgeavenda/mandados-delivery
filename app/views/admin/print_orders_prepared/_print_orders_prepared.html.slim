@@ -5,6 +5,7 @@
         table#tabla.table.table-striped.table-bordered
           thead
             tr
+              th
               th Ruta
               th Dom.
               th Cod - Cliente
@@ -24,10 +25,12 @@
               th
           tfoot
             tr
-              th colspan="11"
+              th colspan="12"
           tbody
             - @shopping_carts.each do |cart|
               tr
+                -unless @buyer_delivered.include? cart.buyer_id
+                  td style="background: red"
                 td
                   = cart.buyer.domicile.delivery_route.get_addres_time_full
                 td

@@ -32,6 +32,15 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
   padding: 0px;
 }
 
+#index_table_receiveds tr.odd, tr.even {
+    &.buyer_new {
+        td:nth-of-type(1).col {
+            width: 1px;
+            background-color: red;
+        }
+    }
+}
+
 .has_many_container {
   margin-bottom: 30px;
 }
