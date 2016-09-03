@@ -15,7 +15,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
       obj.updated_at.in_time_zone('Caracas').strftime("%d / %m / %Y")
     end
     actions defaults: false do |received|
-      link_to 'Preparar', admin_received_path(received, buyer: received.buyer_id)
+      link_to 'Preparar', admin_received_path(received)
     end
   end
     
@@ -63,7 +63,8 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     end
 
     def show
-      @statuscart = Buyer.find(params[:buyer]).shopping_carts.select(:status_cart).order(:status_cart).last
+      buyer_id = ShoppingCart.find(params[:id]).buyer_id
+      @statuscart = Buyer.find(buyer_id).shopping_carts.select(:status_cart).order(:status_cart).last
       super
     end
   end

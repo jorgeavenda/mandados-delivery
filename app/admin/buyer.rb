@@ -34,7 +34,7 @@ ActiveAdmin.register Buyer do
 
   action_item :atras, only: :show do
     unless params[:shopping_cart].nil?
-      link_to "Volver", admin_received_path(params[:shopping_cart], buyer: buyer.id)
+      link_to "Volver", admin_received_path(params[:shopping_cart])
     else
       link_to "Volver", admin_buyers_path
     end
