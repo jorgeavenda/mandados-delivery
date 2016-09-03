@@ -27,13 +27,14 @@ ActiveAdmin.register Buyer do
       row ("Nombre y Apellido") { |s| (s.buyer_info.fullname) }
       row ("Telefono") { |s| (s.buyer_info.phonenumber) }
       row ("Ruta") { |s| (s.domicile.delivery_route.get_addres_full) }
+      row ("Hora de entrega") { |s| (s.domicile.delivery_route.delivery_time.in_time_zone('Caracas').strftime("%I:%M %p")) }
       row ("Casa o Apartamento") { |s| (s.domicile.home) }
     end
   end
 
   action_item :atras, only: :show do
     unless params[:shopping_cart].nil?
-      link_to "Volver", admin_received_path(params[:shopping_cart])
+      link_to "Volver", admin_received_path(params[:shopping_cart], buyer: buyer.id)
     else
       link_to "Volver", admin_buyers_path
     end

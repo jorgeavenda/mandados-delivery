@@ -33,11 +33,13 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
 }
 
 #index_table_receiveds tr.odd, tr.even {
+    td:nth-of-type(1) {
+      width: 1px;
+    }
     &.buyer_new {
-        td:nth-of-type(1).col {
-            width: 1px;
-            background-color: red;
-        }
+      td:nth-of-type(1).col {
+          background-color: red;
+      }
     }
 }
 
@@ -53,6 +55,11 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
 
   .despacho {
     width: 80px;
+  }
+
+  h4 span.alert-user-new {
+    background: red;
+    color: white;
   }
 }
 

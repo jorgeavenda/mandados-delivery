@@ -16,7 +16,7 @@
               th colspan="2" Pagado
               th Firma
             tr
-              th colspan="4"
+              th colspan="5"
               th Nat.
               th Ref.
               th colspan="2"
@@ -29,8 +29,10 @@
           tbody
             - @shopping_carts.each do |cart|
               tr
-                -unless @buyer_delivered.include? cart.buyer_id
+                - unless @buyer_delivered.include? cart.buyer_id
                   td style="background: red"
+                - else
+                  td
                 td
                   = cart.buyer.domicile.delivery_route.get_addres_time_full
                 td

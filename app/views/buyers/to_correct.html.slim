@@ -34,7 +34,7 @@
             div.form-group
               label.col-sm-3.control-label Ruta de entrega
               div.col-sm-9
-                = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id, 'data-time' => r.delivery_time.in_time_zone('Caracas').strftime("%I:%M%p")]}, @buyer.domicile.delivery_route.id), { include_blank: false}, class: "form-control"
+                = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id, 'data-time' => r.delivery_time.in_time_zone('Caracas').strftime("%I:%M %p")]}, @buyer.domicile.delivery_route.id), { include_blank: false}, class: "form-control"
             div.form-group
               label.col-sm-3.control-label Hora de entrega
               p.col-sm-9.time.help-block
