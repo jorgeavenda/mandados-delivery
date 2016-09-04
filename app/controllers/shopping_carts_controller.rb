@@ -7,28 +7,28 @@ class ShoppingCartsController < ApplicationController
   def index
     t = Time.now.in_time_zone('Caracas')
     @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.received_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.first
   end
 
   def show
     t = Time.now.in_time_zone('Caracas')
     @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.received_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.find(params[:id])
   end
   
   def for_tomorrow
     t = Time.now.in_time_zone('Caracas')
     @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at >= :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at >= :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.first
   end
 
   def show_for_tomorrow
     t = Time.now.in_time_zone('Caracas')
     @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at >= :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at >= :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.find(params[:id])
   end
 
