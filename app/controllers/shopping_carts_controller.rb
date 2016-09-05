@@ -32,16 +32,32 @@ class ShoppingCartsController < ApplicationController
     @shopping_cart = @shopping_carts.find(params[:id])
   end
 
-  def previous
+  def deliveries
     @user = current_user
     @shopping_carts = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).order(id: :desc).limit(10)
-    @shopping_cart = @shopping_carts.first
+    @shopping_carts_prueba = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).limit(10)
+    @entregas = @shopping_carts_prueba.group("DATE_TRUNC('day', delivered_at at time zone '-04:00')").count
   end
 
-  def show_previous
+  def deliveries_shopping_cart
     @user = current_user
     @shopping_carts = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).order(id: :desc).limit(10)
-    @shopping_cart = @shopping_carts.find(params[:id])
+    @shopping_carts_prueba = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).limit(10)
+    @entregas = @shopping_carts_prueba.group("DATE_TRUNC('day', delivered_at at time zone '-04:00')").count
+    @entregas_shopping_cart = @shopping_carts.where("DATE_TRUNC('day', delivered_at at time zone '-04:00') = ?", @entregas.keys[params[:id].to_i])
+    @index_entrega = params[:id]
+    @shopping_cart = @entregas_shopping_cart.first
+  end
+
+  def show_deliveries_shopping_cart
+    @user = current_user
+    @shopping_carts = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).order(id: :desc).limit(10)
+    @shopping_carts_prueba = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).limit(10)
+    @entregas = @shopping_carts_prueba.group("DATE_TRUNC('day', delivered_at at time zone '-04:00')").count
+
+    @entregas_shopping_cart = @shopping_carts.where("DATE_TRUNC('day', delivered_at at time zone '-04:00') = ?", @entregas.keys[params[:index_entrega].to_i])
+    @index_entrega = params[:index_entrega]
+    @shopping_cart = @entregas_shopping_cart.find(params[:id])
   end
 
   def remove_item

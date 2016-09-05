@@ -31,7 +31,8 @@ Rails.application.routes.draw do
   resources :shopping_carts do
     collection do
       get :for_tomorrow
-      get :previous
+      get :deliveries
+      get :show_deliveries_shopping_cart
     end
   end
 
@@ -41,7 +42,8 @@ Rails.application.routes.draw do
   post '/shopping_carts/:id/save_list', to: 'shopping_carts#save_list', as: :save_list
 
   get '/shopping_carts/for_tomorrow/:id', to: 'shopping_carts#show_for_tomorrow', as: :show_for_tomorrow
-  get '/shopping_carts/previous/:id', to: 'shopping_carts#show_previous', as: :show_previous
+  get '/shopping_carts/deliveries/:id', to: 'shopping_carts#deliveries_shopping_cart', as: :deliveries_shopping_cart
+  get '/shopping_carts/show_deliveries_shopping_cart/:id', to: 'shopping_carts#show_deliveries_shopping_cart', as: :show_deliveries_shopping_cart
 
   get "commanded_detail" => 'main#commanded_detail'
   get "no_active" => 'main#no_active'

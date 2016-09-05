@@ -1,0 +1,65 @@
+.container-fluid.padding-side-zero
+  .row
+    .col-xs-12.col-md-4.shopping_carts
+      h2.text-center Listas de mandados
+      ul.nav.nav-tabs
+        li
+          = link_to "Para hoy", shopping_carts_path, class: "list-group-item"
+        li
+          = link_to "Para mañana", for_tomorrow_shopping_carts_path, class: "list-group-item"
+        li.active
+          a data-toggle="tab" href="#received" Recibidos
+
+
+      div.tab-content
+        p.text-center 
+          | Mandados recibidos el dia:
+        div.tab-pane.fade.in.active id="received"
+          - unless @shopping_carts.blank?
+            .list-group
+              - @entregas.each_with_index do |(cart, value), index|
+                = link_to deliveries_shopping_cart_path(index), {class: "list-group-item "}
+                  span.badge
+                    = value
+                  span
+                    = cart.strftime("%d-%m-%Y")
+          - else
+            p
+              | No tiene mandados para mostrar
+
+
+
+    .col-xs-12.col-md-4.shopping_carts
+      h2.text-center Mandados
+      - unless @entregas_shopping_cart.blank?
+        .list-group
+          - @entregas_shopping_cart.each do |cart|
+            = link_to  show_deliveries_shopping_cart_path(cart, index_entrega: @index_entrega), {class: "list-group-item "}
+              span.badge
+                = number_to_currency(cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+              span.badge.id_cart
+                = cart.id
+              span
+                = cart.delivered_at.in_time_zone('Caracas').strftime("%d-%m-%Y")
+        table id="tabla" class="table table-striped" 
+          thead
+            tr
+              td Sub-total
+              td
+                = number_to_currency(@entregas_shopping_cart.joins(:shopping_cart_items).sum("amount * quantity"), unit: 'BsF ', separator: ',', delimiter: '.')
+            tr
+              td Delivery
+              td 
+                = number_to_currency(@entregas_shopping_cart.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+          tfoot
+            tr
+              td Total
+              td
+                = number_to_currency(@entregas_shopping_cart.joins(:shopping_cart_items).sum("amount * quantity")+@entregas_shopping_cart.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+      - else
+        p
+          | Seleccione un dia en recibidos para ver mas detalles
+
+    .col-xs-12.col-md-4
+      h2.text-center Productos
+      = render "detail_shopping_cart"
