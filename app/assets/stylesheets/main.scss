@@ -354,6 +354,14 @@ tbody {
   text-decoration: none;
 }
 
+.shopping_carts p.none_list {
+  padding: 20px;
+  background: #D2CCCE;
+  border-radius: 5px;
+  font-weight: normal;
+  color: #5A5859;
+}
+
 .loading {
   background: url('http://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;
 }

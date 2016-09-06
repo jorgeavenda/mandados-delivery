@@ -12,54 +12,56 @@
 
 
       div.tab-content
-        p.text-center 
-          | Mandados recibidos el dia:
         div.tab-pane.fade.in.active id="received"
           - unless @shopping_carts.blank?
-            .list-group
-              - @entregas.each_with_index do |(cart, value), index|
+            p.text-center 
+              | Mandados recibidos el dia:
+            .list-group.text-center
+              - @entregas.each_with_index do |cart, index|
                 = link_to deliveries_shopping_cart_path(index), {class: "list-group-item "}
-                  span.badge
-                    = value
                   span
-                    = cart.strftime("%d-%m-%Y")
+                    = cart[0]
           - else
-            p
-              | No tiene mandados para mostrar
-
+            p.none_list
+              | No tienes mandados para mostrar
 
 
     .col-xs-12.col-md-4.shopping_carts
-      h2.text-center Mandados
-      - unless @entregas_shopping_cart.blank?
-        .list-group
-          - @entregas_shopping_cart.each do |cart|
-            = link_to  show_deliveries_shopping_cart_path(cart, index_entrega: @index_entrega), {class: "list-group-item "}
-              span.badge
-                = number_to_currency(cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
-              span.badge.id_cart
-                = cart.id
-              span
-                = cart.delivered_at.in_time_zone('Caracas').strftime("%d-%m-%Y")
-        table id="tabla" class="table table-striped" 
-          thead
-            tr
-              td Sub-total
-              td
-                = number_to_currency(@entregas_shopping_cart.joins(:shopping_cart_items).sum("amount * quantity"), unit: 'BsF ', separator: ',', delimiter: '.')
-            tr
-              td Delivery
-              td 
-                = number_to_currency(@entregas_shopping_cart.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
-          tfoot
-            tr
-              td Total
-              td
-                = number_to_currency(@entregas_shopping_cart.joins(:shopping_cart_items).sum("amount * quantity")+@entregas_shopping_cart.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
-      - else
-        p
-          | Seleccione un dia en recibidos para ver mas detalles
+      - unless @shopping_carts.blank?
+        h2.text-center
+          | Recibidos
+        - unless @entregas_shopping_cart.blank?
+          p
+            | el 
+            = @entregas.keys[@index_entrega.to_i]
+          .list-group style="text-align: right"
+            - @entregas_shopping_cart.each do |cart|
+              = link_to  show_deliveries_shopping_cart_path(cart, index_entrega: @index_entrega), {class: "list-group-item "}
+                span
+                  = number_to_currency(cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+                span.badge.id_cart
+                  = cart.id
+
+          table id="tabla" class="table table-striped"
+            thead
+              tr
+                td Sub-total
+                td
+                  = number_to_currency(@entregas_shopping_cart.joins(:shopping_cart_items).sum("amount * quantity"), unit: 'BsF ', separator: ',', delimiter: '.')
+              tr
+                td Delivery
+                td
+                  = number_to_currency(@entregas_shopping_cart.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+            tfoot
+              tr
+                td Total
+                td
+                  = number_to_currency(@entregas_shopping_cart.joins(:shopping_cart_items).sum("amount * quantity")+@entregas_shopping_cart.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+        - else
+          p
+            | Selecciona un dia en recibidos para ver mas detalle
 
     .col-xs-12.col-md-4
-      h2.text-center Productos
-      = render "detail_shopping_cart"
+      - unless @shopping_cart.blank?
+        h2.text-center Productos
+        = render "detail_shopping_cart"

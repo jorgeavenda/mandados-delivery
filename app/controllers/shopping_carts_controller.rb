@@ -2,59 +2,41 @@ class ShoppingCartsController < ApplicationController
   before_filter :authenticate_user!
   before_action :extract_shopping_cart, only: [:remove_item, :add_item, :save_list]
   before_action :find_item, only: [:remove_item]
+  before_action :get_current_user, except: [:remove_item, :add_item, :save_list]
+  before_action :get_time_now, except: [:remove_item, :add_item, :save_list]
+  before_action :find_and_group_deliveries, only: [:deliveries, :deliveries_shopping_cart, :show_deliveries_shopping_cart]
   #mejorar este codigo
 
   def index
-    t = Time.now.in_time_zone('Caracas')
-    @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.received_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart < :end_statuscart AND shopping_carts.received_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::ENTREGADO, dates: @t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.first
   end
 
   def show
-    t = Time.now.in_time_zone('Caracas')
-    @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.received_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::PREPARADO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart < :end_statuscart AND shopping_carts.received_at < :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::ENTREGADO, dates: @t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.find(params[:id])
   end
   
   def for_tomorrow
-    t = Time.now.in_time_zone('Caracas')
-    @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at >= :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart = :statuscart AND shopping_carts.received_at >= :dates", {statuscart: StatusCart::RECIBIDO, dates: @t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.first
   end
 
   def show_for_tomorrow
-    t = Time.now.in_time_zone('Caracas')
-    @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > :start_statuscart AND status_cart <= :end_statuscart AND shopping_carts.updated_at >= :dates", {start_statuscart: StatusCart::INICIADO, end_statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
+    @shopping_carts = @user.shopping_carts.where("status_cart = :statuscart AND shopping_carts.received_at >= :dates", {statuscart: StatusCart::RECIBIDO, dates: @t.strftime("%Y-%m-%d 16:30:00")}).order(id: :desc)
     @shopping_cart = @shopping_carts.find(params[:id])
   end
 
   def deliveries
-    @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).order(id: :desc).limit(10)
-    @shopping_carts_prueba = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).limit(10)
-    @entregas = @shopping_carts_prueba.group("DATE_TRUNC('day', delivered_at at time zone '-04:00')").count
   end
 
   def deliveries_shopping_cart
-    @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).order(id: :desc).limit(10)
-    @shopping_carts_prueba = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).limit(10)
-    @entregas = @shopping_carts_prueba.group("DATE_TRUNC('day', delivered_at at time zone '-04:00')").count
     @entregas_shopping_cart = @shopping_carts.where("DATE_TRUNC('day', delivered_at at time zone '-04:00') = ?", @entregas.keys[params[:id].to_i])
     @index_entrega = params[:id]
     @shopping_cart = @entregas_shopping_cart.first
   end
 
   def show_deliveries_shopping_cart
-    @user = current_user
-    @shopping_carts = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).order(id: :desc).limit(10)
-    @shopping_carts_prueba = @user.shopping_carts.where("status_cart > ?", StatusCart::PREPARADO).limit(10)
-    @entregas = @shopping_carts_prueba.group("DATE_TRUNC('day', delivered_at at time zone '-04:00')").count
-
     @entregas_shopping_cart = @shopping_carts.where("DATE_TRUNC('day', delivered_at at time zone '-04:00') = ?", @entregas.keys[params[:index_entrega].to_i])
     @index_entrega = params[:index_entrega]
     @shopping_cart = @entregas_shopping_cart.find(params[:id])
@@ -106,6 +88,19 @@ class ShoppingCartsController < ApplicationController
 
     def obs_params
       params.permit(:obs)
+    end
+
+    def get_current_user
+      @user = current_user
+    end
+
+    def get_time_now
+      @t = Time.now.in_time_zone('Caracas')
+    end
+
+    def find_and_group_deliveries
+      @shopping_carts = @user.shopping_carts.select(:id, :delivered_at, :delivery_price).where("status_cart > ? AND delivered_at > ?", StatusCart::ENVIADO, @t.midnight - 10.day ).order(delivered_at: :desc)
+      @entregas = @shopping_carts.group_by{ |u| u.delivered_at.in_time_zone('Caracas').strftime('%d-%m-%Y') }
     end
 
 end

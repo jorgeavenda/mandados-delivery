@@ -38,9 +38,10 @@
                   td
                     = number_to_currency(@shopping_carts.joins(:shopping_cart_items).sum("amount * quantity")+@shopping_carts.last.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
           - else
-            p
-              | No tiene mandados para hoy
+            p.none_list
+              | No tienes mandados para hoy
 
     .col-xs-12.col-md-8
-      h2.text-center Productos
-      = render "detail_shopping_cart"
+      - unless @shopping_carts.blank?
+        h2.text-center Productos
+        = render "detail_shopping_cart"

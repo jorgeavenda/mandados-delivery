@@ -58,6 +58,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
 
   controller do
     def scoped_collection
+      @buyer_delivered = Buyer.select(:id).group(:id).joins(:shopping_carts).where("status_cart > :statuscart", {statuscart: StatusCart::ENVIADO}).map{|i| i.id}
       t = Time.now.in_time_zone('Caracas')
       super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")})
     end

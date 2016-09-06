@@ -23,9 +23,10 @@
                   span
                     = cart.received_at.in_time_zone('Caracas').strftime("%d-%m-%Y")
           - else
-            p
-              | No tiene mandados para mañana
+            p.none_list
+              | No tienes mandados para mañana
 
     .col-xs-12.col-md-8
-      h2.text-center Productos
-      = render "detail_shopping_cart"
+      - unless @shopping_carts.blank?
+        h2.text-center Productos
+        = render "detail_shopping_cart"
