@@ -32,7 +32,7 @@
           | Recibidos
         - unless @entregas_shopping_cart.blank?
           p
-            | el 
+            | El 
             = @entregas.keys[@index_entrega.to_i]
           .list-group style="text-align: right"
             - @entregas_shopping_cart.each do |cart|
