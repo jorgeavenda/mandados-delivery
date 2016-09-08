@@ -13,7 +13,7 @@ class BuyersController < ApplicationController
     @buyer = Buyer.new(buyer_params)
     if @buyer.save
       render 'welcome', buyer: @buyer
-      ActionCorreo.new_registered_user(@buyer).deliver
+      ActionCorreo.new_registered_user(@buyer).deliver_now
     else
       @routes = DeliveryRoute.all
       render 'new'
@@ -35,7 +35,7 @@ class BuyersController < ApplicationController
   def update_register
     if @buyer.update(buyer_params)
       redirect_to action: :msg_edit
-      ActionCorreo.edit_registered_user(@buyer).deliver
+      ActionCorreo.edit_registered_user(@buyer).deliver_now
     else
       @routes = DeliveryRoute.all
       render 'to_correct'
@@ -51,7 +51,7 @@ class BuyersController < ApplicationController
       if @buyer.email == @email
         @buyer.activate
         render 'activated'
-        ActionCorreo.active_new_user(@buyer).deliver
+        ActionCorreo.active_new_user(@buyer).deliver_now
       end
     else
       render 'activated'

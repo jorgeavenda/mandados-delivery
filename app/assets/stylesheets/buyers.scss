@@ -41,3 +41,7 @@ p.help-block {
     padding: 6px;
     margin: 30px;
 }
+
+.has-success label.valid {
+  display: none !important;
+}

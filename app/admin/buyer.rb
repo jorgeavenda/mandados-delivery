@@ -29,6 +29,7 @@ ActiveAdmin.register Buyer do
       row ("Ruta") { |s| (s.domicile.delivery_route.get_addres_full) }
       row ("Hora de entrega") { |s| (s.domicile.delivery_route.delivery_time.in_time_zone('Caracas').strftime("%I:%M %p")) }
       row ("Casa o Apartamento") { |s| (s.domicile.home) }
+      row :active
     end
   end
 
@@ -38,6 +39,16 @@ ActiveAdmin.register Buyer do
     else
       link_to "Volver", admin_buyers_path
     end
+  end
+
+  action_item :re_email_active, only: :show do
+    unless resource.active
+      link_to "Email Active", re_email_registered_admin_buyer_path
+    end
+  end
+
+  member_action :re_email_registered, method: :get do
+    ActionCorreo.new_registered_user(resource).deliver_now
   end
 
   form do |f|
