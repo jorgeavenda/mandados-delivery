@@ -95,12 +95,12 @@ ActiveRecord::Schema.define(version: 20160910021738) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.integer  "zone_id"
-    t.integer  "offices_id"
+    t.integer  "office_id"
     t.boolean  "other",           default: false
   end
 
   add_index "delivery_routes", ["building_id"], name: "index_delivery_routes_on_building_id", using: :btree
-  add_index "delivery_routes", ["offices_id"], name: "index_delivery_routes_on_offices_id", using: :btree
+  add_index "delivery_routes", ["office_id"], name: "index_delivery_routes_on_office_id", using: :btree
   add_index "delivery_routes", ["residential_id"], name: "index_delivery_routes_on_residential_id", using: :btree
   add_index "delivery_routes", ["urbanization_id"], name: "index_delivery_routes_on_urbanization_id", using: :btree
   add_index "delivery_routes", ["zone_id"], name: "index_delivery_routes_on_zone_id", using: :btree
@@ -220,11 +220,11 @@ ActiveRecord::Schema.define(version: 20160910021738) do
 
   create_table "zones", force: :cascade do |t|
     t.string   "name"
-    t.integer  "cities_id"
+    t.integer  "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "zones", ["cities_id"], name: "index_zones_on_cities_id", using: :btree
+  add_index "zones", ["city_id"], name: "index_zones_on_city_id", using: :btree
 
 end
