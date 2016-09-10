@@ -1,4 +1,5 @@
 = render "modal_loading"
+= render "addres_delivery"
 .form_registro
   div.container-fluid
     div.row
@@ -47,7 +48,7 @@
             div.form-group
               label.col-sm-3.control-label Ruta de entrega
               div.col-sm-9
-                = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id, 'data-time' => r.delivery_time.in_time_zone('Caracas').strftime("%I:%M %p")]}), { include_blank: true}, class: "form-control"
+                = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id]}), { include_blank: true}, id: "ruta"
             div.form-group
               label.col-sm-3.control-label Hora de entrega
               p.col-sm-9.time.help-block
@@ -57,7 +58,14 @@
                 = h.text_field :home, class: "form-control", placeholder: "Introduce tu número de Casa o Apartamento"
           button.btn-block.btn-sm.btn-m type="submit" Enviar
 
+          /'data-time' => r.delivery_time.in_time_zone('Caracas').strftime("%I:%M %p")
+
 javascript:
+  $('#ruta').selectize({
+    maxOptions: 1
+  });
+  $('#zona').selectize();
+  $('#addres').selectize();
 
   $(document).ready(function() {
 
@@ -65,7 +73,7 @@ javascript:
       return this.optional(element) || /^\d{4}-\d{7}$/.test(value);
     }, "Usa este formato: 9999-9999999");
 
-    
+    $('#myModalAddres').modal('show');
   });
 
     $('#form_registro').validate({
@@ -143,7 +151,7 @@ javascript:
           form.submit();
         }
     });
-  $( "select" ).change(function() {
+  $( "#ruta" ).change(function() {
     var str = "";
     $( "select option:selected" ).each(function() {
       str += $(this).data("time");

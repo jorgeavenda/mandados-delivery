@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160901014442) do
+ActiveRecord::Schema.define(version: 20160910021738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,12 @@ ActiveRecord::Schema.define(version: 20160901014442) do
     t.datetime "updated_at"
   end
 
+  create_table "cities", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "config_systems", force: :cascade do |t|
     t.float    "delivery_price"
     t.float    "min_total_cart"
@@ -86,13 +92,18 @@ ActiveRecord::Schema.define(version: 20160901014442) do
     t.integer  "building_id"
     t.string   "addres"
     t.string   "delivery_time"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "zone_id"
+    t.integer  "offices_id"
+    t.boolean  "other",           default: false
   end
 
   add_index "delivery_routes", ["building_id"], name: "index_delivery_routes_on_building_id", using: :btree
+  add_index "delivery_routes", ["offices_id"], name: "index_delivery_routes_on_offices_id", using: :btree
   add_index "delivery_routes", ["residential_id"], name: "index_delivery_routes_on_residential_id", using: :btree
   add_index "delivery_routes", ["urbanization_id"], name: "index_delivery_routes_on_urbanization_id", using: :btree
+  add_index "delivery_routes", ["zone_id"], name: "index_delivery_routes_on_zone_id", using: :btree
 
   create_table "domiciles", force: :cascade do |t|
     t.integer  "buyer_id"
@@ -103,6 +114,12 @@ ActiveRecord::Schema.define(version: 20160901014442) do
   end
 
   add_index "domiciles", ["delivery_route_id"], name: "index_domiciles_on_delivery_route_id", using: :btree
+
+  create_table "offices", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "packings", force: :cascade do |t|
     t.integer  "shopping_cart_id"
@@ -200,5 +217,14 @@ ActiveRecord::Schema.define(version: 20160901014442) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "zones", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "cities_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "zones", ["cities_id"], name: "index_zones_on_cities_id", using: :btree
 
 end

@@ -2,6 +2,8 @@ class DeliveryRoute < ActiveRecord::Base
   belongs_to :urbanization
   belongs_to :residential
   belongs_to :building
+  belongs_to :zone
+  belongs_to :office
   has_many :domicile
   accepts_nested_attributes_for :domicile, :allow_destroy => true
 
