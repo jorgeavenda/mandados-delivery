@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910021738) do
+ActiveRecord::Schema.define(version: 20160910180541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,16 @@ ActiveRecord::Schema.define(version: 20160910021738) do
   add_index "delivery_routes", ["residential_id"], name: "index_delivery_routes_on_residential_id", using: :btree
   add_index "delivery_routes", ["urbanization_id"], name: "index_delivery_routes_on_urbanization_id", using: :btree
   add_index "delivery_routes", ["zone_id"], name: "index_delivery_routes_on_zone_id", using: :btree
+
+  create_table "delivery_times", force: :cascade do |t|
+    t.string   "delivery_hours"
+    t.string   "max_time_received"
+    t.integer  "zone_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "delivery_times", ["zone_id"], name: "index_delivery_times_on_zone_id", using: :btree
 
   create_table "domiciles", force: :cascade do |t|
     t.integer  "buyer_id"

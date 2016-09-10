@@ -215,10 +215,13 @@ ActiveAdmin.setup do |config|
         submenu.add :label => "Urbanizacion", :url => proc {admin_urbanizations_path}
         submenu.add :label => "Edificios", :url => proc {admin_buildings_path}
         submenu.add :label => "Conj. Residencial", :url => proc {admin_residentials_path}
-        submenu.add :label => "Zonas", :url => proc {admin_zones_path}
-        submenu.add :label => "Ciudad", :url => proc {admin_cities_path}
         submenu.add :label => "Comercios u Oficinas", :url => proc {admin_offices_path}
         submenu.add :label => "Rutas de entrega", :url => proc {admin_delivery_routes_path}, priority: 0
+      end
+      menu.add :label => "Zonas" do |submenu|
+        submenu.add :label => "Zonas", :url => proc {admin_zones_path}, priority: 0
+        submenu.add :label => "Ciudad", :url => proc {admin_cities_path}
+        submenu.add :label => "Horas de entrega", :url => proc {admin_delivery_times_path}
       end
     end
   end
