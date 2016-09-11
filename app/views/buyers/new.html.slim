@@ -49,6 +49,7 @@
               label.col-sm-3.control-label Direccion
               div.col-sm-7
                 = h.select :delivery_route_id, options_for_select({}), { include_blank: true}, id: "ruta"
+                p.time.help-block
               a.col-sm-2 style="cursor: pointer; color: #ff3400;" onclick="select_zone()"
                 | Cambiar
             div.form-group
@@ -186,6 +187,7 @@ javascript:
       labelField: 'get_without_addres',
       placeholder: 'Encuentra tu urbanización, residencia, edificio u oficina ',
       searchField: ['get_without_addres'],
+      maxOptions: 7,
       render: {
               option: function(item, escape) {
                   return '<div>' +
@@ -203,7 +205,7 @@ javascript:
 
   $select_addres_unique = $('#ruta').selectize({
       valueField: 'id',
-      labelField: 'get_with_addres'
+      labelField: 'get_addres_full'
   });
 
   select_addres_unique  = $select_addres_unique[0].selectize;
@@ -217,9 +219,9 @@ javascript:
     select_addres_unique.disable();
     select_addres_unique.clearOptions();
        jsonObj = [];
-       item = {}
+       item = {};
        item ["id"] = $( "#addres" ).val();
-       item ["get_with_addres"] = $select_addre[0].selectize['options'][select_addre.getValue()]['get_addres_full']
+       item ["get_addres_full"] = $select_addre[0].selectize['options'][select_addre.getValue()]['get_addres_full'];
        jsonObj.push(item);
 
     select_addres_unique.load(function(callback) {
@@ -228,4 +230,11 @@ javascript:
     });
     $('#myModalAddres').modal('hide');
     select_addres_unique.setValue(jsonObj[0].id);
+    var str = "";
+    str += $select_addre[0].selectize['options'][select_addre.getValue()]['get_delivery_time'];
+    if (str =="undefined") {
+      $( "p.time" ).text( "Seleccione una direccion para ver la hora de entrega");
+    } else {
+      $( "p.time" ).text( "La hora de entrega aproximada es: " + str );
+    }
   }

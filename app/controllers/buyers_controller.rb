@@ -61,8 +61,8 @@ class BuyersController < ApplicationController
   end
 
   def zone_addres
-    @addres = DeliveryRoute.where(zone: params[:zone], other: false)
-    render :json => @addres, methods: [:get_without_addres, :get_addres_full]
+    @addres = DeliveryRoute.where(zone: params[:zone]).order(:other)
+    render :json => @addres, methods: [:get_without_addres, :get_addres_full, :get_delivery_time]
   end
 
   private
