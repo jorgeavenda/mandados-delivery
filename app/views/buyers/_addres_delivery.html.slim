@@ -16,7 +16,7 @@
             label.col-sm-3.control-label Direccion
             div.col-sm-9
               = select_tag("addres", options_for_select({}), { include_blank: true})
-              = link_to "No encuentro mi direccion", shopping_carts_path, class: "col-sm-12 text-right direction_none"
+              = link_to "No encuentro mi direccion", new_postulation_path, class: "col-sm-12 text-right direction_none"
 
       .modal-footer
         button.btn-sm.btn-m onclick="set_addres_unique()"

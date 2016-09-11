@@ -88,3 +88,7 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
   }
 
 }
+
+#new_postulation #postulation_address, #new_postulation #postulation_comment {
+  height: 30px;
+}

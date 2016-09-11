@@ -1,0 +1,66 @@
+.form_postulacion
+  div.container-fluid
+    div.row
+      div.col-md-12.title
+        h2.text-center Postulación de dirección
+        p
+          | Puedes proponer nuevas direcciones, que gustosamente se analizarán y podrán ser incorporadas posteriormente.
+      div.col-md-12
+        = form_for @postulation, :html => { class: 'form-horizontal', id: 'form_postulacion'} do |f|
+          - if @postulation.errors.any?
+            div id="error_explanation"
+              p
+                | Por favor:
+              ul
+                - @postulation.errors.messages.values.each do |msg|
+                  - msg.each do |m|
+                    li
+                      | -
+                      = m
+          div.form-group
+            label.col-sm-3.control-label Email
+            div.col-sm-9
+              = f.email_field :email, autofocus: true, class: "form-control", placeholder: "Introduce tu email"
+          div.form-group
+            label.col-sm-3.control-label Direccion
+            div.col-sm-9
+              = f.text_area :address, class: "form-control", placeholder: "Introduce tu dirección"
+          div.form-group
+            label.col-sm-3.control-label Comentario
+            div.col-sm-9
+              = f.text_area :comment, class: "form-control", placeholder: "Introduce tu comentario"
+          button.btn-block.btn-sm.btn-m type="submit" Enviar
+
+javascript:
+
+  $('#form_postulacion').validate({
+      rules: {
+          'postulation[email]': {
+            required: true,
+            email: true
+          },
+          'postulation[address]': {
+            required: true
+          }
+      },
+      messages: {
+          'postulation[email]': {
+            required: "Email requerido",
+            email: "Especifique un email valido"
+          },
+          'postulation[address]': {
+            required: "Direccion requerida"
+          }
+      },
+      highlight: function (element) {
+          $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+      },
+      success: function (element) {
+          element.text('OK!').addClass('valid')
+              .closest('.form-group').removeClass('has-error').addClass('has-success');
+      },
+      submitHandler: function(form) {
+        $('#myModalLoading').modal('show');
+        form.submit();
+      }
+  });

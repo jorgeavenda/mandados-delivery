@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  resources :postulations
+
   get 'how_to_buy/instructions'
   get 'how_to_buy/condition'
 
