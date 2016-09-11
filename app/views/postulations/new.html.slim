@@ -29,7 +29,10 @@
             label.col-sm-3.control-label Comentario
             div.col-sm-9
               = f.text_area :comment, class: "form-control", placeholder: "Introduce tu comentario"
-          button.btn-block.btn-sm.btn-m type="submit" Enviar
+          .form-footer
+            = link_to new_buyer_path
+              button.btn.btn-sm.btn-m Atras
+            button.btn.btn-sm.btn-m type="submit" Enviar
 
 javascript:
 
