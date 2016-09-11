@@ -1,6 +1,6 @@
 ActiveAdmin.register DeliveryRoute do
   menu false
-  permit_params :addres, :delivery_time, :urbanization_id, :residential_id, :building_id, :office_id, :zone_id
+  permit_params :addres, :delivery_time, :urbanization_id, :residential_id, :building_id, :office_id, :zone_id, :other
 
   index do
     selectable_column

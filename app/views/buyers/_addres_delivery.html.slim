@@ -5,17 +5,19 @@
         button type="button" class="close" data-dismiss="modal" aria-label="Close"
           | &times;
         h3 class="modal-title"
-          | Selecciona tu direccion
+          | ¿ Donde te gustaria recibir tus mandados ?
       .modal-body
         .form-horizontal
           .form-group
             label.col-sm-3.control-label Zona
             div.col-sm-9
-              = select_tag("zona", options_for_select(@routes.map {|r| [r.get_addres_full, r.id]}), { include_blank: true})
+              = select_tag("zona", options_for_select(@zone.map {|r| [r.get_zone_full, r.id]}), { include_blank: true})
           .form-group
-            label.col-sm-3.control-label Hacemos entregas en:
+            label.col-sm-3.control-label Direccion
             div.col-sm-9
-              = select_tag("addres", options_for_select(@routes.map {|r| [r.get_addres_full, r.id]}), { include_blank: true})
+              = select_tag("addres", options_for_select({}), { include_blank: true})
+              = link_to "No encuentro mi direccion", shopping_carts_path, class: "col-sm-12 text-right direction_none"
+
       .modal-footer
-        button.btn-sm.btn-m
+        button.btn-sm.btn-m onclick="set_addres_unique()"
           | Siguiente

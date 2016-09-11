@@ -45,3 +45,20 @@ p.help-block {
 .has-success label.valid {
   display: none !important;
 }
+
+.selectize-dropdown-content span.description {
+  font-size: 12px;
+  display: block;
+  opacity: 0.5;
+  font-weight: normal;
+}
+
+a.direction_none {
+  cursor: pointer;
+  color: #ff3400 !important;
+  font-weight: normal;
+  text-decoration: none;
+}
+.selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
+    color: #555555;
+}

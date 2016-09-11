@@ -7,6 +7,7 @@ class BuyersController < ApplicationController
     @buyer.build_domicile
     # @routes = DeliveryRoute.all
     @routes = DeliveryRoute.all
+    @zone = Zone.all
   end
 
   def create
@@ -16,6 +17,7 @@ class BuyersController < ApplicationController
       ActionCorreo.new_registered_user(@buyer).deliver_now
     else
       @routes = DeliveryRoute.all
+      @zone = Zone.all
       render 'new'
     end  
   end
@@ -51,11 +53,16 @@ class BuyersController < ApplicationController
       if @buyer.email == @email
         @buyer.activate
         render 'activated'
-        ActionCorreo.active_new_user(@buyer).deliver_now
+        #ActionCorreo.active_new_user(@buyer).deliver_now
       end
     else
       render 'activated'
     end
+  end
+
+  def zone_addres
+    @addres = DeliveryRoute.where(zone: params[:zone], other: false)
+    render :json => @addres, methods: [:get_without_addres, :get_addres_full]
   end
 
   private

@@ -46,12 +46,11 @@
               p.col-sm-4.help-block Usa este formato: 9999-9999999
           = f.fields_for :domicile do |h|
             div.form-group
-              label.col-sm-3.control-label Ruta de entrega
-              div.col-sm-9
-                = h.select :delivery_route_id, options_for_select(@routes.map {|r| [r.get_addres_full, r.id]}), { include_blank: true}, id: "ruta"
-            div.form-group
-              label.col-sm-3.control-label Hora de entrega
-              p.col-sm-9.time.help-block
+              label.col-sm-3.control-label Direccion
+              div.col-sm-7
+                = h.select :delivery_route_id, options_for_select({}), { include_blank: true}, id: "ruta"
+              a.col-sm-2 style="cursor: pointer; color: #ff3400;" onclick="select_zone()"
+                | Cambiar
             div.form-group
               label.col-sm-3.control-label Casa o Apartamento
               div.col-sm-9
@@ -61,11 +60,6 @@
           /'data-time' => r.delivery_time.in_time_zone('Caracas').strftime("%I:%M %p")
 
 javascript:
-  $('#ruta').selectize({
-    maxOptions: 1
-  });
-  $('#zona').selectize();
-  $('#addres').selectize();
 
   $(document).ready(function() {
 
@@ -151,14 +145,87 @@ javascript:
           form.submit();
         }
     });
-  $( "#ruta" ).change(function() {
-    var str = "";
-    $( "select option:selected" ).each(function() {
-      str += $(this).data("time");
+
+  $('#zona').selectize({
+    placeholder: 'Selecciona una zona'
+  });
+
+  var xhr;
+  var select_zone, $select_zone;
+  var select_addre, $select_addre;
+
+  var select_addres_unique, $select_addres_unique
+
+  $select_zone = $( "#zona" ).change(function() {
+    //if (!value.length) return;
+    var zone = $( "#zona" ).val();
+    select_addre.disable();
+    select_addre.clearOptions();
+    select_addre.load(function(callback) {
+        xhr && xhr.abort();
+        xhr = $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: {
+              zone: zone
+             },
+            url: '/buyers/zone_addres/',
+            success: function(results) {
+                select_addre.enable();
+                callback(results);
+            },
+            error: function() {
+                callback();
+            }
+        })
     });
-    if (str =="undefined") {
-      $( "p.time" ).text( "Seleccione una ruta para ver la hora de entrega");
-    } else {
-      $( "p.time" ).text( "La hora de entrega aproximada es: " + str );
-    }
-  }).trigger( "change" );
+  });
+
+  $select_addre = $('#addres').selectize({
+      valueField: 'id',
+      labelField: 'get_without_addres',
+      placeholder: 'Encuentra tu urbanización, residencia, edificio u oficina ',
+      searchField: ['get_without_addres'],
+      render: {
+              option: function(item, escape) {
+                  return '<div>' +
+                      '<span class="title">' + escape(item.get_without_addres) + '</span>' +
+                      '<span class="description">' + escape(item.addres) + '</span>' +
+                  '</div>';
+              }
+          },
+  });
+
+  select_addre  = $select_addre[0].selectize;
+  select_zone = $select_zone[0].selectize;
+  select_addre.disable();
+
+
+  $select_addres_unique = $('#ruta').selectize({
+      valueField: 'id',
+      labelField: 'get_with_addres'
+  });
+
+  select_addres_unique  = $select_addres_unique[0].selectize;
+  select_addres_unique.disable();
+
+  var select_zone = function(){
+    $('#myModalAddres').modal('show');
+  }
+
+  var set_addres_unique = function(){
+    select_addres_unique.disable();
+    select_addres_unique.clearOptions();
+       jsonObj = [];
+       item = {}
+       item ["id"] = $( "#addres" ).val();
+       item ["get_with_addres"] = $select_addre[0].selectize['options'][select_addre.getValue()]['get_addres_full']
+       jsonObj.push(item);
+
+    select_addres_unique.load(function(callback) {
+      select_addres_unique.enable();
+      callback(jsonObj);
+    });
+    $('#myModalAddres').modal('hide');
+    select_addres_unique.setValue(jsonObj[0].id);
+  }

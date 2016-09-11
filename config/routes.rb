@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   get '/shopping_carts/deliveries/:id', to: 'shopping_carts#deliveries_shopping_cart', as: :deliveries_shopping_cart
   get '/shopping_carts/show_deliveries_shopping_cart/:id', to: 'shopping_carts#show_deliveries_shopping_cart', as: :show_deliveries_shopping_cart
 
+  post '/buyers/zone_addres', to: 'buyers#zone_addres', as: :zone_addres
+
   get "commanded_detail" => 'main#commanded_detail'
   get "no_active" => 'main#no_active'
 
