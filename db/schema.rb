@@ -241,8 +241,9 @@ ActiveRecord::Schema.define(version: 20160911163823) do
   create_table "zones", force: :cascade do |t|
     t.string   "name"
     t.integer  "city_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.float    "delivery_price"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   add_index "zones", ["city_id"], name: "index_zones_on_city_id", using: :btree

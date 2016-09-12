@@ -3,6 +3,7 @@ class CreateZones < ActiveRecord::Migration
     create_table :zones do |t|
       t.string :name
       t.belongs_to :city, index:true
+      t.float :delivery_price
 
       t.timestamps null: false
     end

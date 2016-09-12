@@ -12,7 +12,8 @@ ActiveAdmin.register DeliveryRoute do
     column :delivery_time
     column :office
     column :other
-    column ("zone") { |s| (s.zone.get_zone_full) }
+    #column ("zone") { |s| (s.zone.get_zone_full) }
+    column :zone
     actions
   end
 
