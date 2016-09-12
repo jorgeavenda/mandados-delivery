@@ -2,7 +2,7 @@ class ShoppingCartsController < ApplicationController
   before_filter :authenticate_user!
   before_action :extract_shopping_cart, only: [:remove_item, :add_item, :save_list]
   before_action :find_item, only: [:remove_item]
-  before_action :get_current_user, except: [:remove_item, :add_item, :save_list]
+  before_action :get_current_user, except: [:remove_item, :add_item]
   before_action :get_time_now, except: [:remove_item, :add_item, :save_list]
   before_action :find_and_group_deliveries, only: [:deliveries, :deliveries_shopping_cart, :show_deliveries_shopping_cart]
   #mejorar este codigo
@@ -57,7 +57,9 @@ class ShoppingCartsController < ApplicationController
   end
 
   def save_list
-    @shopping_cart.change_status_received(obs_params)
+    @params = obs_params
+    @params[:delivery_price] = @user.domicile.delivery_route.zone.delivery_price
+    @shopping_cart.change_status_received(@params)
     render :status => 200, :json => {:shopping_cart => @shopping_cart}
   end
 

@@ -1,4 +1,6 @@
 class HowToBuyController < ApplicationController
+  before_filter :authenticate_user!, only: [:condition]
+  
   def instructions
     @user = current_user
   end

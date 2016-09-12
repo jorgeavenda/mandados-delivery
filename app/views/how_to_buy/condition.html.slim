@@ -34,7 +34,7 @@
             | Delivery
         p.text-center
           | El costo del delivery es de 
-          = " #{number_with_precision(@config_system.delivery_price, precision: 0)}"
+          = " #{number_with_precision(@user.domicile.delivery_route.zone.delivery_price, precision: 0)}"
           |  BsF
     .col-xs-6
       .condition

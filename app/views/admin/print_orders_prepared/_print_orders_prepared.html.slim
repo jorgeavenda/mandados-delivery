@@ -49,7 +49,7 @@
                   = @shopping_carts_prepared.joins(:packings).where(buyer_id: cart.buyer_id, :packings => {packing_type: 1}).sum(:quantity)
                 td
                   /= number_to_currency(cart.buyer.get_shopping_cart_prepared.to_a.sum(&:amount_total_cart)+@config_system.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
-                  = number_to_currency(@shopping_carts_prepared.joins(:shopping_cart_items).where(buyer_id: cart.buyer_id).sum("amount * quantity")+@config_system.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+                  = number_to_currency(@shopping_carts_prepared.joins(:shopping_cart_items).where(buyer_id: cart.buyer_id).sum("amount * quantity")+@shopping_carts_prepared.where(buyer_id: cart.buyer_id).first.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
                 td
                 td
                 td
