@@ -14,16 +14,23 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     column "Fecha de Recibido", :updated_at  do |obj|
       obj.updated_at.in_time_zone('Caracas').strftime("%d / %m / %Y")
     end
+
+    #guardar en session url con parametros de filter
+    session.delete(:admin_url_received)
+    session[:admin_url_received] ||= request.fullpath
+
     actions defaults: false do |received|
       link_to 'Preparar', admin_received_path(received)
     end
   end
     
-    config.clear_action_items! 
+    config.clear_action_items!
+    config.sort_order = 'id_asc'
     #config.remove_action_item(:new)
     
     actions :all, except: [:new, :destroy]
-    before_filter :skip_sidebar!, :only => :index
+    filter :get_zone_in, as: :select, collection: Zone.all.map {|r| [r.get_zone_full, r.id]}, label: 'Zona'
+    # before_filter :skip_sidebar!, :only => :index
 
 
   show :title =>  proc{|s| "Mandado: #{s.id}" } do
@@ -31,7 +38,8 @@ ActiveAdmin.register ShoppingCart, as: "received" do
   end
 
   action_item :atras, only: :show do
-    link_to "Volver", admin_receiveds_path
+    # link_to "Volver", admin_receiveds_path
+    link_to "volver", session[:admin_url_received]
   end
 
   action_item :usuario, only: :show do
@@ -66,6 +74,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     def show
       buyer_id = ShoppingCart.find(params[:id]).buyer_id
       @statuscart = Buyer.find(buyer_id).shopping_carts.select(:status_cart).order(:status_cart).last
+      @param_zone = session[:admin_url_received]
       super
     end
   end

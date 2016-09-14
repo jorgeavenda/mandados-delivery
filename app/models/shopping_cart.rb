@@ -70,4 +70,18 @@ class ShoppingCart < ActiveRecord::Base
     self.update_attributes(status_cart: StatusCart::ENTREGADO, delivered_at: Time.now)
   end
 
+
+  def self.in_zone(zone)
+    self.joins(buyer: [domicile: [:delivery_route]]).where("delivery_routes.zone_id = ?", zone)
+  end
+
+  ransacker :get_zone,
+    formatter: proc { |v|
+      results = ShoppingCart.in_zone(v).map(&:id)
+      results = results.present? ? results : nil
+    }, splat_params: true do |parent|
+    parent.table[:id]
+  end
+
+
 end

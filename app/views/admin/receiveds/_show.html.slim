@@ -80,6 +80,7 @@
 = javascript_include_tag '/js/jquery.price_format.2.0.min', 'data-turbolinks-track' => true
 
 javascript:
+  zone = "#{@param_zone}";
 
   $(function() {
     $('[name="despachado"]').keyup(function() {
@@ -141,5 +142,6 @@ javascript:
   }
   
   var to_return = function() {
-    window.location.href = "/admin/receiveds";
+    //window.location.href = "/admin/receiveds?q%5Bget_zone_in%5D=" + zone + "&commit=Filter&order=id_desc";
+    window.location.href = zone;
   }
