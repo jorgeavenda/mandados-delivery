@@ -27,7 +27,7 @@ class DeliveryRoute < ActiveRecord::Base
     unless self.other?
       "#{self.addres} #{"Urb. "+self.urbanization.name unless self.urbanization.nil?} #{"Resd. "+self.residential.name unless self.residential.nil?} #{"Edif. "+self.building.name unless self.building.nil?} #{"Ofic. "+self.office.name unless self.office.nil?} - #{self.delivery_time}"
     else
-       "#{self.addres}"
+      "#{self.addres} - #{self.delivery_time.in_time_zone('Caracas').strftime("%I:%M %p")}"
     end
   end
 

@@ -47,7 +47,7 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
   margin-bottom: 30px;
 }
 
-.items_dispatched, .print_prepared, .inventory{
+.items_dispatched, .print_prepared, .inventory, .admin_print_prepareds #active_admin_content #collection_selection{
   @import "bootstrap";
   @import "bootstrap-sprockets";
 
@@ -58,6 +58,11 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
   }
 
   h4 span.alert-user-new {
+    background: red;
+    color: white;
+  }
+
+  span.tag_new_buyer {
     background: red;
     color: white;
   }

@@ -209,7 +209,8 @@ ActiveAdmin.setup do |config|
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
       menu.add :label => "Imprimir" do |submenu|
-        submenu.add :label => "Preparados", :url => proc {admin_print_orders_prepared_path}
+        #submenu.add :label => "Preparados", :url => proc {admin_print_orders_prepared_path}
+        submenu.add :label => "Preparados", :url => proc {admin_print_prepareds_path}
       end
       menu.add :label => "Rutas" do |submenu|
         submenu.add :label => "Urbanizacion", :url => proc {admin_urbanizations_path}

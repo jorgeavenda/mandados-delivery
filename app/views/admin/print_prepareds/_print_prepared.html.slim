@@ -1,0 +1,60 @@
+
+.print_prepared
+  .container-fluid.padding-side-zero
+    .row
+      .col-xs-12
+        - unless params[:q].nil?
+          = @zonas.find(params[:q][:get_zone_in]).get_zone_full
+table#tabla_print_prepared.table.table-striped.table-bordered
+  thead
+    tr
+      th Ruta
+      th Dom.
+      th Cod - Cliente
+      th Telefono
+      th colspan="2" Empaques
+      th Monto a pagar
+      th Forma de pago
+      th colspan="2" Pagado
+      th Firma
+    tr
+      th colspan="4"
+      th Nat.
+      th Ref.
+      th colspan="2"
+      th Si
+      th No
+      th
+  tfoot
+    tr
+      th colspan="11"
+  tbody
+    - @print_prepareds.select(:buyer_id).group(:buyer_id).reorder('').each do |bu|
+      tr
+        td
+          = bu.buyer.domicile.delivery_route.get_addres_time_full
+        td
+          = bu.buyer.domicile.home
+        td
+          = bu.buyer_id
+          |  - 
+          = bu.buyer.buyer_info.fullname
+          span.tag_new_buyer
+            br
+              - unless @buyer_delivered.include? bu.buyer_id
+                span - Nuevo -
+        td
+          = bu.buyer.buyer_info.phonenumber
+        td
+          = @print_prepareds.joins(:packings).where(buyer_id: bu.buyer_id, :packings => {packing_type: 2}).sum(:quantity)
+        td
+          = @print_prepareds.joins(:packings).where(buyer_id: bu.buyer_id, :packings => {packing_type: 1}).sum(:quantity)
+        td
+          /= number_to_currency(bu.buyer.get_shopping_bu_prepared.to_a.sum(&:amount_total_bu)+@config_system.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+          = number_to_currency(@print_prepareds.joins(:shopping_cart_items).where(buyer_id: bu.buyer_id).sum("amount * quantity")+@print_prepareds.where(buyer_id: bu.buyer_id).first.delivery_price, unit: 'BsF ', separator: ',', delimiter: '.')
+        td
+        td
+        td
+        td
+
+= stylesheet_link_tag 'print', :media => 'print'
