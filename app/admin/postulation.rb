@@ -1,5 +1,5 @@
 ActiveAdmin.register Postulation do
-  menu parent: 'Postulation'
+  menu false
   permit_params :email, :address, :comment, :status_postulation, :motive
 
   index do

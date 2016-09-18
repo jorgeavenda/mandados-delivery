@@ -208,16 +208,13 @@ ActiveAdmin.setup do |config|
   #
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
-      menu.add :label => "Imprimir" do |submenu|
-        #submenu.add :label => "Preparados", :url => proc {admin_print_orders_prepared_path}
-        submenu.add :label => "Preparados", :url => proc {admin_print_prepareds_path}
-      end
       menu.add :label => "Rutas" do |submenu|
         submenu.add :label => "Urbanizacion", :url => proc {admin_urbanizations_path}
         submenu.add :label => "Edificios", :url => proc {admin_buildings_path}
         submenu.add :label => "Conj. Residencial", :url => proc {admin_residentials_path}
         submenu.add :label => "Comercios u Oficinas", :url => proc {admin_offices_path}
         submenu.add :label => "Rutas de entrega", :url => proc {admin_delivery_routes_path}, priority: 0
+        submenu.add :label => "Postulaciones", :url => proc {admin_postulations_path}
       end
       menu.add :label => "Zonas" do |submenu|
         submenu.add :label => "Zonas", :url => proc {admin_zones_path}, priority: 0

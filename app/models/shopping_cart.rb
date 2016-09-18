@@ -70,6 +70,10 @@ class ShoppingCart < ActiveRecord::Base
     self.update_attributes(status_cart: StatusCart::ENTREGADO, delivered_at: Time.now)
   end
 
+  def change_status_sent
+    self.update_attributes(status_cart: StatusCart::ENVIADO)
+  end
+
 
   def self.in_zone(zone)
     self.joins(buyer: [domicile: [:delivery_route]]).where("delivery_routes.zone_id = ?", zone)

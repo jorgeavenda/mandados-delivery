@@ -15,6 +15,10 @@ en:
             password_confirmation:
               blank: "Repetir la contraseña"
               confirmation: "Las contraseñas no coinciden"
+  active_admin:
+    batch_actions:
+          button_label: "Aplicar"
+          action_label: "%{title} Seleccionados"
 
   devise:
     confirmations:

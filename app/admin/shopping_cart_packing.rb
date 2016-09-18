@@ -1,5 +1,5 @@
 ActiveAdmin.register ShoppingCart, as: "packings" do
-	menu parent: "Mandados", label: "Empaques"
+	menu parent: "Gestion de Mandados", label: "Empaques"
 
   permit_params  :packings_attributes => [:id, :quantity, :packing_type, :_destroy]
 

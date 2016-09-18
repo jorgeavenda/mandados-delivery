@@ -47,7 +47,7 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
   margin-bottom: 30px;
 }
 
-.items_dispatched, .print_prepared, .inventory, .admin_print_prepareds #active_admin_content #collection_selection{
+.items_dispatched, .print_prepared, .inventory, .admin_print_prepareds #active_admin_content #collection_selection, .admin_delivereds #active_admin_content #collection_selection {
   @import "bootstrap";
   @import "bootstrap-sprockets";
 
@@ -98,4 +98,19 @@ form fieldset > ol > li fieldset:not(.has_many_fields) ol li.hidden {
   #postulation_address, #postulation_comment {
     height: 30px;
   }
+}
+
+.admin_prepareds {
+  #empaques_sidebar_section {
+    tfoot td {
+      font-weight: bold;
+      text-transform: uppercase;
+      border-top: 1px solid #ccc;
+      color: #5E6469;
+    }
+
+  }
+    #search-status-_sidebar_section {
+      display: none;
+    }
 }

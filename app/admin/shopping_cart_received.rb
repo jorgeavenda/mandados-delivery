@@ -1,5 +1,5 @@
 ActiveAdmin.register ShoppingCart, as: "received" do
-	menu parent: "Mandados", label: "Recibidos", priority: 1
+	menu parent: "Gestion de Mandados", label: "Preparacion", priority: 1
 
   permit_params do
     params = [:quantity]
@@ -7,7 +7,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
 
   @buyer_delivered = Buyer.select(:id).group(:id).joins(:shopping_carts).where("status_cart > :statuscart", {statuscart: StatusCart::ENVIADO}).map{|i| i.id}
 
-  index :title => 'Mandados recibidos', :row_class => -> record { 'buyer_new' unless @buyer_delivered.include? record.buyer_id } do
+  index :title => 'Preparacion de Mandados Recibidos', :row_class => -> record { 'buyer_new' unless @buyer_delivered.include? record.buyer_id } do
     column ""
     column "Nro. Mandado", :id
     column "Cliente", :buyer_id
@@ -20,7 +20,9 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     session[:admin_url_received] ||= request.fullpath
 
     actions defaults: false do |received|
-      link_to 'Preparar', admin_received_path(received)
+      unless params[:q].nil?
+        link_to 'Preparar', admin_received_path(received)
+      end
     end
   end
     
@@ -68,7 +70,7 @@ ActiveAdmin.register ShoppingCart, as: "received" do
     def scoped_collection
       @buyer_delivered = Buyer.select(:id).group(:id).joins(:shopping_carts).where("status_cart > :statuscart", {statuscart: StatusCart::ENVIADO}).map{|i| i.id}
       t = Time.now.in_time_zone('Caracas')
-      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-%d 16:30:00")})
+      super.where("status_cart = :statuscart AND updated_at < :dates", {statuscart: StatusCart::RECIBIDO, dates: t.strftime("%Y-%m-20 16:30:00")})
     end
 
     def show

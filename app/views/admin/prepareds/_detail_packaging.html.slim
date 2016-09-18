@@ -1,0 +1,28 @@
+- unless @prepareds.blank?
+  - unless params[:q].nil?
+    table
+      thead
+        tr
+          th colspan="2"
+          - if params[:q][:buyer_id_equals].nil?
+            | Zona 
+            = Zone.find(params[:q][:get_zone_in]).get_zone_full
+          - else
+            | Cod. CLiente: 
+            = @prepareds.last.buyer_id
+      tfoot
+        tr
+          td Total
+          td
+            = @prepareds.joins(:packings).sum(:quantity)
+      tbody
+        tr
+          td
+            | Natural
+          td
+            = @prepareds.joins(:packings).where(:packings => {packing_type: 2}).sum(:quantity)
+        tr
+          td
+            | Refrigerado
+          td
+            = @prepareds.joins(:packings).where(:packings => {packing_type: 1}).sum(:quantity)
