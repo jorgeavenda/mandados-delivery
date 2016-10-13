@@ -1,7 +1,7 @@
 ActiveAdmin.register ShoppingCart, as: "print_prepareds" do
 	menu false
 
-  index :title => 'Mandados Preparados' do
+  index :title => 'Despachos Listos para Entrega' do
     render partial: 'print_prepared'
   end
 
