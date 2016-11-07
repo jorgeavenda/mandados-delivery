@@ -2,87 +2,56 @@
 = render "modal_no_product"
 = render "modal_loading"
 = render "modal_validate_quantify"
-.container-fluid.padding-side-zero
+.container-fluid.padding-side-zero.contentMain
   .row
-    .col-xs-12.col-md-4
-      h2.text-center Lista del mandado
-      table id="tabla" class="table table-striped"
-        thead
-          tr
-            th Descripcion
-            th Precio
-        tfoot
-          tr
-            td Total
-            td
-              = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
-        tbody onscroll="getItemScrolltop()"
-          - if @shopping_cart.shopping_cart_items.last.blank?
-              tr
-                td.text-center
-                  = image_tag("icons/add-to-cart-Recuperado.gif")
-                  p
-                    | Aqui se mostrarán
-                    br los productos agregados
-          - @shopping_cart.shopping_cart_items.each do |item|
-            tr
-              td
-                = item.product.description
-                br
-                  = " #{number_with_precision(item.quantity, precision: 3, separator: ',', delimiter: '.')} x #{number_to_currency(item.amount, unit: 'BsF ', separator: ',', delimiter: '.')}"
-              td
-                = " #{ number_to_currency(item.quantity*item.amount, unit: '', separator: ',', delimiter: '.')} "
-                a onclick="removeItem(#{@shopping_cart.id}, #{item.id})"
-                  .remove
+    = render "slider_main"
+  .row
+    = render "shopping_list"
 
-      button.btn-block.btn-sm.btn-m data-toggle="modal" data-target="#myModal"
-        | Finalizar Pedido
-      .col-xs-12.box-observation
-        label.control-label for="message-text" Observación para el mandado:
-        textarea#observation.form-control maxlength="250" placeholder="Puede especificar por ejemplo si necesita un corte en particular para algun producto"
-
-    .col-xs-12.col-md-8
+    .col-sm-offset-3.col-xs-12.col-sm-9
       h2.text-center Productos
-      .row.box-productos#box-productos onscroll="getProductScrolltop()"
+      #box-productos.row.box-productos
         - @products.each do |p|
-          .col-xs-6.col-sm-4.col-lg-3
+          .col-xs-12.col-sm-6.col-md-4.col-lg-3
             .box-producto.center-block
               .col-xs-12.fondoimgarticulo.vertical-align
                 span.helper
                 /= image_tag(p.first_image, {class: "img-responsive"})
                 = image_tag("default.png", {class: "img-responsive lazy", 'data-original' => p.get_image_medium })
               .col-xs-12.padding-side-zero name="box-precio"
-                p.stock
-                  | Disponible:
-                  - if p.measuring_type == MeasuringType::UNIDAD
-                    = " #{number_with_precision(p.max_sale, precision: 0)}"
-                    |  Unid
-                  - else
-                    = " #{number_with_precision(p.max_sale, precision: 3, separator: ',', delimiter: '.')}"
-                    |  Kg
-                h3.text-center
-                  = p.description.capitalize
-                p.precio-producto.text-center name="pmvp" value="#{p.price}" id="pmvp_#{p.id}"
-                  = number_to_currency(p.price, unit: "", separator: ",", delimiter: ".")
-                .container-fluid.form_product
-                  .row.banda
+                .descPrecio
+                  p.stock
+                    | Disponible:
                     - if p.measuring_type == MeasuringType::UNIDAD
-                      span.cant 
-                        | Cant
-                      input.peso type="number" name="cant" id="cant_#{p.id}" min="0" max="#{p.max_sale}"
+                      = " #{number_with_precision(p.max_sale, precision: 0)}"
+                      |  Unid
                     - else
-                      span
-                        | BsF
-                      input.precio type="tel" name="precio" id="precio_#{p.id}"
-                      span
-                        | Kg
-                      input.peso type="tel" name="peso" id="peso_#{p.id}"
+                      = " #{number_with_precision(p.max_sale, precision: 3, separator: ',', delimiter: '.')}"
+                      |  Kg
+                  h3.text-center
+                    = p.description.capitalize
+                .form_producto
+                  p.precio-producto.text-center name="pmvp" value="#{p.price}" id="pmvp_#{p.id}"
+                    = number_to_currency(p.price, unit: "", separator: ",", delimiter: ".")
                   .container-fluid
-                    .row
-                      .col-md-12
-                        a class="add-product" method="POST" onclick="addItem(#{@shopping_cart.id}, #{p.id}, #{(p.measuring_type == MeasuringType::UNIDAD) ? '"cant_"' : '"peso_"' }, #{p.price}, #{p.max_sale})"
-                          button.btn-xs.btn-m.center-block
-                            | Agregar
+                    .row.banda
+                      - if p.measuring_type == MeasuringType::UNIDAD
+                        span.cant 
+                          | Cant
+                        input.peso type="number" name="cant" id="cant_#{p.id}" min="0" max="#{p.max_sale}"
+                      - else
+                        span
+                          | BsF
+                        input.precio type="tel" name="precio" id="precio_#{p.id}"
+                        span
+                          | Kg
+                        input.peso type="tel" name="peso" id="peso_#{p.id}"
+                    .container-fluid
+                      .row
+                        .col-md-12
+                          a class="add-product" method="POST" onclick="addItem(#{@shopping_cart.id}, #{p.id}, #{(p.measuring_type == MeasuringType::UNIDAD) ? '"cant_"' : '"peso_"' }, #{p.price}, #{p.max_sale})"
+                            button.btn-sm.btn-m.center-block
+                              | Agregar
 
 = javascript_include_tag '/js/precio-peso', 'data-turbolinks-track' => true
 = javascript_include_tag '/js/lista-mandado', 'data-turbolinks-track' => true
@@ -96,6 +65,10 @@ javascript:
   $(document).ready(function() {
     controlScroll();
     $('#observation').val(sessionStorage.getItem('observation'));
+    if (sessionStorage["listActive"] == "true"){
+      $('.toggles.togle').addClass('togleHover');
+      $('#sidebar').css({left: 20});
+    }
   });
 
   $("img.lazy").lazyload({
@@ -103,17 +76,11 @@ javascript:
       container: $("#box-productos")
   });
 
-  var getProductScrolltop = function(){
-    sessionStorage["productos_scrolltop"] = $("#box-productos").scrollTop();
-  }
   var getItemScrolltop = function(){
     sessionStorage["items_scrolltop"] = $("#tabla tbody").scrollTop();
   }
-  var setProductScrolltop = function(){
-    $("#box-productos").scrollTop(sessionStorage.getItem('productos_scrolltop'));
-  }
   var visible = function() {
-    $("#box-productos").css({ "visibility": "visible"});
+    $(".contentMain").css({ "visibility": "visible"});
     $("#tabla tbody").css({ "visibility": "visible"});
   }
   var controlScroll = function(){
@@ -127,13 +94,19 @@ javascript:
       $("#tabla tbody tr:last").delay(1600).queue(function(){
         $("#tabla tbody tr:last").removeAttr("style");
       });
-      setProductScrolltop();
+
+      $('.toggles.togle i').css({"color": "#fff"});
+      $('.toggles.togle').animate({backgroundColor: "#ff3400"}, 1800);
+      $('.toggles.togle').animate({backgroundColor: "#f7f7f7"}, 1800);
+      $(".toggles.togle").delay(0).queue(function(){
+        $(".toggles.togle").removeAttr("style");
+        $(".toggles.togle i").removeAttr("style");
+      });
       visible();
     } else {
       if (sessionStorage.getItem('items_remove') == "true" ) {
         sessionStorage["items_remove"]=false;
         $("#tabla tbody").scrollTop(sessionStorage.getItem('items_scrolltop'));
-        setProductScrolltop();
         visible();
       }
       else{
@@ -146,7 +119,7 @@ javascript:
     $('#myModalLoading').modal('show');
     $.post("/shopping_carts/"+id+"/remove_item/"+item_id, { product_id: id, quantity: item_id },function(data){
       console.log('fallo: '+data)
-      renderCart();
+      reloadCart();
     });
     sessionStorage["items_remove"]=true;
   }
@@ -172,13 +145,13 @@ javascript:
 
       $.post("/shopping_carts/"+id+"/add_item", { product_id: product_id, quantity: quantity, amount: price }, function( data, status ) {
         if (data.add == "true" ){
-            renderCart();
+            reloadCart();
         } else {
             if (data.reason == "availability" ){
               $('#myModalLoading').modal('hide');
               $('#myModalNoProduct').modal('show');
               $('#myModalNoProduct').on('hidden.bs.modal', function(){
-              renderCart();
+              reloadCart();
               });
             } else {
               $('#myModalLoading').modal('hide');

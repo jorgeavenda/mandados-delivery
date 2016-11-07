@@ -1,47 +1,64 @@
-nav.navbar.navbar-default.navbar-fixed-top.grad-navbar style="position: absolute;"
-  .container.nav-content
-    .navbar-header.margin-right-logo
+nav.navbar.navbar-default.navbar-fixed-top.main-navbar
+  .container-fluid.nav-content
+    .navbar-header
       button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
         span.icon-bar
       /a.navbar-brand.nav-logo.nav-logo-image.nav-logo-image-black href="" onclick="renderCart()"
-      a.navbar-brand.nav-logo.nav-logo-image.nav-logo-image-black href=""
+      a.nav-logo href=""
         = image_tag("logo.png")
 
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
         - if current_user
           li
-            a href="" onclick="renderCart()"
-              = image_tag("main.png")
+            .fa-hover
+              a href="" onclick="renderCart()"
+                i class="fa fa-home" aria-hidden="true"
+                | Inicio
           li
-            = link_to(how_to_buy_condition_path)
-              = image_tag("condiciones.png")
+            .fa-hover
+              = link_to(how_to_buy_condition_path)
+                i class="fa fa-check-square-o" aria-hidden="true"
+                | Condiciones
           li
-            = link_to(how_to_buy_instructions_path)
-              = image_tag("how-to-buy.png")
+            .fa-hover
+              = link_to(how_to_buy_instructions_path)
+                  i class="fa fa-question-circle-o" aria-hidden="true"
+                  | Ayuda
           li
-            = link_to(shopping_carts_path, class: "color-text-dark")
-              = image_tag("mis-mandados.png")
+            .fa-hover
+                = link_to(shopping_carts_path, class: "color-text-dark")
+                  i class="fa fa-list-ul" aria-hidden="true"
+                  | Mis mandados          
           li
-            p
-              | Bienvenid@ 
-              br
-              = @user.fullname
+            .fa-hover
+                a href="" onclick="renderCart()"
+                  i class="fa fa-user-circle-o" aria-hidden="true"
+                  = @user.fullname                               
           li
-            = link_to("Salir", destroy_user_session_path, method: :delete, class: "color-text-dark")
+            .fa-hover
+                 = link_to(destroy_user_session_path, method: :delete, class: "color-text-dark")
+                  i class="fa fa-sign-out" aria-hidden="true"
+                  | Salir           
         - else
           li
-            = link_to(how_to_buy_instructions_path)
-              = image_tag("how-to-buy.png")
+            .fa-hover
+              = link_to(how_to_buy_instructions_path)
+                  i class="fa fa-question-circle-o" aria-hidden="true"
+                  | Ayuda
           li
-            /a.color-text-dark href="#" Ingresar
-            = link_to("Ingresar", new_user_session_path, class: "color-text-dark")
+            .fa-hover
+               = link_to(new_user_session_path, class: "color-text-dark")
+                  i class="fa fa-sign-in" aria-hidden="true"
+                  | Ingresar       
           li
-            /a.color-text-dark href="#" Registrarse
-            = link_to("Registrarse", new_buyer_path, class: "color-text-dark")
+            .fa-hover
+              = link_to(new_buyer_path, class: "color-text-dark")
+                  i class="fa fa-user-plus" aria-hidden="true"
+                  | Registrarse       
 
 script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
 = javascript_include_tag '/js/jquery.validate', 'data-turbolinks-track' => true
@@ -50,4 +67,8 @@ javascript:
 
   var renderCart = function() {
     window.location.href = "/";
+  }
+
+  var reloadCart = function() {
+    location.reload();
   }

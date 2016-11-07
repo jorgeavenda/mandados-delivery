@@ -14,13 +14,37 @@
     height: 150px;
   }
 
-  .form_product:hover .banda input, .form_product:hover button.btn-m{
-    -webkit-transform: scale(1.3);
-    -moz-transform: scale(1.3);
-    transform: scale(1.3);
+  div#sidebar {
+    top: 69px;
+    font-size: 11px;
+    padding-right: 60px;
+
+    h2 {
+      font-size: 1.3em;
+    }
+
+    .togleHover i {
+      font-size: 2.5em;
+    }
+    
+    .togle {
+      width: 54px;
+      height: 58px;
+    }
+
+    #sidebar-content {
+      padding: 14px;
+      height: 455px;
+    }
+
+    i.fa.fa-shopping-cart {
+      margin-top: 10px;
+    }
+
+    #toggleSidebar {
+        padding-left: 8px;
+    }
+
   }
 
-  #tabla>tbody>tr>td img {
-    width: 80px;
-  }
 }

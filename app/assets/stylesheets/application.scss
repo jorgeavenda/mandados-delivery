@@ -19,6 +19,8 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import 'https://fonts.googleapis.com/css?family=Vollkorn';
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 html {
   position: relative;
@@ -33,7 +35,7 @@ body.with-footer {
 }
 
 body > .container-with-nav {
-  padding: 79px 15px 0;
+  padding: 59px 15px 0;
   margin-bottom: 60px;
 }
 
@@ -67,67 +69,62 @@ h1, h2, .box-welcome h3 {
 /* Margin y Padiing */
 
 /* Header Styles */
-  .navbar-fixed-top {
-    min-height: 60px;
-  }
 
-  .grad-navbar {
-    background: #d2ccce; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#d2ccce, #d2ccce); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#d2ccce, #d2ccce); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#d2ccce, #d2ccce); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#d2ccce, #d2ccce); /* Standard syntax (must be last) */
+  .main-navbar {
+    background: #d2ccce;
     border-color: #828282;
   }
 
-  nav.navbar.navbar-default.style-nav-default-public-login {
-    position: absolute;
-    background-color: transparent;
-    border: none;
-  }
-
-  .navbar-default .nav-content #navbar {
-    position: relative;
-  }
-
-  .navbar-default .nav-content .navbar-header {
-    position: relative;
-    z-index: 10;
-  }
-
-  .navbar-default .nav-content #navbar ul {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
-
-  .navbar-default .nav-content #navbar .navbar-nav > li > a {
-    padding-bottom: 0px;
-    padding-right: 0px;
-  }
-
-  #navbar .navbar-nav > li > p {
-    padding-bottom: 6px;
-    padding-top: 15px;
-    margin-bottom: 0;
-    color: #777;
-  }
-
-  .navbar-default .nav-content #navbar ul > li.box-icon-navbar img {
-    margin-top: -2px;
-  }
-
-  .navbar-brand {
-    height: auto;
-  }
-
-  .navbar-default .nav-content .navbar-header .nav-logo img {
+  .navbar-header .nav-logo img {
+    margin: 6px;
     max-height: 46px;
   }
 
-  .navbar-toggle {
-    margin-top: 21px;
+  .navbar-default .nav-content #navbar ul {
+    margin-right: 6px;
   }
+
+  .navbar-default .nav-content #navbar .navbar-nav > li > a {
+    padding: 0 17px;
+    margin-top: 13px;
+    height: 30px;
+  }
+
+  #navbar ul > li .fa-hover {
+      margin-top: 11px;
+  }
+
+  #navbar ul > li  .fa-hover a {
+    display: block;
+    color: #777;
+    line-height: 32px;
+    padding-right: 8px;
+    border-radius: 4px;
+    .fa {
+      color: #ff3400;
+    }
+  }
+
+  #navbar ul > li .fa-hover a .fa {
+    width: 32px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+#navbar ul > li .fa-hover a:hover {
+    background-color: #ff3400;
+    color: #fff;
+    text-decoration: none;
+}
+
+#navbar ul > li .fa-hover a:hover .fa {
+    font-size: 28px;
+    vertical-align: -6px;
+    color: #fff;
+}
+
+
+
 /* Header Styles */
 
 /* Footer Styles */
@@ -232,3 +229,42 @@ h1, h2, .box-welcome h3 {
     margin-bottom: 0;
   }
 /* Footer Styles */
+
+
+@media only screen and (max-width: 948px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .navbar-text {
+        float: none;
+        margin: 15px 0;
+    }
+    /* since 3.1.0 */
+    .navbar-collapse.collapse.in { 
+        display: block!important;
+    }
+    .collapsing {
+        overflow: hidden!important;
+    }
+}

@@ -1,0 +1,143 @@
+css:
+  #sidebar {
+      position: fixed;
+      top: 100px;
+      left: -375px;
+      z-index: 100;
+      width: 100%;
+      max-width: 457px;
+      padding-right: 82px;
+  }
+
+  #sidebar-content {
+    height: 542px;
+    max-width: 457px;
+    background: #f7f7f7;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    padding: 20px;
+  }
+
+  #toggleSidebar {
+    color: #ff3400;
+    position: absolute;
+    top: 180px;
+    padding-left: 15px;
+    margin-left: 10px;
+  }
+
+  .togle {
+    width: 86px;
+    height: 80px;
+    -moz-border-radius: 0 100px 100px 0;
+    -webkit-border-radius: 0 100px 100px 0;
+    border-radius: 0 100px 100px 0;
+  }
+  
+  i.fa.fa-shopping-cart {
+    margin-top: 15px;
+  }
+  
+  .togle:hover {
+    background: #ff3400;
+    cursor: pointer;
+  }
+
+  .togle:hover i{
+    color: #fff;
+    font-size: 3.5em;
+  }
+
+  .togleHover {
+    background: #ff3400;
+    cursor: pointer;
+  }
+
+  .togleHover i {
+    color: #fff;
+    font-size: 3.5em;
+  }
+
+  .relleno {
+    height: 110px;
+    float: left;
+  }
+
+#sidebar
+  #sidebar-content
+    h2.text-center Lista del mandado
+    table id="tabla" class="table table-striped"
+      thead
+        tr
+          th Descripcion
+          th Precio
+      tfoot
+        tr
+          td Total
+          td
+            = number_to_currency(@shopping_cart.amount_total_cart, unit: 'BsF ', separator: ',', delimiter: '.')
+      tbody onscroll="getItemScrolltop()"
+        - if @shopping_cart.shopping_cart_items.last.blank?
+            tr
+              td.text-center
+                = image_tag("icons/add-to-cart-Recuperado.gif")
+                p
+                  | Aqui se mostrarán
+                  br los productos agregados
+        - @shopping_cart.shopping_cart_items.each do |item|
+          tr
+            td
+              = item.product.description
+              br
+                = " #{number_with_precision(item.quantity, precision: 3, separator: ',', delimiter: '.')} x #{number_to_currency(item.amount, unit: 'BsF ', separator: ',', delimiter: '.')}"
+            td
+              = " #{ number_to_currency(item.quantity*item.amount, unit: '', separator: ',', delimiter: '.')} "
+              a onclick="removeItem(#{@shopping_cart.id}, #{item.id})"
+                .remove
+
+    button.btn-block.btn-sm.btn-m data-toggle="modal" data-target="#myModal"
+      | Finalizar Pedido
+    .col-xs-12.box-observation
+      label.control-label for="message-text" Observación para el mandado:
+      textarea#observation.form-control maxlength="250" placeholder="Puede especificar por ejemplo si necesita un corte en particular para algun producto"
+    a.toggles.togle id="toggleSidebar"
+      i.fa.fa-shopping-cart.fa-3x aria-hidden="true"
+
+
+javascript:
+  $.asm = {};
+  $.asm.panels = 1;
+  var widthSidebar = $('#sidebar').width();
+  $('#sidebar').css({left: -widthSidebar});
+
+  function sidebar(panels) {
+      $.asm.panels = panels;
+      if (panels === 1) {
+        // $('#content').removeClass('span9');
+        // $('#content').addClass('span12 no-sidebar');
+        sessionStorage["listActive"]="false";
+        $('.toggles.togle').removeClass('togleHover');
+        var left = $('#sidebar').width();
+        $('#sidebar').animate({
+              left: -left,
+        });
+      } else if (panels === 2) {
+        // $('#content').removeClass('span12 no-sidebar');
+        // $('#content').addClass('span9');
+          sessionStorage["listActive"]="true";
+          $('.toggles.togle').addClass('togleHover');
+          $('#sidebar').animate({
+              left: 20,
+          });
+      }
+  };
+
+  $('#toggleSidebar').click(function() {
+    if ($.asm.panels === 1) {
+      return sidebar(2);
+    } else {
+      return sidebar(1);
+    }
+  });  
