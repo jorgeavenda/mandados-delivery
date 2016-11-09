@@ -4,10 +4,7 @@
     li data-target="#carousel-example-generic" data-slide-to="1"
     li data-target="#carousel-example-generic" data-slide-to="2"
 
-  div.carousel-inner role="listbox"
-    div.item.active
-      img src="http://www.extraplus.com.br/system/banners/images/000/000/230/original/ex_0089_16d_webban_arroz.jpg"
-    div.item
-      img src="http://www.extraplus.com.br/system/banners/images/000/000/230/original/ex_0089_16d_webban_arroz.jpg"
-    div.item
-      img src="http://www.extraplus.com.br/system/banners/images/000/000/230/original/ex_0089_16d_webban_arroz.jpg"
+  #bannerMain.carousel-inner role="listbox"
+    - @media_banner.each_with_index do |b, index|
+      .item class=('active' if index == 0)
+        = image_tag("", {class: "img-responsive lazybanner", 'data-original' => b.get_image_original })

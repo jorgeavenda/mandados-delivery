@@ -7,6 +7,7 @@ class MainController < ApplicationController
     @shopping_cart = @user.get_shopping_cart
     @products = Product.show_by_stock
     @config_system = ConfigSystem.last
+    @media_banner = MediaFile.where("media_type = ?", MediaType::BANNER)
   end
 
   def check_active

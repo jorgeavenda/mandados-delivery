@@ -50,6 +50,10 @@
   -webkit-text-fill-color: #7f7f7f;
 }
 
+.lazybanner {
+  width: 100%;
+}
+
 .box-producto .fondoimgarticulo .helper {
   display: inline-block;
   height: 100%;
@@ -62,6 +66,7 @@
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
+  max-height: calc(100% - 1px);
 }
 
 .form_producto {

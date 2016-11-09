@@ -76,6 +76,16 @@ javascript:
       container: $("#box-productos")
   });
 
+  $(function() {
+    $("img.lazybanner").lazyload({
+        effect : "fadeIn",
+        event : "sporty"
+    });
+  });
+  $(window).bind("load", function() {
+      var timeout = setTimeout(function() { $("img.lazybanner").trigger("sporty") }, 4000);
+  }); 
+
   var getItemScrolltop = function(){
     sessionStorage["items_scrolltop"] = $("#tabla tbody").scrollTop();
   }

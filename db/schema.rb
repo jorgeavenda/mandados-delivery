@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911163823) do
+ActiveRecord::Schema.define(version: 20161109030058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,18 @@ ActiveRecord::Schema.define(version: 20160911163823) do
   end
 
   add_index "domiciles", ["delivery_route_id"], name: "index_domiciles_on_delivery_route_id", using: :btree
+
+  create_table "media_files", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "media_type",         default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "media_file_name"
+    t.string   "media_content_type"
+    t.integer  "media_file_size"
+    t.datetime "media_updated_at"
+  end
 
   create_table "offices", force: :cascade do |t|
     t.string   "name"
